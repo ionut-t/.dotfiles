@@ -20,7 +20,7 @@ return {
         'typescriptreact',
         'typescript.tsx',
       },
-      root_dir = lspconfig.util.root_pattern('angular.json', 'project.json'),
+      root_dir = lspconfig.util.root_pattern('angular.json', 'nx.json', 'project.json'),
       -- Properly configure the Angular Language Server command
       on_new_config = function(new_config, new_root_dir)
         local node_modules = get_node_modules(new_root_dir)
