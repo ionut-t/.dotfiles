@@ -116,3 +116,7 @@ export BAT_THEME=tokyonight_night
 
 # Load p10k configuration
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+alias lvim="/Users/ionut-traistaru/.local/bin/lvim"
+
+export PATH=$PATH:$(go env GOPATH)/bin
