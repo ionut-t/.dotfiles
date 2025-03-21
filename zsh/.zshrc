@@ -19,7 +19,7 @@ CASE_SENSITIVE="true"
 ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 
-# Plugins (removed duplicates and conflicts)
+# Plugins
 plugins=(
   git
   sudo
@@ -27,7 +27,6 @@ plugins=(
   python
   zsh-autosuggestions
   zsh-syntax-highlighting
-  thefuck
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -107,12 +106,16 @@ alias tks="tmux kill-session"
 alias ta="tmux a"
 alias tls="tmux ls"
 alias sdf="$HOME/.dotfiles/sync-dotfiles.zsh"
+alias vim="/Applications/MacVim.app/Contents/bin/Vim"
+
+unsetopt CORRECT_ALL
 
 # Tool configurations
 eval $(thefuck --alias)
 eval $(thefuck --alias fk)
 eval "$(zoxide init zsh)"
-export BAT_THEME=tokyonight_night
+
+export BAT_THEME=catppuccin_mocha
 
 # Load p10k configuration
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -120,3 +123,5 @@ export BAT_THEME=tokyonight_night
 alias lvim="/Users/ionut-traistaru/.local/bin/lvim"
 
 export PATH=$PATH:$(go env GOPATH)/bin
+export PATH=$PATH:$HOME/zig
+export PATH="/usr/local/opt/postgresql@17/bin:$PATH"
