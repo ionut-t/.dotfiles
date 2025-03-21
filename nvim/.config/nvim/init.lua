@@ -30,7 +30,10 @@ require('lazy').setup {
   require 'plugins.indent-blankline',
   require 'plugins.misc',
   require 'plugins.comment',
-  -- require 'plugins.angular',
+  require 'plugins.angular',
+  require 'plugins.go',
+  require 'plugins.copilot',
+  require 'plugins.zig',
 }
 
 vim.cmd.colorscheme 'catppuccin'
