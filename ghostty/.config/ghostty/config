@@ -1,0 +1,19 @@
+# ghostty +show-config --default --docs
+# ghostty +list-themes
+
+# font-family = FiraCode Nerd Font Mono
+
+# font-family = MesloLGSDZ Nerd Font Mono Italic
+
+font-size = 18
+# window-inherit-font-size = true
+
+# Look and Feel
+adjust-cursor-thickness = 3
+adjust-underline-position = 3
+# bold-is-bright = true
+link-url = true
+mouse-hide-while-typing = true
+theme = catppuccin-mocha
+background-opacity = 1
+
