@@ -17,3 +17,4 @@ parent = "!git show-branch | grep '*' | grep -v \"$(git rev-parse --abbrev-ref H
 	defaultBranch = main
 [core]
 	autocrlf = input
+	editor = hx
