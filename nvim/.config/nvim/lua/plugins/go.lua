@@ -1,19 +1,20 @@
 return {
   -- LSP Configuration
   {
+    'williamboman/mason.nvim',
+    priority = 100,
+    build = ':MasonUpdate',
+    config = function()
+      require('mason').setup()
+    end,
+  },
+
+  {
     'neovim/nvim-lspconfig',
     dependencies = {
       'mason.nvim',
       'mason-lspconfig.nvim',
     },
-  },
-
-  {
-    'williamboman/mason.nvim',
-    build = ':MasonUpdate',
-    config = function()
-      require('mason').setup()
-    end,
   },
 
   {

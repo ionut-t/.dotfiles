@@ -61,9 +61,9 @@ return {
     local builtin = require 'telescope.builtin'
 
     -- Previous keymaps...
-    vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
+    vim.keymap.set('n', '<leader>h', builtin.help_tags, { desc = 'Find [H]elp' })
     vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-    vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+    vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = '[F]ind [F]iles' })
     vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
     vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
     vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
@@ -73,7 +73,7 @@ return {
     vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
     -- Sibling files search
-    vim.keymap.set('n', '<leader>si', function()
+    vim.keymap.set('n', '<leader>fs', function()
       local current_buffer = vim.api.nvim_buf_get_name(0)
       local parent_dir = vim.fn.fnamemodify(current_buffer, ':h')
 
@@ -84,19 +84,19 @@ return {
         no_ignore = true,
         file_ignore_patterns = { 'node_modules', '.git', '.venv' },
       }
-    end, { desc = '[S]earch S[i]bling Files' })
+    end, { desc = '[F]ind [S]ibling Files' })
 
     -- Git status (modified files)
-    vim.keymap.set('n', '<leader>sm', builtin.git_status, { desc = '[S]earch [M]odified files' })
+    vim.keymap.set('n', '<leader>fm', builtin.git_status, { desc = '[F]ind [M]odified files' })
 
     -- Git changed files only (more focused than git_status)
-    vim.keymap.set('n', '<leader>sc', function()
+    vim.keymap.set('n', '<leader>fc', function()
       builtin.git_files {
         prompt_title = 'Git Changed Files',
         show_untracked = true,
         modified = true, -- Only show files that have changed
       }
-    end, { desc = '[S]earch [C]hanged files only' })
+    end, { desc = '[F]ind [C]hanged files only' })
 
     -- Previous advanced examples...
     vim.keymap.set('n', '<leader>/', function()
