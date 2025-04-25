@@ -100,6 +100,21 @@ sync_file() {
     rm -rf $temp_dir
 }
 
+# Function to pull latest changes for a branch
+pull_latest_changes() {
+    local branch=$1
+    local current_branch=${$(git branch --show-current)}
+    
+    print_colored info "Pulling latest changes for $branch branch..."
+    
+    # Checkout the branch and pull
+    git checkout -q $branch
+    git pull
+    
+    # Return to original branch
+    git checkout -q $current_branch
+}
+
 main() {
     # Store current branch name
     local CURRENT_BRANCH=${$(git branch --show-current)}
@@ -117,6 +132,10 @@ main() {
 
     print_colored info "Current branch: $CURRENT_BRANCH"
     print_colored info "Other branch: $OTHER_BRANCH"
+    
+    # Pull latest changes for the other branch
+    pull_latest_changes $OTHER_BRANCH
+    
     print "\nSelect source branch for sync:"
     print "1) $CURRENT_BRANCH"
     print "2) $OTHER_BRANCH"
