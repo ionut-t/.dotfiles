@@ -15,7 +15,8 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Set up plugins
 require('lazy').setup {
-  require 'plugins.neotree',
+  -- require 'plugins.neotree',
+  require 'plugins.oil',
   require 'plugins.theme',
   require 'plugins.bufferline',
   require 'plugins.lualine',
@@ -30,6 +31,7 @@ require('lazy').setup {
   require 'plugins.misc',
   require 'plugins.comment',
   require 'plugins.angular',
+  require 'plugins.python',
 }
 
 vim.cmd.colorscheme 'catppuccin'
