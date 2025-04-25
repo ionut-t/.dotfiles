@@ -125,3 +125,6 @@ alias lvim="/Users/ionut-traistaru/.local/bin/lvim"
 export PATH=$PATH:$(go env GOPATH)/bin
 export PATH=$PATH:$HOME/zig
 export PATH="/usr/local/opt/postgresql@17/bin:$PATH"
+
+export EDITOR=hx
+export VISUAL=hx
