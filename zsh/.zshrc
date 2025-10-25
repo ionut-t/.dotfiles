@@ -107,6 +107,7 @@ alias ta="tmux a"
 alias tls="tmux ls"
 alias sdf="$HOME/.dotfiles/sync-dotfiles.zsh"
 alias vim="/Applications/MacVim.app/Contents/bin/Vim"
+alias code="code-insiders"
 
 unsetopt CORRECT_ALL
 
@@ -128,3 +129,13 @@ export PATH="/usr/local/opt/postgresql@17/bin:$PATH"
 
 export EDITOR=hx
 export VISUAL=hx
+
+fpath=(~/.zsh/completion $fpath)
+autoload -U compinit && compinit
+
+source ~/.envs/envs.sh
+export PATH="${HOME}/.local/bin":${PATH}
+
+function gem-ng() {
+  gemini -p "$(cat "${HOME}/prompts/angular.md")"
+}

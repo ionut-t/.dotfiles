@@ -14,6 +14,7 @@ adjust-underline-position = 3
 # bold-is-bright = true
 link-url = true
 mouse-hide-while-typing = true
-theme = catppuccin-mocha
+theme = Catppuccin Mocha
 background-opacity = 1
 
+keybind = shift+enter=text:\x1b\r
