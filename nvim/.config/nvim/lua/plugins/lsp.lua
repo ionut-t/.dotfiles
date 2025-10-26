@@ -187,6 +187,14 @@ return {
       jsonls = {},
       yamlls = {},
 
+      -- Zig Language Server
+      zls = {},
+
+      -- Angular Language Server
+      angularls = {
+        filetypes = { 'typescript', 'html', 'typescriptreact', 'typescript.tsx' },
+      },
+
       lua_ls = {
         -- cmd = {...},
         -- filetypes = { ...},

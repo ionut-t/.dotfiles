@@ -116,3 +116,70 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.highlight.on_yank()
   end,
 })
+
+-- Open terminal in current file's directory
+vim.keymap.set('n', '<leader>tt', function()
+  -- Get the directory of the current file, handling oil:// paths
+  local path = vim.fn.expand '%:p'
+  local file_dir
+
+  -- Check if this is an oil path and convert it
+  if path:match '^oil://' then
+    -- Convert oil:// path to real path (remove the oil:// prefix)
+    file_dir = path:gsub('^oil://', '')
+  else
+    -- Regular file, get its directory
+    file_dir = vim.fn.expand '%:p:h'
+  end
+
+  -- Open a split for the terminal
+  vim.cmd 'split'
+  vim.cmd 'resize 15'
+  -- Open terminal with the cd command
+  vim.cmd('terminal cd "' .. file_dir .. '" && $SHELL')
+  -- Automatically enter insert mode in the terminal
+  vim.cmd 'startinsert'
+end, { desc = 'Open terminal in current file directory' })
+
+-- Open terminal in vertical split in current file's directory
+vim.keymap.set('n', '<leader>tv', function()
+  -- Get the directory of the current file, handling oil:// paths
+  local path = vim.fn.expand '%:p'
+  local file_dir
+
+  -- Check if this is an oil path and convert it
+  if path:match '^oil://' then
+    -- Convert oil:// path to real path (remove the oil:// prefix)
+    file_dir = path:gsub('^oil://', '')
+  else
+    -- Regular file, get its directory
+    file_dir = vim.fn.expand '%:p:h'
+  end
+
+  vim.cmd 'vsplit'
+  -- Open terminal with the cd command
+  vim.cmd('terminal cd "' .. file_dir .. '" && $SHELL')
+  vim.cmd 'startinsert'
+end, { desc = 'Open terminal in vertical split in current file directory' })
+
+-- Reload configuration without restarting Neovim
+vim.keymap.set('n', '<leader>rc', function()
+  -- Source the init.lua file
+  vim.cmd 'source $MYVIMRC'
+  vim.notify('Nvim configuration reloaded!', vim.log.levels.INFO)
+end, { desc = 'Reload nvim configuration' })
+
+-- Reload configuration files only (faster, but doesn't reload plugins)
+vim.keymap.set('n', '<leader>rl', function()
+  -- Reload important config files
+  for _, file in ipairs {
+    vim.fn.stdpath 'config' .. '/lua/core/options.lua',
+    vim.fn.stdpath 'config' .. '/lua/core/keymaps.lua',
+    vim.fn.stdpath 'config' .. '/lua/core/snippets.lua',
+  } do
+    if vim.fn.filereadable(file) == 1 then
+      vim.cmd('source ' .. file)
+    end
+  end
+  vim.notify('Configuration files reloaded!', vim.log.levels.INFO)
+end, { desc = 'Reload lua configuration files' })

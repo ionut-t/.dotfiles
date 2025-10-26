@@ -1,50 +1,11 @@
 return {
   -- LSP Configuration
   {
-    'williamboman/mason.nvim',
-    priority = 100,
-    build = ':MasonUpdate',
-    config = function()
-      require('mason').setup()
-    end,
-  },
-
-  {
     'neovim/nvim-lspconfig',
     dependencies = {
       'mason.nvim',
       'mason-lspconfig.nvim',
     },
-  },
-
-  {
-    'williamboman/mason-lspconfig.nvim',
-    config = function()
-      require('mason-lspconfig').setup {
-        ensure_installed = {
-          'gopls', -- Go LSP
-        },
-      }
-
-      local lspconfig = require 'lspconfig'
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-      -- Gopls configuration
-      lspconfig.gopls.setup {
-        capabilities = capabilities,
-        settings = {
-          gopls = {
-            analyses = {
-              unusedparams = true,
-            },
-            staticcheck = true,
-            gofumpt = true,
-            usePlaceholders = true,
-            completeUnimported = true,
-          },
-        },
-      }
-    end,
   },
 
   -- Go-specific plugins

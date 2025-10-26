@@ -44,3 +44,5 @@ vim.opt.runtimepath:remove '/usr/share/vim/vimfiles' -- Separate Vim plugins fro
 -- Enable FiraCode with ligatures
 vim.o.guifont = 'FiraCode Nerd Font:h14'
 vim.g.neovide_ligatures = true
+
+vim.g.lazyvim_rust_diagnostics = 'rust-analyzer'
