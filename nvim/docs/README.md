@@ -70,6 +70,18 @@ Terminal integration and configuration management.
 - Diagnostics & debugging
 - Configuration file structure
 
+### [06 - Python Development](./06-python-development.md)
+Comprehensive Python development tools and workflows.
+
+**Topics:**
+- Virtual environment management (`<Space>vs`)
+- Debugging with DAP (`<Space>db`, `<Space>dc`)
+- Testing with Neotest (`<Space>tn`, `<Space>tf`)
+- Docstring generation (`<Space>ng`)
+- LSP integration (pylsp + ruff)
+- PEP 8 formatting
+- Common workflows
+
 ---
 
 ## 🚀 Quick Start Guide
