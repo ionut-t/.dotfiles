@@ -1,7 +1,7 @@
 return {
   'nvim-telescope/telescope.nvim',
   event = 'VimEnter',
-  branch = '0.1.x',
+  branch = 'master', -- Updated to master for Neovim 0.11+ compatibility
   dependencies = {
     'nvim-lua/plenary.nvim',
     {
@@ -60,23 +60,31 @@ return {
 
     local builtin = require 'telescope.builtin'
 
-    -- Previous keymaps...
-    vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
-    vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-    vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
-    vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
-    vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-    vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
-    vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
-    vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
-    vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
-    vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+    -- ═══════════════════════════════════════════════════════════════════
+    -- FIND namespace (<Space>f) - Files, Buffers, UI elements
+    -- ═══════════════════════════════════════════════════════════════════
+    vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = '[F]ind [F]iles' })
+    vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = '[F]ind [B]uffers' })
+    vim.keymap.set('n', '<leader>fr', builtin.oldfiles, { desc = '[F]ind [R]ecent files' })
+    vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = '[F]ind [H]elp' })
+    vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = '[F]ind [K]eymaps' })
+    vim.keymap.set('n', '<leader>ft', builtin.builtin, { desc = '[F]ind [T]elescope pickers' })
 
-    -- Sibling files search
-    vim.keymap.set('n', '<leader>si', function()
+    -- Git files
+    vim.keymap.set('n', '<leader>fg', builtin.git_files, { desc = '[F]ind [G]it files' })
+    vim.keymap.set('n', '<leader>fm', builtin.git_status, { desc = '[F]ind [M]odified files (git)' })
+    vim.keymap.set('n', '<leader>fc', function()
+      builtin.git_files {
+        prompt_title = 'Git Changed Files',
+        show_untracked = true,
+        modified = true,
+      }
+    end, { desc = '[F]ind [C]hanged files (git)' })
+
+    -- Contextual finds
+    vim.keymap.set('n', '<leader>fs', function()
       local current_buffer = vim.api.nvim_buf_get_name(0)
       local parent_dir = vim.fn.fnamemodify(current_buffer, ':h')
-
       builtin.find_files {
         prompt_title = 'Sibling Files',
         cwd = parent_dir,
@@ -84,33 +92,46 @@ return {
         no_ignore = true,
         file_ignore_patterns = { 'node_modules', '.git', '.venv' },
       }
-    end, { desc = '[S]earch S[i]bling Files' })
+    end, { desc = '[F]ind [S]ibling files' })
 
-    -- Git status (modified files)
-    vim.keymap.set('n', '<leader>sm', builtin.git_status, { desc = '[S]earch [M]odified files' })
-
-    -- Git changed files only (more focused than git_status)
-    vim.keymap.set('n', '<leader>sc', function()
-      builtin.git_files {
-        prompt_title = 'Git Changed Files',
-        show_untracked = true,
-        modified = true, -- Only show files that have changed
+    vim.keymap.set('n', '<leader>fp', function()
+      builtin.oldfiles {
+        prompt_title = 'Recent Files (Project Only)',
+        cwd_only = true,
       }
-    end, { desc = '[S]earch [C]hanged files only' })
+    end, { desc = '[F]ind recent in [P]roject' })
 
-    -- Previous advanced examples...
+    -- ═══════════════════════════════════════════════════════════════════
+    -- SEARCH namespace (<Space>s) - Content inside files
+    -- ═══════════════════════════════════════════════════════════════════
+    vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+    vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
+    vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
+    vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
+
+    -- Search in specific contexts
+    vim.keymap.set('n', '<leader>sb', function()
+      builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+        winblend = 10,
+        previewer = false,
+      })
+    end, { desc = '[S]earch in [B]uffer' })
+
+    vim.keymap.set('n', '<leader>so', function()
+      builtin.live_grep {
+        grep_open_files = true,
+        prompt_title = 'Live Grep in Open Files',
+      }
+    end, { desc = '[S]earch in [O]pen files' })
+
+    -- Keep legacy mappings for compatibility (can remove after getting used to new ones)
     vim.keymap.set('n', '<leader>/', function()
       builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
         winblend = 10,
         previewer = false,
       })
-    end, { desc = '[/] Fuzzily search in current buffer' })
+    end, { desc = '[/] Search in current buffer' })
 
-    vim.keymap.set('n', '<leader>s/', function()
-      builtin.live_grep {
-        grep_open_files = true,
-        prompt_title = 'Live Grep in Open Files',
-      }
-    end, { desc = '[S]earch [/] in Open Files' })
+    vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find buffers (quick access)' })
   end,
 }
