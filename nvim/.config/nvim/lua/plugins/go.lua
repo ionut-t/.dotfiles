@@ -11,6 +11,7 @@ return {
   -- Go-specific plugins
   {
     'ray-x/go.nvim',
+    version = '*', -- Use latest stable version
     dependencies = {
       'ray-x/guihua.lua',
       'neovim/nvim-lspconfig',
