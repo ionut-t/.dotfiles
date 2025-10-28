@@ -1,63 +1,124 @@
-# Terminal settings (add these at the very top)
-export TERM="xterm-256color"
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
-
-# Enable Powerlevel10k instant prompt
+# ============================================================================
+# INSTANT PROMPT
+# ============================================================================
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# Oh My Zsh path
-export ZSH="/Users/ionut-traistaru/.oh-my-zsh"
+# ============================================================================
+# HOMEBREW
+# ============================================================================
+if [[ -f "/opt/homebrew/bin/brew" ]] then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
 
-# Theme
-ZSH_THEME="powerlevel10k/powerlevel10k"
+# ============================================================================
+# ZINIT PLUGIN MANAGER
+# ============================================================================
+# Set the directory we want to store zinit and plugins
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
-# Settings
-CASE_SENSITIVE="true"
-ENABLE_CORRECTION="true"
-COMPLETION_WAITING_DOTS="true"
+# Download Zinit, if it's not there yet
+if [ ! -d "$ZINIT_HOME" ]; then
+   mkdir -p "$(dirname $ZINIT_HOME)"
+   git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+fi
 
-# Plugins
-plugins=(
-  git
-  sudo
-  gcloud
-  python
-  zsh-autosuggestions
-  zsh-syntax-highlighting
-)
+# Source/Load zinit
+source "${ZINIT_HOME}/zinit.zsh"
 
-source $ZSH/oh-my-zsh.sh
+# ============================================================================
+# ZSH PLUGINS
+# ============================================================================
+# Powerlevel10k theme
+zinit ice depth=1; zinit light romkatv/powerlevel10k
 
-# Flutter path
-export PATH="$PATH:/Users/ionut-traistaru/tools/flutter/bin"
-export PATH="Users/ionut-traistaru/tools/bin:$PATH"
+# Zsh plugins
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+zinit light Aloxaf/fzf-tab
 
-# NVM configuration
+# Oh My Zsh snippets
+zinit snippet OMZL::git.zsh
+zinit snippet OMZP::git
+zinit snippet OMZP::gcloud
+zinit snippet OMZP::python
+zinit snippet OMZP::sudo
+zinit snippet OMZP::kubectl
+zinit snippet OMZP::kubectx
+zinit snippet OMZP::command-not-found
+
+# Load completions
+autoload -Uz compinit && compinit
+zinit cdreplay -q
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# ============================================================================
+# SHELL CONFIGURATION
+# ============================================================================
+# Keybindings
+bindkey '^p' history-search-backward
+bindkey '^n' history-search-forward
+bindkey '^[w' kill-region
+
+# History configuration
+HISTSIZE=10000
+HISTFILE=~/.zsh_history
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
+
+# Disable auto-correct
+unsetopt CORRECT_ALL
+
+# Completion styling
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+
+# ============================================================================
+# PATH CONFIGURATION
+# ============================================================================
+# Development tools
+export PATH="${HOME}/.local/bin:$PATH"
+export PATH="/Applications/Docker.app/Contents/Resources/bin:$PATH"
+
+# Language-specific paths
+export PATH="$PATH:$(go env GOPATH)/bin"                                    # Go
+export PATH="$PATH:$HOME/zig"                                               # Zig
+export PATH="$PATH:/usr/local/share/dotnet"                                 # .NET Core
+export PATH="/usr/local/opt/postgresql@17/bin:$PATH"                        # PostgreSQL
+export PATH="$PATH:/Users/ionut-traistaru/tools/flutter/bin"               # Flutter
+export PATH="/Users/ionut-traistaru/tools/bin:$PATH"                       # Custom tools
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"  # Yarn
+
+# ============================================================================
+# LANGUAGE & FRAMEWORK SETUP
+# ============================================================================
+# NVM (Node Version Manager)
 export NVM_DIR="$HOME/.nvm"
+
+# Unset npm prefix environment variable to avoid conflicts with nvm
+unset npm_config_prefix
+
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
-# Yarn path
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-
-# Google Cloud SDK
-if [ -f '/Users/ionut-traistaru/Downloads/google-cloud-sdk/path.zsh.inc' ]; then
-  source '/Users/ionut-traistaru/Downloads/google-cloud-sdk/path.zsh.inc'
-fi
-if [ -f '/Users/ionut-traistaru/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then
-  source '/Users/ionut-traistaru/Downloads/google-cloud-sdk/completion.zsh.inc'
-fi
-
-# Dart completion
-[[ -f /Users/ionut-traistaru/.dart-cli-completion/zsh-config.zsh ]] && source /Users/ionut-traistaru/.dart-cli-completion/zsh-config.zsh
-
-# Docker path
-export PATH="/Applications/Docker.app/Contents/Resources/bin:$PATH"
-
-# Conda initialization
+# Conda (Python)
 __conda_setup="$('/Users/ionut-traistaru/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
@@ -70,72 +131,90 @@ else
 fi
 unset __conda_setup
 
-# .NET Core path
-export PATH=$PATH:/usr/local/share/dotnet
+# Dart completion
+[[ -f /Users/ionut-traistaru/.dart-cli-completion/zsh-config.zsh ]] && \
+  source /Users/ionut-traistaru/.dart-cli-completion/zsh-config.zsh
 
-# FZF configuration
-source <(fzf --zsh)
-source ~/fzf-git.sh/fzf-git.sh
+# Google Cloud SDK
+if [ -f '/Users/ionut-traistaru/Downloads/google-cloud-sdk/path.zsh.inc' ]; then
+  source '/Users/ionut-traistaru/Downloads/google-cloud-sdk/path.zsh.inc'
+fi
+if [ -f '/Users/ionut-traistaru/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then
+  source '/Users/ionut-traistaru/Downloads/google-cloud-sdk/completion.zsh.inc'
+fi
 
+# ============================================================================
+# FZF CONFIGURATION
+# ============================================================================
+# FZF commands
 export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
 
-# FZF theme
-fg="#CBE0F0"
-bg="#011628"
-bg_highlight="#143652"
-purple="#B388FF"
-blue="#06BCE4"
-cyan="#2CF9ED"
-
-export FZF_DEFAULT_OPTS="--color=fg:${fg},bg:${bg},hl:${purple},fg+:${fg},bg+:${bg_highlight},hl+:${purple},info:${blue},prompt:${cyan},pointer:${cyan},marker:${cyan},spinner:${cyan},header:${cyan}"
+# FZF preview settings
 show_file_or_dir_preview="if [ -d {} ]; then eza --tree --color=always {} | head -200; else bat -n --color=always --line-range :500 {}; fi"
-
 export FZF_CTRL_T_OPTS="--preview '$show_file_or_dir_preview'"
 export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
 
-# Aliases
-alias f="fzf"
-alias fp="fzf --preview 'bat --color=always --line-range :500 {}'"
-alias ls="eza --color=always --long --git --icons=always --no-user --no-time --no-permissions --no-filesize"
-alias cd="z"
-alias ws="webstorm"
-alias t="tmux"
-alias tks="tmux kill-session"
-alias ta="tmux a"
-alias tls="tmux ls"
-alias sdf="$HOME/.dotfiles/sync-dotfiles.zsh"
-alias vim="/Applications/MacVim.app/Contents/bin/Vim"
-alias code="code-insiders"
+# FZF theme - Catppuccin Mocha
+export FZF_DEFAULT_OPTS=" \
+--color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+--color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+--color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
+--color=selected-bg:#45475a \
+--multi"
 
-unsetopt CORRECT_ALL
+# FZF Git integration
+source ~/fzf-git.sh/fzf-git.sh
 
-# Tool configurations
-eval $(thefuck --alias)
-eval $(thefuck --alias fk)
+# ============================================================================
+# TOOL INTEGRATIONS
+# ============================================================================
+# Initialize shell integrations
+eval "$(fzf --zsh)"
+eval "$(zoxide init --cmd cd zsh)"
+eval "$(thefuck --alias)"
+eval "$(thefuck --alias fk)"
 eval "$(zoxide init zsh)"
 
+# Tool themes
 export BAT_THEME=catppuccin_mocha
 
-# Load p10k configuration
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# ============================================================================
+# ALIASES
+# ============================================================================
+# Navigation & file management
+alias cd="z"
+alias ls="eza --color=always --long --git --icons=always --no-user --no-time --no-permissions --no-filesize"
 
-alias lvim="/Users/ionut-traistaru/.local/bin/lvim"
+# Fuzzy finder
+alias f="fzf"
+alias fp="fzf --preview 'bat --color=always --line-range :500 {}'"
 
-export PATH=$PATH:$(go env GOPATH)/bin
-export PATH=$PATH:$HOME/zig
-export PATH="/usr/local/opt/postgresql@17/bin:$PATH"
+# Tmux
+alias t="tmux"
+alias ta="tmux a"
+alias tls="tmux ls"
+alias tks="tmux kill-session"
 
-export EDITOR=hx
-export VISUAL=hx
+# Editors & IDEs
+alias vim="/Applications/MacVim.app/Contents/bin/Vim"
+alias code="code-insiders"
+alias ws="webstorm"
 
-fpath=(~/.zsh/completion $fpath)
-autoload -U compinit && compinit
+# Utilities
+alias c='clear'
+alias sdf="$HOME/.dotfiles/sync-dotfiles.zsh"
 
-source ~/.envs/envs.sh
-export PATH="${HOME}/.local/bin":${PATH}
-
+# ============================================================================
+# CUSTOM FUNCTIONS
+# ============================================================================
+# Launch gemini with Angular prompt
 function gem-ng() {
   gemini -p "$(cat "${HOME}/prompts/angular.md")"
 }
+
+# ============================================================================
+# ENVIRONMENT VARIABLES
+# ============================================================================
+source ~/.envs/envs.sh
