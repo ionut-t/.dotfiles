@@ -72,8 +72,7 @@ HISTSIZE=10000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
-setopt appendhistory
-setopt sharehistory
+setopt share_history             # Share history between all sessions (imports new commands from other shells)
 setopt hist_ignore_space
 setopt hist_ignore_all_dups
 setopt hist_save_no_dups
@@ -111,12 +110,12 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH" 
 # ============================================================================
 # NVM (Node Version Manager)
 export NVM_DIR="$HOME/.nvm"
-
-# Unset npm prefix environment variable to avoid conflicts with nvm
-unset npm_config_prefix
-
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+# Fix npm prefix conflict after nvm loads
+unset PREFIX
+nvm use default --silent 2>/dev/null
 
 # Conda (Python)
 __conda_setup="$('/Users/ionut-traistaru/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
