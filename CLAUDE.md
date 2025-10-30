@@ -58,12 +58,31 @@ Neovim uses a modular Lua configuration structure:
 - File navigation: `oil.lua` (file manager), `telescope.lua` (fuzzy finder)
 - Git integration: `gitsigns.lua`
 - Code quality: `none-ls.lua` (formatting/linting), `copilot.lua`
+- Diagnostics: `trouble.nvim` (diagnostic panel/viewer)
 
 **Adding New Plugins**:
 1. Create new file in `lua/plugins/` (e.g., `lua/plugins/newplugin.lua`)
 2. Return a lazy.nvim plugin spec table with the plugin configuration
 3. Add `require 'plugins.newplugin'` to the `require('lazy').setup` call in `init.lua`
 4. The plugin will be automatically loaded by lazy.nvim on next restart
+
+**Diagnostic System**:
+- **Status bar display** (`lualine.lua`): Shows counts for errors, warnings, info, and hints in status bar
+- **Diagnostic navigation** (`core/keymaps.lua`):
+  - `]d` - Jump to next diagnostic
+  - `[d` - Jump to previous diagnostic
+  - `<leader>e` - Show diagnostic float at cursor
+  - `<leader>q` - Open diagnostic quickfix list
+- **Trouble.nvim panel** (`plugins/trouble.lua`):
+  - `<leader>xx` - Toggle trouble diagnostics panel (workspace-wide)
+  - `<leader>xX` - Toggle buffer diagnostics only
+  - `<leader>xf` - Focus trouble panel
+  - `<leader>xb` - Focus back to buffer
+  - `<leader>cs` - Show symbols in trouble
+  - `<leader>cl` - Show LSP definitions/references
+  - `<leader>xL` - Location list in trouble
+  - `<leader>xQ` - Quickfix list in trouble
+  - Inside trouble panel: `j/k` (navigate), `<CR>` (jump), `o` (jump & close), `q` (close), `K` (full message), `p` (preview)
 
 ## Zsh Configuration
 

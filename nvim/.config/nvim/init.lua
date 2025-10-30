@@ -36,6 +36,7 @@ require('lazy').setup {
   require 'plugins.copilot',
   require 'plugins.zig',
   require 'plugins.rust',
+  require 'plugins.trouble',
 }
 
 vim.cmd.colorscheme 'catppuccin'

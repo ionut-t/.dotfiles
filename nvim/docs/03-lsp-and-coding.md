@@ -106,10 +106,47 @@
 
 ## Diagnostics
 
+### Status Bar Display
+The status bar (lualine) shows diagnostic counts:
+- Error count with `` icon
+- Warning count with `` icon
+- Info count with `` icon
+- Hint count with `` icon
+
 ### Viewing Diagnostics
+
+#### Trouble.nvim - Diagnostic Panel
+- `<Space>xx` - **Toggle Trouble diagnostics panel** (workspace-wide)
+  - Shows all diagnostics in a dedicated window
+  - Navigate without scrolling through code
+  - Auto-updates as you fix issues
+
+- `<Space>xX` - **Toggle buffer diagnostics only**
+  - Shows diagnostics for current file only
+  - Focused view for current work
+
+- `<Space>xf` - **Focus trouble panel**
+  - Switch focus to trouble window
+  - Navigate diagnostics with `j/k`
+
+- `<Space>xb` - **Focus back to buffer**
+  - Return focus to code editor
+  - Quick toggle between views
+
+#### Inside Trouble Panel
+- `j` / `k` - Navigate between diagnostics
+- `<CR>` or `<Tab>` - Jump to diagnostic location
+- `o` - Jump to diagnostic and close panel
+- `q` or `<Esc>` - Close panel
+- `K` - Show full diagnostic message
+- `p` - Preview location
+- `m` - Toggle between workspace/document mode
+- `r` - Refresh diagnostics
+
+#### Other Diagnostic Views
 - `<Space>sd` - **[S]earch [D]iagnostics** (Telescope)
   - View all diagnostics in project
-  - Errors, warnings, info, hints
+  - Fuzzy searchable
   - Jump directly to issues
 
 - `<Space>q` - **Open Diagnostic [Q]uickfix List**
@@ -117,23 +154,42 @@
   - Navigate with `:cnext` / `:cprev`
   - Useful for fixing issues sequentially
 
-### Diagnostic Navigation
-- `[d` - Go to previous diagnostic
-- `]d` - Go to next diagnostic
-- `<Space>e` - Show diagnostic in floating window
+- `<Space>cs` - **Show symbols in Trouble**
+  - Document outline in trouble panel
+
+- `<Space>cl` - **LSP definitions/references in Trouble**
+  - Shows LSP information in trouble format
+
+- `<Space>xL` - **Location list in Trouble**
+- `<Space>xQ` - **Quickfix list in Trouble**
+
+### Diagnostic Navigation (Without Panel)
+- `]d` - **Go to next diagnostic**
+  - Jump directly to next error/warning
+  - Works without opening panel
+  - Fast navigation through issues
+
+- `[d` - **Go to previous diagnostic**
+  - Jump to previous error/warning
+  - Backward navigation
+
+- `<Space>e` - **Show diagnostic [E]rror in floating window**
+  - Shows full diagnostic message at cursor
+  - No need to open panel
+  - Useful for quick checks
 
 ### Diagnostic Levels
-- **Error** (E) - Code won't compile/run
-- **Warning** (W) - Potential issues
-- **Info** (I) - Informational messages
-- **Hint** (H) - Code improvements
+- **Error** () - Code won't compile/run
+- **Warning** () - Potential issues
+- **Info** () - Informational messages
+- **Hint** () - Code improvements
 
 ### Signs in Gutter
 Look for signs in the left column:
-- `E` - Error
-- `W` - Warning
-- `I` - Info
-- `H` - Hint
+- `` - Error
+- `` - Warning
+- `` - Info
+- `` - Hint
 
 ---
 
@@ -379,10 +435,26 @@ Similar to quickfix but window-local:
 4. `<CR>` to jump to usage
 
 ### Fix All Errors in File
-1. `<Space>sd` to see diagnostics
-2. Navigate to each error
+
+**Method 1: Using Trouble Panel**
+1. `<Space>xx` to open trouble diagnostics
+2. Navigate with `j/k` to browse errors
+3. `<CR>` to jump to error location
+4. `<Space>ca` for code actions to fix
+5. Continue fixing, trouble auto-updates
+
+**Method 2: Quick Navigation**
+1. `]d` to jump to next diagnostic
+2. `<Space>e` to see full error message
 3. `<Space>ca` for code actions
-4. Or `]d` / `[d` to navigate diagnostics
+4. `]d` to move to next error
+5. Repeat until no more diagnostics
+
+**Method 3: Telescope Search**
+1. `<Space>sd` to see all diagnostics
+2. Fuzzy search for specific errors
+3. `<CR>` to jump to location
+4. Fix and repeat
 
 ### Explore Unknown Code
 1. `<Space>ds` to see file structure
