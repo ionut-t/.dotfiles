@@ -42,6 +42,8 @@ require('lazy').setup {
   require 'plugins.git-enhanced',
   require 'plugins.dap-multi',
   require 'plugins.testing',
+  require 'plugins.terminal',
+  require 'plugins.search',
 }
 
 vim.cmd.colorscheme 'catppuccin'
