@@ -231,6 +231,13 @@ return {
       -- Zig Language Server
       zls = {},
 
+      -- Markdown Language Server
+      marksman = {},
+
+      -- Docker Language Servers
+      dockerls = {},
+      docker_compose_language_service = {},
+
       -- Angular Language Server
       angularls = {
         filetypes = { 'typescript', 'html', 'typescriptreact', 'typescript.tsx' },

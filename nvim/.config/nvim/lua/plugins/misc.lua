@@ -89,12 +89,18 @@ return {
       -- Define key group names
       wk.add {
         { '<leader>c', group = '[C]ode' },
-        { '<leader>d', group = '[D]ocument' },
-        { '<leader>r', group = '[R]ename' },
+        { '<leader>d', group = '[D]ocument/Debug' },
+        { '<leader>r', group = '[R]efactor' },
         { '<leader>s', group = '[S]earch' },
         { '<leader>w', group = '[W]orkspace' },
-        { '<leader>t', group = '[T]erminal/Toggle' },
+        { '<leader>t', group = '[T]est/Terminal/Toggle' },
         { '<leader>x', group = 'Diagnostics (Trouble)' },
+        { '<leader>g', group = '[G]it' },
+        { '<leader>q', group = '[Q]uit/Session' },
+        { '<leader>b', group = '[B]uffer' },
+        { '<leader>f', group = '[F]ind (Files)' },
+        { '<leader>v', group = '[V]env (Python)' },
+        { '<leader>n', group = 'Docstri[n]g/Notes' },
       }
     end,
   },
