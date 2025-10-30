@@ -19,6 +19,52 @@ return {
   {
     -- Hints keybinds
     'folke/which-key.nvim',
+    event = 'VeryLazy',
+    opts = {
+      preset = 'helix',
+      delay = 500, -- Delay before showing which-key (ms)
+      icons = {
+        breadcrumb = '»', -- symbol used in the command line area that shows your active key combo
+        separator = '➜', -- symbol used between a key and it's label
+        group = '+', -- symbol prepended to a group
+      },
+      win = {
+        border = 'single', -- none, single, double, shadow, rounded
+        padding = { 1, 2 }, -- extra window padding [top/bottom, right/left]
+        title = true,
+        title_pos = 'center',
+        zindex = 1000,
+        wo = {
+          winblend = 0, -- value between 0-100 0 for fully opaque and 100 for fully transparent
+        },
+      },
+      layout = {
+        height = { min = 4, max = 25 }, -- min and max height of the columns
+        width = { min = 20, max = 50 }, -- min and max width of the columns
+        spacing = 3, -- spacing between columns
+        align = 'left', -- align columns left, center or right
+      },
+      show_help = true, -- show a help message in the command line for using WhichKey
+      show_keys = true, -- show the currently pressed key and its label as a message in the command line
+      triggers = {
+        { '<auto>', mode = 'nxsot' },
+      },
+    },
+    config = function(_, opts)
+      local wk = require 'which-key'
+      wk.setup(opts)
+
+      -- Define key group names
+      wk.add {
+        { '<leader>c', group = '[C]ode' },
+        { '<leader>d', group = '[D]ocument' },
+        { '<leader>r', group = '[R]ename' },
+        { '<leader>s', group = '[S]earch' },
+        { '<leader>w', group = '[W]orkspace' },
+        { '<leader>t', group = '[T]erminal/Toggle' },
+        { '<leader>x', group = 'Diagnostics (Trouble)' },
+      }
+    end,
   },
   {
     -- Autoclose parentheses, brackets, quotes, etc.

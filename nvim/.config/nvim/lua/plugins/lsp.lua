@@ -90,6 +90,11 @@ return {
         -- or a suggestion from your LSP for this to activate.
         map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
 
+        -- Format the current buffer
+        map('<leader>cf', function()
+          vim.lsp.buf.format { async = false }
+        end, '[C]ode [F]ormat')
+
         -- WARN: This is not Goto Definition, this is Goto Declaration.
         --  For example, in C this would take you to the header.
         map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
