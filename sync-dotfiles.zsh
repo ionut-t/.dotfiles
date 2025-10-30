@@ -62,7 +62,7 @@ select_files() {
     print -l $selected_files
 }
 
-# Function to sync one file between branches
+# Function to sync one file or directory between branches
 sync_file() {
     local source_branch=$1
     local target_branch=$2
@@ -70,28 +70,46 @@ sync_file() {
 
     print_colored info "Syncing $file from $source_branch to $target_branch..."
 
-    # Checkout source branch and copy file
+    # Checkout source branch and copy file/directory
     git checkout -q $source_branch
-    if [[ ! -f $file ]]; then
-        print_colored error "File $file not found in $source_branch"
+    if [[ ! -e $file ]]; then
+        print_colored error "File or directory $file not found in $source_branch"
         return 1
     fi
 
     # Create temp directory with mktemp
     local temp_dir=$(mktemp -d)
-    local temp_file="$temp_dir/${file:t}"
+    local temp_item="$temp_dir/${file:t}"
 
-    # Copy file to temporary location
-    cp $file $temp_file
+    # Copy file or directory to temporary location
+    if [[ -d $file ]]; then
+        # It's a directory - copy recursively
+        cp -r $file $temp_item
+    else
+        # It's a file
+        cp $file $temp_item
+    fi
 
     # Switch to target branch
     git checkout -q $target_branch
 
-    # Copy file from temporary location
-    if [[ -f $temp_file ]]; then
-        # Create directory structure if it doesn't exist
+    # Copy file/directory from temporary location
+    if [[ -e $temp_item ]]; then
+        # Create parent directory structure if it doesn't exist
         mkdir -p ${file:h}
-        cp $temp_file $file
+
+        # Remove existing file/directory in target branch
+        if [[ -e $file ]]; then
+            rm -rf $file
+        fi
+
+        # Copy from temporary location
+        if [[ -d $temp_item ]]; then
+            cp -r $temp_item $file
+        else
+            cp $temp_item $file
+        fi
+
         git add $file
         print_colored success "Synced: $file"
     fi
