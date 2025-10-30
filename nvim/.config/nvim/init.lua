@@ -31,6 +31,7 @@ require('lazy').setup {
   require 'plugins.misc',
   require 'plugins.comment',
   require 'plugins.angular',
+  require 'plugins.typescript',
   require 'plugins.go',
   require 'plugins.python',
   require 'plugins.copilot',
