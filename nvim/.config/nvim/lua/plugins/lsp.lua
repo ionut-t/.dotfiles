@@ -13,6 +13,9 @@ return {
 
     -- Allows extra capabilities provided by nvim-cmp
     'hrsh7th/cmp-nvim-lsp',
+
+    -- JSON/YAML schemas for validation
+    'b0o/schemastore.nvim',
   },
   config = function()
     -- Brief aside: **What is LSP?**
@@ -89,6 +92,10 @@ return {
         -- Execute a code action, usually your cursor needs to be on top of an error
         -- or a suggestion from your LSP for this to activate.
         map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
+
+        -- Show hover documentation
+        --  See type information, function signatures, and documentation strings
+        map('K', vim.lsp.buf.hover, 'Hover Documentation')
 
         -- Format the current buffer
         map('<leader>cf', function()
@@ -200,8 +207,26 @@ return {
       cssls = {},
       tailwindcss = {},
       sqlls = {},
-      jsonls = {},
-      yamlls = {},
+      jsonls = {
+        settings = {
+          json = {
+            schemas = require('schemastore').json.schemas(),
+            validate = { enable = true },
+          },
+        },
+      },
+      yamlls = {
+        settings = {
+          yaml = {
+            schemaStore = {
+              enable = false,
+              url = '',
+            },
+            schemas = require('schemastore').yaml.schemas(),
+            validate = true,
+          },
+        },
+      },
 
       -- Zig Language Server
       zls = {},
