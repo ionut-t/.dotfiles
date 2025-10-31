@@ -20,11 +20,22 @@ end)
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
--- Diagnostic keymaps
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+-- Exit insert mode with jj
+vim.keymap.set('i', 'jj', '<Esc>', { desc = 'Exit insert mode' })
+
+-- Enter visual mode from insert mode with vv, visual line mode with VV
+vim.keymap.set('i', 'vv', '<Esc>v', { desc = 'Exit insert and enter visual mode' })
+vim.keymap.set('i', 'VV', '<Esc>V', { desc = 'Exit insert and enter visual line mode' })
+
+-- Diagnostic keymaps (consolidated under <leader>q for Quality/Issues)
+vim.keymap.set('n', '<leader>qq', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>qf', vim.diagnostic.open_float, { desc = 'Show diagnostic [F]loat' })
+vim.keymap.set('n', '<leader>qn', vim.diagnostic.goto_next, { desc = 'Go to [N]ext diagnostic' })
+vim.keymap.set('n', '<leader>qp', vim.diagnostic.goto_prev, { desc = 'Go to [P]revious diagnostic' })
+
+-- Keep [d / ]d for muscle memory
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
