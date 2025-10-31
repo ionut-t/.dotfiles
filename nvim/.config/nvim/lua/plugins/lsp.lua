@@ -244,6 +244,24 @@ return {
         -- cmd = {...},
         -- filetypes = { ...},
         -- capabilities = {},
+        on_init = function(client)
+          local path = client.workspace_folders[1].name
+          if vim.loop.fs_stat(path .. '/.luarc.json') or vim.loop.fs_stat(path .. '/.luarc.jsonc') then
+            return
+          end
+
+          client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+            runtime = {
+              version = 'LuaJIT',
+            },
+            workspace = {
+              checkThirdParty = false,
+              library = {
+                vim.env.VIMRUNTIME,
+              },
+            },
+          })
+        end,
         settings = {
           Lua = {
             completion = {
@@ -253,12 +271,18 @@ return {
             workspace = {
               checkThirdParty = false,
               library = {
+                vim.env.VIMRUNTIME,
                 '${3rd}/luv/library',
-                unpack(vim.api.nvim_get_runtime_file('', true)),
               },
             },
-            diagnostics = { disable = { 'missing-fields' } },
+            diagnostics = {
+              disable = { 'missing-fields' },
+              globals = { 'vim' },
+            },
             format = {
+              enable = false,
+            },
+            telemetry = {
               enable = false,
             },
           },
