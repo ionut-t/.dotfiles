@@ -14,7 +14,8 @@ return {
       ensure_installed = {
         'prettier', -- ts/js/html/css/json/yaml/markdown formatter
         'stylua', -- lua formatter
-        'eslint_d', -- ts/js linter
+        -- Note: eslint_d removed due to high memory usage
+        -- typescript-tools.nvim provides linting for TS/JS
         'shfmt', -- Shell formatter
         'checkmake', -- linter for Makefiles
         'ruff', -- Python linter and formatter
@@ -28,7 +29,7 @@ return {
     local sources = {
       -- Diagnostics/Linters
       diagnostics.checkmake,
-      require 'none-ls.diagnostics.eslint_d',
+      -- eslint_d removed - using typescript-tools.nvim for TS/JS linting
 
       -- Formatters
       -- TypeScript/JavaScript/React/Vue/Angular
