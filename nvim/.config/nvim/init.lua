@@ -29,14 +29,23 @@ require('lazy').setup {
   require 'plugins.alpha',
   require 'plugins.indent-blankline',
   require 'plugins.misc',
+  require 'plugins.noice',
   require 'plugins.comment',
   require 'plugins.angular',
+  require 'plugins.typescript',
   require 'plugins.go',
   require 'plugins.python',
   require 'plugins.copilot',
   require 'plugins.zig',
   require 'plugins.rust',
   require 'plugins.trouble',
+  require 'plugins.session',
+  require 'plugins.refactoring',
+  require 'plugins.git-enhanced',
+  require 'plugins.dap-multi',
+  require 'plugins.testing',
+  require 'plugins.terminal',
+  require 'plugins.search',
 }
 
 vim.cmd.colorscheme 'catppuccin'

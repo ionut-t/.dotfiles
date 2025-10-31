@@ -159,65 +159,7 @@ return {
     },
   },
 
-  -- Neotest for Python testing
-  {
-    'nvim-neotest/neotest',
-    dependencies = {
-      'nvim-neotest/nvim-nio',
-      'nvim-lua/plenary.nvim',
-      'nvim-treesitter/nvim-treesitter',
-      'nvim-neotest/neotest-python',
-    },
-    config = function()
-      require('neotest').setup {
-        adapters = {
-          require 'neotest-python' {
-            dap = { justMyCode = false },
-            args = { '--log-level', 'DEBUG', '--verbose' },
-            runner = 'pytest',
-          },
-        },
-        quickfix = {
-          enabled = true,
-          open = false,
-        },
-        status = {
-          virtual_text = true,
-          signs = true,
-        },
-      }
-
-      -- Keymaps for testing
-      local opts = { noremap = true, silent = true }
-      vim.keymap.set('n', '<leader>tn', function()
-        require('neotest').run.run()
-      end, vim.tbl_extend('force', opts, { desc = '[T]est [N]earest' }))
-
-      vim.keymap.set('n', '<leader>tf', function()
-        require('neotest').run.run(vim.fn.expand '%')
-      end, vim.tbl_extend('force', opts, { desc = '[T]est [F]ile' }))
-
-      vim.keymap.set('n', '<leader>td', function()
-        require('neotest').run.run { strategy = 'dap' }
-      end, vim.tbl_extend('force', opts, { desc = '[T]est [D]ebug nearest' }))
-
-      vim.keymap.set('n', '<leader>ts', function()
-        require('neotest').summary.toggle()
-      end, vim.tbl_extend('force', opts, { desc = '[T]est [S]ummary' }))
-
-      vim.keymap.set('n', '<leader>to', function()
-        require('neotest').output.open { enter = true }
-      end, vim.tbl_extend('force', opts, { desc = '[T]est [O]utput' }))
-
-      vim.keymap.set('n', '<leader>tO', function()
-        require('neotest').output_panel.toggle()
-      end, vim.tbl_extend('force', opts, { desc = '[T]est [O]utput panel' }))
-
-      vim.keymap.set('n', '<leader>tS', function()
-        require('neotest').run.stop()
-      end, vim.tbl_extend('force', opts, { desc = '[T]est [S]top' }))
-    end,
-  },
+  -- Note: Neotest configuration moved to plugins/testing.lua for multi-language support
 
   -- Docstring generation
   {

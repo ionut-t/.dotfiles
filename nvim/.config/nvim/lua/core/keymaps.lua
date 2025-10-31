@@ -7,68 +7,11 @@ vim.g.maplocalleader = ' '
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
--- [[ Setting options ]]
--- See `:help vim.opt`
--- NOTE: You can change these options as you wish!
---  For more options, you can see `:help option-list`
-
--- Make line numbers default
-vim.opt.number = true
--- You can also add relative line numbers, to help with jumping.
---  Experiment for yourself to see if you like it!
-vim.opt.relativenumber = true
-
--- Enable mouse mode, can be useful for resizing splits for example!
-vim.opt.mouse = 'a'
-
--- Don't show the mode, since it's already in the status line
-vim.opt.showmode = false
-
 -- Sync clipboard between OS and Neovim.
---  Schedule the setting after `UiEnter` because it can increase startup-time.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
+-- Scheduled after `UiEnter` to improve startup time
 vim.schedule(function()
   vim.opt.clipboard = 'unnamedplus'
 end)
-
--- Enable break indent
-vim.opt.breakindent = true
-
--- Save undo history
-vim.opt.undofile = true
-
--- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
-
--- Keep signcolumn on by default
-vim.opt.signcolumn = 'yes'
-
--- Decrease update time
-vim.opt.updatetime = 250
-
--- Decrease mapped sequence wait time
-vim.opt.timeoutlen = 300
-
--- Configure how new splits should be opened
-vim.opt.splitright = true
-vim.opt.splitbelow = true
-
--- Sets how neovim will display certain whitespace characters in the editor.
---  See `:help 'list'`
---  and `:help 'listchars'`
-vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
-
--- Preview substitutions live, as you type!
-vim.opt.inccommand = 'split'
-
--- Show which line your cursor is on
-vim.opt.cursorline = true
-
--- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.scrolloff = 10
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -165,24 +108,49 @@ vim.keymap.set('n', '<leader>tv', function()
   vim.cmd 'startinsert'
 end, { desc = 'Open terminal in vertical split in current file directory' })
 
--- Reload configuration without restarting Neovim
-vim.keymap.set('n', '<leader>rc', function()
-  -- Source the init.lua file
-  vim.cmd 'source $MYVIMRC'
-  vim.notify('Nvim configuration reloaded!', vim.log.levels.INFO)
-end, { desc = 'Reload nvim configuration' })
+-- Reload a specific plugin module (useful for plugin config changes)
+vim.keymap.set('n', '<leader>rp', function()
+  vim.ui.input({ prompt = 'Plugin to reload (e.g., telescope): ' }, function(input)
+    if input then
+      -- Clear the plugin module from cache
+      package.loaded['plugins.' .. input] = nil
 
--- Reload configuration files only (faster, but doesn't reload plugins)
+      -- Try to reload with Lazy
+      local ok, err = pcall(vim.cmd, 'Lazy reload ' .. input .. '.nvim')
+      if ok then
+        vim.notify('Reloaded ' .. input .. '.nvim', vim.log.levels.INFO)
+      else
+        vim.notify('Failed to reload ' .. input .. ': ' .. err, vim.log.levels.ERROR)
+      end
+    end
+  end)
+end, { desc = '[R]eload [P]lugin' })
+
+-- Reload core configuration files (options, keymaps, snippets)
 vim.keymap.set('n', '<leader>rl', function()
-  -- Reload important config files
-  for _, file in ipairs {
-    vim.fn.stdpath 'config' .. '/lua/core/options.lua',
-    vim.fn.stdpath 'config' .. '/lua/core/keymaps.lua',
-    vim.fn.stdpath 'config' .. '/lua/core/snippets.lua',
-  } do
-    if vim.fn.filereadable(file) == 1 then
-      vim.cmd('source ' .. file)
+  -- Clear Lua module cache for core modules
+  for name, _ in pairs(package.loaded) do
+    if name:match '^core' then
+      package.loaded[name] = nil
     end
   end
-  vim.notify('Configuration files reloaded!', vim.log.levels.INFO)
-end, { desc = 'Reload lua configuration files' })
+
+  -- Reload core modules
+  require 'core.options'
+  require 'core.keymaps'
+  require 'core.snippets'
+
+  vim.notify('Core configuration files reloaded!', vim.log.levels.INFO)
+end, { desc = '[R]eload [L]ua core files' })
+
+-- Quick exit and save (with session persistence)
+vim.keymap.set('n', '<leader>rr', function()
+  -- Save current session if persistence is loaded
+  local ok = pcall(require, 'persistence')
+  if ok then
+    require('persistence').save()
+  end
+
+  -- Exit (session will restore on next open)
+  vim.cmd 'wqa'
+end, { desc = '[R]estart/Exit Neovim (saves session)' })

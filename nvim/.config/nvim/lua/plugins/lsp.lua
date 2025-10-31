@@ -13,6 +13,9 @@ return {
 
     -- Allows extra capabilities provided by nvim-cmp
     'hrsh7th/cmp-nvim-lsp',
+
+    -- JSON/YAML schemas for validation
+    'b0o/schemastore.nvim',
   },
   config = function()
     -- Brief aside: **What is LSP?**
@@ -89,6 +92,15 @@ return {
         -- Execute a code action, usually your cursor needs to be on top of an error
         -- or a suggestion from your LSP for this to activate.
         map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
+
+        -- Show hover documentation
+        --  See type information, function signatures, and documentation strings
+        map('K', vim.lsp.buf.hover, 'Hover Documentation')
+
+        -- Format the current buffer
+        map('<leader>cf', function()
+          vim.lsp.buf.format { async = false }
+        end, '[C]ode [F]ormat')
 
         -- WARN: This is not Goto Definition, this is Goto Declaration.
         --  For example, in C this would take you to the header.
@@ -169,11 +181,8 @@ return {
       -- rust_analyzer = {},
       -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
       --
-      -- Some languages (like typescript) have entire language plugins that can be useful:
-      --    https://github.com/pmizio/typescript-tools.nvim
-      --
-      -- But for many setups, the LSP (`tsserver`) will work just fine
-      ts_ls = {}, -- tsserver is deprecated
+      -- TypeScript/JavaScript handled by typescript-tools.nvim plugin
+      -- See plugins/typescript.lua for configuration
       ruff = {},
       pylsp = {
         settings = {
@@ -195,11 +204,36 @@ return {
       cssls = {},
       tailwindcss = {},
       sqlls = {},
-      jsonls = {},
-      yamlls = {},
+      jsonls = {
+        settings = {
+          json = {
+            schemas = require('schemastore').json.schemas(),
+            validate = { enable = true },
+          },
+        },
+      },
+      yamlls = {
+        settings = {
+          yaml = {
+            schemaStore = {
+              enable = false,
+              url = '',
+            },
+            schemas = require('schemastore').yaml.schemas(),
+            validate = true,
+          },
+        },
+      },
 
       -- Zig Language Server
       zls = {},
+
+      -- Markdown Language Server
+      marksman = {},
+
+      -- Docker Language Servers
+      dockerls = {},
+      docker_compose_language_service = {},
 
       -- Angular Language Server
       angularls = {
@@ -210,6 +244,24 @@ return {
         -- cmd = {...},
         -- filetypes = { ...},
         -- capabilities = {},
+        on_init = function(client)
+          local path = client.workspace_folders[1].name
+          if vim.loop.fs_stat(path .. '/.luarc.json') or vim.loop.fs_stat(path .. '/.luarc.jsonc') then
+            return
+          end
+
+          client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+            runtime = {
+              version = 'LuaJIT',
+            },
+            workspace = {
+              checkThirdParty = false,
+              library = {
+                vim.env.VIMRUNTIME,
+              },
+            },
+          })
+        end,
         settings = {
           Lua = {
             completion = {
@@ -219,12 +271,18 @@ return {
             workspace = {
               checkThirdParty = false,
               library = {
+                vim.env.VIMRUNTIME,
                 '${3rd}/luv/library',
-                unpack(vim.api.nvim_get_runtime_file('', true)),
               },
             },
-            diagnostics = { disable = { 'missing-fields' } },
+            diagnostics = {
+              disable = { 'missing-fields' },
+              globals = { 'vim' },
+            },
             format = {
+              enable = false,
+            },
+            telemetry = {
               enable = false,
             },
           },
@@ -242,15 +300,21 @@ return {
 
     -- You can add other tools here that you want Mason to install
     -- for you, so that they are available from within Neovim.
+    -- NOTE: Formatters like stylua, prettier, etc. are managed by none-ls.lua
     local ensure_installed = vim.tbl_keys(servers or {})
-    vim.list_extend(ensure_installed, {
-      'stylua', -- Used to format Lua code
-    })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
     require('mason-lspconfig').setup {
       handlers = {
         function(server_name)
+          -- Skip formatters/linters that aren't LSP servers
+          local non_lsp_tools = { 'stylua', 'prettier', 'eslint_d', 'gofumpt', 'goimports', 'shfmt', 'ruff' }
+          for _, tool in ipairs(non_lsp_tools) do
+            if server_name == tool then
+              return -- Don't try to set up as LSP
+            end
+          end
+
           local server = servers[server_name] or {}
           -- This handles overriding only values explicitly passed
           -- by the server configuration above. Useful when disabling
