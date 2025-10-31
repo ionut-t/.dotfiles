@@ -29,6 +29,7 @@ require('lazy').setup {
   require 'plugins.alpha',
   require 'plugins.indent-blankline',
   require 'plugins.misc',
+  require 'plugins.noice',
   require 'plugins.comment',
   require 'plugins.angular',
   require 'plugins.typescript',
