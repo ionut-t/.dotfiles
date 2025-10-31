@@ -48,26 +48,26 @@ return {
   config = function(_, opts)
     require('trouble').setup(opts)
 
-    -- Keymaps for trouble
-    vim.keymap.set('n', '<leader>xx', '<cmd>Trouble diagnostics toggle<cr>', { desc = 'Toggle Trouble diagnostics' })
+    -- Keymaps for trouble (consolidated under <leader>q for diagnostics)
+    vim.keymap.set('n', '<leader>qt', '<cmd>Trouble diagnostics toggle<cr>', { desc = 'Toggle [T]rouble diagnostics' })
     vim.keymap.set(
       'n',
-      '<leader>xX',
+      '<leader>qb',
       '<cmd>Trouble diagnostics toggle filter.buf=0<cr>',
-      { desc = 'Buffer Diagnostics (Trouble)' }
+      { desc = '[B]uffer diagnostics (Trouble)' }
     )
-    vim.keymap.set('n', '<leader>cs', '<cmd>Trouble symbols toggle focus=false<cr>', { desc = 'Symbols (Trouble)' })
+    vim.keymap.set('n', '<leader>qs', '<cmd>Trouble symbols toggle focus=false<cr>', { desc = '[S]ymbols (Trouble)' })
     vim.keymap.set(
       'n',
-      '<leader>cl',
+      '<leader>ql',
       '<cmd>Trouble lsp toggle focus=false win.position=right<cr>',
-      { desc = 'LSP Definitions / references / ... (Trouble)' }
+      { desc = '[L]SP definitions/references (Trouble)' }
     )
-    vim.keymap.set('n', '<leader>xL', '<cmd>Trouble loclist toggle<cr>', { desc = 'Location List (Trouble)' })
-    vim.keymap.set('n', '<leader>xQ', '<cmd>Trouble qflist toggle<cr>', { desc = 'Quickfix List (Trouble)' })
+    vim.keymap.set('n', '<leader>qL', '<cmd>Trouble loclist toggle<cr>', { desc = '[L]ocation list (Trouble)' })
+    vim.keymap.set('n', '<leader>qQ', '<cmd>Trouble qflist toggle<cr>', { desc = '[Q]uickfix list (Trouble)' })
 
     -- Keymaps for focusing trouble panel and buffer
-    vim.keymap.set('n', '<leader>xf', '<cmd>Trouble diagnostics focus<cr>', { desc = 'Focus Trouble panel' })
-    vim.keymap.set('n', '<leader>xb', '<cmd>wincmd p<cr>', { desc = 'Focus back to buffer' })
+    vim.keymap.set('n', '<leader>qF', '<cmd>Trouble diagnostics focus<cr>', { desc = '[F]ocus Trouble panel' })
+    vim.keymap.set('n', '<leader>qr', '<cmd>wincmd p<cr>', { desc = '[R]eturn to buffer from Trouble' })
   end,
 }

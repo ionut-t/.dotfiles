@@ -54,7 +54,7 @@ return {
     event = 'VeryLazy',
     opts = {
       preset = 'helix',
-      delay = 500, -- Delay before showing which-key (ms)
+      delay = 200, -- Delay before showing which-key (ms)
       icons = {
         breadcrumb = '»', -- symbol used in the command line area that shows your active key combo
         separator = '➜', -- symbol used between a key and it's label
@@ -94,9 +94,9 @@ return {
         { '<leader>s', group = '[S]earch' },
         { '<leader>w', group = '[W]orkspace' },
         { '<leader>t', group = '[T]est/Terminal/Toggle' },
-        { '<leader>x', group = 'Diagnostics (Trouble)' },
+        { '<leader>q', group = 'Diagnostics/[Q]uality' },
+        { '<leader>e', group = '[E]xit/Session' },
         { '<leader>g', group = '[G]it' },
-        { '<leader>q', group = '[Q]uit/Session' },
         { '<leader>b', group = '[B]uffer' },
         { '<leader>f', group = '[F]ind (Files)' },
         { '<leader>v', group = '[V]env (Python)' },
