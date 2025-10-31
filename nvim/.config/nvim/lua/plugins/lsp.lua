@@ -276,15 +276,21 @@ return {
 
     -- You can add other tools here that you want Mason to install
     -- for you, so that they are available from within Neovim.
+    -- NOTE: Formatters like stylua, prettier, etc. are managed by none-ls.lua
     local ensure_installed = vim.tbl_keys(servers or {})
-    vim.list_extend(ensure_installed, {
-      'stylua', -- Used to format Lua code
-    })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
     require('mason-lspconfig').setup {
       handlers = {
         function(server_name)
+          -- Skip formatters/linters that aren't LSP servers
+          local non_lsp_tools = { 'stylua', 'prettier', 'eslint_d', 'gofumpt', 'goimports', 'shfmt', 'ruff' }
+          for _, tool in ipairs(non_lsp_tools) do
+            if server_name == tool then
+              return -- Don't try to set up as LSP
+            end
+          end
+
           local server = servers[server_name] or {}
           -- This handles overriding only values explicitly passed
           -- by the server configuration above. Useful when disabling

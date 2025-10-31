@@ -108,24 +108,49 @@ vim.keymap.set('n', '<leader>tv', function()
   vim.cmd 'startinsert'
 end, { desc = 'Open terminal in vertical split in current file directory' })
 
--- Reload configuration without restarting Neovim
-vim.keymap.set('n', '<leader>rc', function()
-  -- Source the init.lua file
-  vim.cmd 'source $MYVIMRC'
-  vim.notify('Nvim configuration reloaded!', vim.log.levels.INFO)
-end, { desc = 'Reload nvim configuration' })
+-- Reload a specific plugin module (useful for plugin config changes)
+vim.keymap.set('n', '<leader>rp', function()
+  vim.ui.input({ prompt = 'Plugin to reload (e.g., telescope): ' }, function(input)
+    if input then
+      -- Clear the plugin module from cache
+      package.loaded['plugins.' .. input] = nil
 
--- Reload configuration files only (faster, but doesn't reload plugins)
+      -- Try to reload with Lazy
+      local ok, err = pcall(vim.cmd, 'Lazy reload ' .. input .. '.nvim')
+      if ok then
+        vim.notify('Reloaded ' .. input .. '.nvim', vim.log.levels.INFO)
+      else
+        vim.notify('Failed to reload ' .. input .. ': ' .. err, vim.log.levels.ERROR)
+      end
+    end
+  end)
+end, { desc = '[R]eload [P]lugin' })
+
+-- Reload core configuration files (options, keymaps, snippets)
 vim.keymap.set('n', '<leader>rl', function()
-  -- Reload important config files
-  for _, file in ipairs {
-    vim.fn.stdpath 'config' .. '/lua/core/options.lua',
-    vim.fn.stdpath 'config' .. '/lua/core/keymaps.lua',
-    vim.fn.stdpath 'config' .. '/lua/core/snippets.lua',
-  } do
-    if vim.fn.filereadable(file) == 1 then
-      vim.cmd('source ' .. file)
+  -- Clear Lua module cache for core modules
+  for name, _ in pairs(package.loaded) do
+    if name:match '^core' then
+      package.loaded[name] = nil
     end
   end
-  vim.notify('Configuration files reloaded!', vim.log.levels.INFO)
-end, { desc = 'Reload lua configuration files' })
+
+  -- Reload core modules
+  require 'core.options'
+  require 'core.keymaps'
+  require 'core.snippets'
+
+  vim.notify('Core configuration files reloaded!', vim.log.levels.INFO)
+end, { desc = '[R]eload [L]ua core files' })
+
+-- Quick exit and save (with session persistence)
+vim.keymap.set('n', '<leader>rr', function()
+  -- Save current session if persistence is loaded
+  local ok = pcall(require, 'persistence')
+  if ok then
+    require('persistence').save()
+  end
+
+  -- Exit (session will restore on next open)
+  vim.cmd 'wqa'
+end, { desc = '[R]estart/Exit Neovim (saves session)' })
