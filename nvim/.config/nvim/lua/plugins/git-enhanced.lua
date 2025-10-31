@@ -30,6 +30,17 @@ return {
     keys = {
       { '<leader>gg', '<cmd>Neogit<cr>', desc = '[G]it Neo[g]it' },
       { '<leader>gC', '<cmd>Neogit commit<cr>', desc = '[G]it [C]ommit' },
+      {
+        '<leader>gb',
+        function()
+          vim.ui.input({ prompt = 'Go back to branch (or - for previous): ' }, function(branch)
+            if branch and branch ~= '' then
+              vim.cmd('Git checkout ' .. branch)
+            end
+          end)
+        end,
+        desc = '[G]it checkout [B]ranch',
+      },
     },
     opts = {
       integrations = {

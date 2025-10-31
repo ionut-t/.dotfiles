@@ -74,6 +74,7 @@ return {
         vim.keymap.set('n', '<leader>fg', builtin.git_files, { desc = '[F]ind [G]it files' })
         vim.keymap.set('n', '<leader>fm', builtin.git_status, { desc = '[F]ind [M]odified files (git)' })
         vim.keymap.set('n', '<leader>fc', function()
+            -- Actions: <CR> checkout, <C-r> reset soft, <C-h> reset hard
             builtin.git_commits()
         end, { desc = '[F]ind [C]ommits (git)' })
 
