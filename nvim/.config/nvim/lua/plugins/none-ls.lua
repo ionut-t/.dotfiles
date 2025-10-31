@@ -75,6 +75,9 @@ return {
       require 'none-ls.formatting.ruff_format',
     }
 
+    -- Global variable to track format-on-save state
+    vim.g.format_on_save_enabled = true
+
     local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
     null_ls.setup {
       -- debug = true, -- Enable debug mode. Inspect logs with :NullLsLog.
@@ -87,11 +90,21 @@ return {
             group = augroup,
             buffer = bufnr,
             callback = function()
-              vim.lsp.buf.format { async = false }
+              -- Only format if globally enabled
+              if vim.g.format_on_save_enabled then
+                vim.lsp.buf.format { async = false }
+              end
             end,
           })
         end
       end,
     }
+
+    -- Keymap to toggle format-on-save
+    vim.keymap.set('n', '<leader>tf', function()
+      vim.g.format_on_save_enabled = not vim.g.format_on_save_enabled
+      local status = vim.g.format_on_save_enabled and 'enabled' or 'disabled'
+      vim.notify('Format on save ' .. status, vim.log.levels.INFO)
+    end, { desc = 'Toggle [F]ormat on save' })
   end,
 }
