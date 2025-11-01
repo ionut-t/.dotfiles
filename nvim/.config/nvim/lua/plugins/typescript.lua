@@ -42,12 +42,12 @@ return {
     require('typescript-tools').setup(opts)
 
     -- Keymaps
-    vim.keymap.set('n', '<leader>co', '<cmd>TSToolsOrganizeImports<cr>', { desc = '[C]ode [O]rganize Imports' })
-    vim.keymap.set('n', '<leader>cO', '<cmd>TSToolsSortImports<cr>', { desc = '[C]ode S[O]rt Imports' })
-    vim.keymap.set('n', '<leader>cu', '<cmd>TSToolsRemoveUnused<cr>', { desc = '[C]ode Remove [U]nused' })
-    vim.keymap.set('n', '<leader>cz', '<cmd>TSToolsGoToSourceDefinition<cr>', { desc = '[C]ode Go to Source Definition' })
-    vim.keymap.set('n', '<leader>cR', '<cmd>TSToolsRenameFile<cr>', { desc = '[C]ode [R]ename File' })
-    vim.keymap.set('n', '<leader>cI', '<cmd>TSToolsAddMissingImports<cr>', { desc = '[C]ode Add Missing [I]mports' })
-    vim.keymap.set('n', '<leader>cF', '<cmd>TSToolsFixAll<cr>', { desc = '[C]ode [F]ix All' })
+    vim.keymap.set('n', '<leader>co', '<cmd>TSToolsOrganizeImports<cr>', { desc = 'Code organize imports' })
+    vim.keymap.set('n', '<leader>cO', '<cmd>TSToolsSortImports<cr>', { desc = 'Code sort imports' })
+    vim.keymap.set('n', '<leader>cu', '<cmd>TSToolsRemoveUnused<cr>', { desc = 'Code remove unused' })
+    vim.keymap.set('n', '<leader>cz', '<cmd>TSToolsGoToSourceDefinition<cr>', { desc = 'Code go to source definition' })
+    vim.keymap.set('n', '<leader>cR', '<cmd>TSToolsRenameFile<cr>', { desc = 'Code rename file' })
+    vim.keymap.set('n', '<leader>cI', '<cmd>TSToolsAddMissingImports<cr>', { desc = 'Code add missing imports' })
+    vim.keymap.set('n', '<leader>cF', '<cmd>TSToolsFixAll<cr>', { desc = 'Code fix all' })
   end,
 }

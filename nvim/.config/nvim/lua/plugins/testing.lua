@@ -10,19 +10,19 @@ return {
     'nvim-neotest/neotest-go',
   },
   keys = {
-    { '<leader>tn', '<cmd>lua require("neotest").run.run()<cr>', desc = '[T]est [N]earest' },
-    { '<leader>tf', '<cmd>lua require("neotest").run.run(vim.fn.expand("%"))<cr>', desc = '[T]est [F]ile' },
+    { '<leader>tn', '<cmd>lua require("neotest").run.run()<cr>', desc = 'Test nearest' },
+    { '<leader>tf', '<cmd>lua require("neotest").run.run(vim.fn.expand("%"))<cr>', desc = 'Test file' },
     {
       '<leader>ta',
       '<cmd>lua require("neotest").run.run(vim.fn.getcwd())<cr>',
-      desc = '[T]est [A]ll',
+      desc = 'Test all',
     },
-    { '<leader>ts', '<cmd>lua require("neotest").summary.toggle()<cr>', desc = '[T]est [S]ummary' },
-    { '<leader>to', '<cmd>lua require("neotest").output.open({ enter = true })<cr>', desc = '[T]est [O]utput' },
-    { '<leader>tO', '<cmd>lua require("neotest").output_panel.toggle()<cr>', desc = '[T]est [O]utput Panel' },
-    { '<leader>td', '<cmd>lua require("neotest").run.run({ strategy = "dap" })<cr>', desc = '[T]est [D]ebug' },
-    { '<leader>tS', '<cmd>lua require("neotest").run.stop()<cr>', desc = '[T]est [S]top' },
-    { '<leader>tw', '<cmd>lua require("neotest").watch.toggle()<cr>', desc = '[T]est [W]atch' },
+    { '<leader>ts', '<cmd>lua require("neotest").summary.toggle()<cr>', desc = 'Test summary' },
+    { '<leader>to', '<cmd>lua require("neotest").output.open({ enter = true })<cr>', desc = 'Test output' },
+    { '<leader>tO', '<cmd>lua require("neotest").output_panel.toggle()<cr>', desc = 'Test output panel' },
+    { '<leader>td', '<cmd>lua require("neotest").run.run({ strategy = "dap" })<cr>', desc = 'Test debug' },
+    { '<leader>tS', '<cmd>lua require("neotest").run.stop()<cr>', desc = 'Test stop' },
+    { '<leader>tw', '<cmd>lua require("neotest").watch.toggle()<cr>', desc = 'Test watch' },
   },
   config = function()
     require('neotest').setup {

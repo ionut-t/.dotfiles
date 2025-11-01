@@ -48,26 +48,26 @@ return {
   config = function(_, opts)
     require('trouble').setup(opts)
 
-    -- Keymaps for trouble (consolidated under <leader>q for diagnostics)
-    vim.keymap.set('n', '<leader>qt', '<cmd>Trouble diagnostics toggle<cr>', { desc = 'Toggle [T]rouble diagnostics' })
+    -- Keymaps for trouble (consolidated under <leader>x for diagnostics - LazyVim standard)
+    vim.keymap.set('n', '<leader>xt', '<cmd>Trouble diagnostics toggle<cr>', { desc = 'Toggle trouble diagnostics' })
     vim.keymap.set(
       'n',
-      '<leader>qb',
+      '<leader>xb',
       '<cmd>Trouble diagnostics toggle filter.buf=0<cr>',
-      { desc = '[B]uffer diagnostics (Trouble)' }
+      { desc = 'Buffer diagnostics (trouble)' }
     )
-    vim.keymap.set('n', '<leader>qs', '<cmd>Trouble symbols toggle focus=false<cr>', { desc = '[S]ymbols (Trouble)' })
+    vim.keymap.set('n', '<leader>xs', '<cmd>Trouble symbols toggle focus=false<cr>', { desc = 'Symbols (trouble)' })
     vim.keymap.set(
       'n',
-      '<leader>ql',
+      '<leader>xl',
       '<cmd>Trouble lsp toggle focus=false win.position=right<cr>',
-      { desc = '[L]SP definitions/references (Trouble)' }
+      { desc = 'LSP definitions/references (trouble)' }
     )
-    vim.keymap.set('n', '<leader>qL', '<cmd>Trouble loclist toggle<cr>', { desc = '[L]ocation list (Trouble)' })
-    vim.keymap.set('n', '<leader>qQ', '<cmd>Trouble qflist toggle<cr>', { desc = '[Q]uickfix list (Trouble)' })
+    vim.keymap.set('n', '<leader>xL', '<cmd>Trouble loclist toggle<cr>', { desc = 'Location list (trouble)' })
+    vim.keymap.set('n', '<leader>xQ', '<cmd>Trouble qflist toggle<cr>', { desc = 'Quickfix list (trouble)' })
 
     -- Keymaps for focusing trouble panel and buffer
-    vim.keymap.set('n', '<leader>qF', '<cmd>Trouble diagnostics focus<cr>', { desc = '[F]ocus Trouble panel' })
-    vim.keymap.set('n', '<leader>qr', '<cmd>wincmd p<cr>', { desc = '[R]eturn to buffer from Trouble' })
+    vim.keymap.set('n', '<leader>xF', '<cmd>Trouble diagnostics focus<cr>', { desc = 'Focus trouble panel' })
+    vim.keymap.set('n', '<leader>xr', '<cmd>wincmd p<cr>', { desc = 'Return to buffer from trouble' })
   end,
 }

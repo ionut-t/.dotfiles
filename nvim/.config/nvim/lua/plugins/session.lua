@@ -41,28 +41,28 @@ return {
   end,
   keys = {
     {
-      '<leader>es',
+      '<leader>qs',
       function()
         require('persistence').load()
       end,
-      desc = 'Restore [S]ession for current dir',
+      desc = 'Restore session for current dir',
     },
     {
-      '<leader>el',
+      '<leader>ql',
       function()
         require('persistence').load { last = true }
       end,
-      desc = 'Restore [L]ast session (any dir)',
+      desc = 'Restore last session (any dir)',
     },
     {
-      '<leader>ed',
+      '<leader>qd',
       function()
         require('persistence').stop()
       end,
-      desc = "[D]on't save session on exit",
+      desc = "Don't save session on exit",
     },
     {
-      '<leader>ex',
+      '<leader>qx',
       function()
         vim.ui.input({ prompt = 'Delete all sessions? (y/n): ' }, function(input)
           if input == 'y' or input == 'Y' then
@@ -75,6 +75,11 @@ return {
         end)
       end,
       desc = 'Delete all sessions',
+    },
+    {
+      '<leader>qq',
+      '<cmd>qa<cr>',
+      desc = 'Quit all',
     },
   },
 }

@@ -7,14 +7,14 @@ return {
       function()
         require('spectre').open()
       end,
-      desc = '[S]ubstitute (Search & Replace)',
+      desc = 'search and replace',
     },
     {
       '<leader>Sw',
       function()
         require('spectre').open_visual { select_word = true }
       end,
-      desc = '[S]ubstitute current [W]ord',
+      desc = 'Search and replace current word',
     },
     {
       '<leader>S',
@@ -22,14 +22,14 @@ return {
         require('spectre').open_visual()
       end,
       mode = 'v',
-      desc = '[S]ubstitute selection',
+      desc = 'Search and replace selection',
     },
     {
       '<leader>Sf',
       function()
         require('spectre').open_file_search { select_word = true }
       end,
-      desc = '[S]ubstitute in current [F]ile',
+      desc = 'Search and replace in file',
     },
   },
   opts = {

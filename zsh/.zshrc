@@ -217,3 +217,5 @@ function gem-ng() {
 # ENVIRONMENT VARIABLES
 # ============================================================================
 source ~/.envs/envs.sh
+
+alias lazyvim="NVIM_APPNAME=lazyvim nvim"

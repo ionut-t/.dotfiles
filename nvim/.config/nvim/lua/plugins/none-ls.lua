@@ -101,10 +101,10 @@ return {
     }
 
     -- Keymap to toggle format-on-save
-    vim.keymap.set('n', '<leader>tf', function()
+    vim.keymap.set('n', '<leader>uf', function()
       vim.g.format_on_save_enabled = not vim.g.format_on_save_enabled
       local status = vim.g.format_on_save_enabled and 'enabled' or 'disabled'
       vim.notify('Format on save ' .. status, vim.log.levels.INFO)
-    end, { desc = 'Toggle [F]ormat on save' })
+    end, { desc = 'Toggle [f]ormat on save' })
   end,
 }

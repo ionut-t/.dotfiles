@@ -71,21 +71,21 @@ return {
       function()
         require('noice').cmd 'history'
       end,
-      desc = '[S]earch [N]oice Messages',
+      desc = 'Search noice messages',
     },
     {
       '<leader>snl',
       function()
         require('noice').cmd 'last'
       end,
-      desc = '[S]earch [N]oice [L]ast Message',
+      desc = 'Search noice last message',
     },
     {
       '<leader>snd',
       function()
         require('noice').cmd 'dismiss'
       end,
-      desc = '[S]earch [N]oice [D]ismiss All',
+      desc = 'Search noice dismiss all',
     },
   },
 }

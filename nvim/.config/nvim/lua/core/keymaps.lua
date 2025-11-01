@@ -24,18 +24,18 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('i', 'jj', '<Esc>', { desc = 'Exit insert mode' })
 
 -- Enter visual mode from insert mode with vv, visual line mode with VV
-vim.keymap.set('i', 'vv', '<Esc>v', { desc = 'Exit insert and enter visual mode' })
-vim.keymap.set('i', 'VV', '<Esc>V', { desc = 'Exit insert and enter visual line mode' })
+vim.keymap.set('i', 'vv', '<Esc>v', { desc = 'Enter visual mode from insert' })
+vim.keymap.set('i', 'VV', '<Esc>V', { desc = 'Enter visual line mode from insert' })
 
--- Diagnostic keymaps (consolidated under <leader>q for Quality/Issues)
-vim.keymap.set('n', '<leader>qq', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-vim.keymap.set('n', '<leader>qf', vim.diagnostic.open_float, { desc = 'Show diagnostic [F]loat' })
-vim.keymap.set('n', '<leader>qn', vim.diagnostic.goto_next, { desc = 'Go to [N]ext diagnostic' })
-vim.keymap.set('n', '<leader>qp', vim.diagnostic.goto_prev, { desc = 'Go to [P]revious diagnostic' })
+-- Diagnostic keymaps (consolidated under <leader>x for diagnostics/quickfix - LazyVim standard)
+vim.keymap.set('n', '<leader>xx', vim.diagnostic.setloclist, { desc = 'Diagnostic quickfix list' })
+vim.keymap.set('n', '<leader>xf', vim.diagnostic.open_float, { desc = 'Diagnostic float' })
+vim.keymap.set('n', '<leader>xn', vim.diagnostic.goto_next, { desc = 'Next diagnostic' })
+vim.keymap.set('n', '<leader>xp', vim.diagnostic.goto_prev, { desc = 'Previous diagnostic' })
 
 -- Keep [d / ]d for muscle memory
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Previous diagnostic' })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Next diagnostic' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -55,10 +55,10 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 --  Use CTRL+<hjkl> to switch between windows
 --
 --  See `:help wincmd` for a list of all window commands
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Window left' })
+vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Window right' })
+vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Window down' })
+vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Window up' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -75,7 +75,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- Open terminal in current file's directory
-vim.keymap.set('n', '<leader>tt', function()
+vim.keymap.set('n', '<leader>Tt', function()
   -- Get the directory of the current file, handling oil:// paths
   local path = vim.fn.expand '%:p'
   local file_dir
@@ -96,10 +96,10 @@ vim.keymap.set('n', '<leader>tt', function()
   vim.cmd('terminal cd "' .. file_dir .. '" && $SHELL')
   -- Automatically enter insert mode in the terminal
   vim.cmd 'startinsert'
-end, { desc = 'Open terminal in current file directory' })
+end, { desc = 'Terminal in file directory' })
 
 -- Open terminal in vertical split in current file's directory
-vim.keymap.set('n', '<leader>tv', function()
+vim.keymap.set('n', '<leader>Tv', function()
   -- Get the directory of the current file, handling oil:// paths
   local path = vim.fn.expand '%:p'
   local file_dir
@@ -117,7 +117,7 @@ vim.keymap.set('n', '<leader>tv', function()
   -- Open terminal with the cd command
   vim.cmd('terminal cd "' .. file_dir .. '" && $SHELL')
   vim.cmd 'startinsert'
-end, { desc = 'Open terminal in vertical split in current file directory' })
+end, { desc = 'Terminal vertical in file directory' })
 
 -- Reload a specific plugin module (useful for plugin config changes)
 vim.keymap.set('n', '<leader>rp', function()
@@ -135,7 +135,7 @@ vim.keymap.set('n', '<leader>rp', function()
       end
     end
   end)
-end, { desc = '[R]eload [P]lugin' })
+end, { desc = 'Reload plugin' })
 
 -- Reload core configuration files (options, keymaps, snippets)
 vim.keymap.set('n', '<leader>rl', function()
@@ -152,7 +152,7 @@ vim.keymap.set('n', '<leader>rl', function()
   require 'core.snippets'
 
   vim.notify('Core configuration files reloaded!', vim.log.levels.INFO)
-end, { desc = '[R]eload [L]ua core files' })
+end, { desc = 'Reload core config files' })
 
 -- Quick exit and save (with session persistence)
 vim.keymap.set('n', '<leader>rr', function()
@@ -164,4 +164,4 @@ vim.keymap.set('n', '<leader>rr', function()
 
   -- Exit (session will restore on next open)
   vim.cmd 'wqa'
-end, { desc = '[R]estart/Exit Neovim (saves session)' })
+end, { desc = 'Restart/exit neovim (saves session)' })

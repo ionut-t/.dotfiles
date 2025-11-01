@@ -31,8 +31,8 @@ return {
       }
 
       -- Keymaps
-      vim.keymap.set('n', '<leader>vs', '<cmd>VenvSelect<cr>', { desc = '[V]env [S]elect' })
-      vim.keymap.set('n', '<leader>vc', '<cmd>VenvSelectCached<cr>', { desc = '[V]env Select [C]ached' })
+      vim.keymap.set('n', '<leader>vs', '<cmd>VenvSelect<cr>', { desc = 'Venv select' })
+      vim.keymap.set('n', '<leader>vc', '<cmd>VenvSelectCached<cr>', { desc = 'Venv select cached' })
     end,
   },
 
@@ -67,15 +67,15 @@ return {
       local opts = { noremap = true, silent = true }
       vim.keymap.set('n', '<leader>dn', function()
         require('dap-python').test_method()
-      end, vim.tbl_extend('force', opts, { desc = '[D]ebug [N]earest test method' }))
+      end, vim.tbl_extend('force', opts, { desc = 'Debug nearest test method' }))
 
       vim.keymap.set('n', '<leader>df', function()
         require('dap-python').test_class()
-      end, vim.tbl_extend('force', opts, { desc = '[D]ebug test [F]ile/class' }))
+      end, vim.tbl_extend('force', opts, { desc = 'Debug test file/class' }))
 
       vim.keymap.set('v', '<leader>ds', function()
         require('dap-python').debug_selection()
-      end, vim.tbl_extend('force', opts, { desc = '[D]ebug [S]election' }))
+      end, vim.tbl_extend('force', opts, { desc = 'Debug selection' }))
     end,
   },
 
@@ -107,39 +107,39 @@ return {
       local opts = { noremap = true, silent = true }
       vim.keymap.set('n', '<leader>db', function()
         dap.toggle_breakpoint()
-      end, vim.tbl_extend('force', opts, { desc = '[D]ebug toggle [B]reakpoint' }))
+      end, vim.tbl_extend('force', opts, { desc = 'Debug toggle breakpoint' }))
 
       vim.keymap.set('n', '<leader>dc', function()
         dap.continue()
-      end, vim.tbl_extend('force', opts, { desc = '[D]ebug [C]ontinue' }))
+      end, vim.tbl_extend('force', opts, { desc = 'Debug continue' }))
 
       vim.keymap.set('n', '<leader>di', function()
         dap.step_into()
-      end, vim.tbl_extend('force', opts, { desc = '[D]ebug step [I]nto' }))
+      end, vim.tbl_extend('force', opts, { desc = 'Debug step into' }))
 
       vim.keymap.set('n', '<leader>do', function()
         dap.step_over()
-      end, vim.tbl_extend('force', opts, { desc = '[D]ebug step [O]ver' }))
+      end, vim.tbl_extend('force', opts, { desc = 'Debug step over' }))
 
       vim.keymap.set('n', '<leader>dO', function()
         dap.step_out()
-      end, vim.tbl_extend('force', opts, { desc = '[D]ebug step [O]ut' }))
+      end, vim.tbl_extend('force', opts, { desc = 'Debug step out' }))
 
       vim.keymap.set('n', '<leader>dr', function()
         dap.repl.toggle()
-      end, vim.tbl_extend('force', opts, { desc = '[D]ebug toggle [R]EPL' }))
+      end, vim.tbl_extend('force', opts, { desc = 'Debug toggle REPL' }))
 
       vim.keymap.set('n', '<leader>dl', function()
         dap.run_last()
-      end, vim.tbl_extend('force', opts, { desc = '[D]ebug run [L]ast' }))
+      end, vim.tbl_extend('force', opts, { desc = 'Debug run last' }))
 
       vim.keymap.set('n', '<leader>du', function()
         dapui.toggle()
-      end, vim.tbl_extend('force', opts, { desc = '[D]ebug toggle [U]I' }))
+      end, vim.tbl_extend('force', opts, { desc = 'Debug toggle UI' }))
 
       vim.keymap.set('n', '<leader>dt', function()
         dap.terminate()
-      end, vim.tbl_extend('force', opts, { desc = '[D]ebug [T]erminate' }))
+      end, vim.tbl_extend('force', opts, { desc = 'Debug terminate' }))
 
       -- Breakpoint signs
       vim.fn.sign_define('DapBreakpoint', { text = '🔴', texthl = '', linehl = '', numhl = '' })
@@ -179,7 +179,7 @@ return {
 
       vim.keymap.set('n', '<leader>ng', function()
         require('neogen').generate()
-      end, { desc = '[N]eogen [G]enerate docstring' })
+      end, { desc = 'Neogen generate docstring' })
     end,
   },
 }
