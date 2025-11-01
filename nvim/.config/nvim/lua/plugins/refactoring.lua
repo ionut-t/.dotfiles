@@ -28,9 +28,9 @@ return {
       require('refactoring').refactor 'Inline Variable'
     end, { desc = 'Refactor inline variable' })
 
-    vim.keymap.set('n', '<leader>rb', function()
+    vim.keymap.set('n', '<leader>rbe', function()
       require('refactoring').refactor 'Extract Block'
-    end, { desc = 'Refactor extract block' })
+    end, { desc = 'Refactor block extract' })
 
     vim.keymap.set('n', '<leader>rbf', function()
       require('refactoring').refactor 'Extract Block To File'

@@ -62,7 +62,7 @@ return {
 
       -- Go-specific mappings (nested under code namespace: <leader>cg)
       map('n', '<leader>cgd', '<cmd>GoInstallDeps<CR>', 'Go install dependencies')
-      map('n', '<leader>cgt', '<cmd>GoTest<CR>', 'Go test')
+      map('n', '<leader>cgta', '<cmd>GoTest<CR>', 'Go test all')
       map('n', '<leader>cgtf', '<cmd>GoTestFunc<CR>', 'Go test function')
       map('n', '<leader>cgr', '<cmd>GoRun<CR>', 'Go run')
       map('n', '<leader>cgf', '<cmd>GoFillStruct<CR>', 'Go fill struct')

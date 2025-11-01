@@ -186,3 +186,10 @@ end, { desc = 'Buffer delete others' })
 -- Move buffer left/right
 vim.keymap.set('n', '<leader>b[', ':BufferLineMovePrev<CR>', { desc = 'Buffer move left', silent = true })
 vim.keymap.set('n', '<leader>b]', ':BufferLineMoveNext<CR>', { desc = 'Buffer move right', silent = true })
+
+-- UI toggles
+vim.keymap.set('n', '<leader>ud', function()
+  vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+  local status = vim.diagnostic.is_enabled() and 'enabled' or 'disabled'
+  vim.notify('Diagnostics ' .. status, vim.log.levels.INFO)
+end, { desc = 'Toggle diagnostics' })

@@ -3,11 +3,11 @@ return {
   dependencies = { 'nvim-lua/plenary.nvim' },
   keys = {
     {
-      '<leader>S',
+      '<leader>Sr',
       function()
         require('spectre').open()
       end,
-      desc = 'search and replace',
+      desc = 'Search replace',
     },
     {
       '<leader>Sw',

@@ -1,6 +1,14 @@
 -- Standalone plugins with less than 10 lines of config go here
 return {
   {
+    -- Icon provider for Neovim plugins
+    'echasnovski/mini.icons',
+    version = '*',
+    config = function()
+      require('mini.icons').setup()
+    end,
+  },
+  {
     -- Tmux & split window navigation
     'christoomey/vim-tmux-navigator',
   },

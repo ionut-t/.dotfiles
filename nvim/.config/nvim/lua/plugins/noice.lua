@@ -67,11 +67,11 @@ return {
   },
   keys = {
     {
-      '<leader>sn',
+      '<leader>snh',
       function()
         require('noice').cmd 'history'
       end,
-      desc = 'Search noice messages',
+      desc = 'Search noice history',
     },
     {
       '<leader>snl',
