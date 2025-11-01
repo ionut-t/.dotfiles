@@ -165,3 +165,24 @@ vim.keymap.set('n', '<leader>rr', function()
   -- Exit (session will restore on next open)
   vim.cmd 'wqa'
 end, { desc = 'Restart/exit neovim (saves session)' })
+
+-- Buffer management
+-- Close all buffers
+vim.keymap.set('n', '<leader>bD', function()
+  vim.cmd 'bufdo Bdelete'
+end, { desc = 'Buffer delete all' })
+
+-- Close all buffers except current
+vim.keymap.set('n', '<leader>bo', function()
+  local current = vim.api.nvim_get_current_buf()
+  local buffers = vim.api.nvim_list_bufs()
+  for _, buf in ipairs(buffers) do
+    if buf ~= current and vim.api.nvim_buf_is_loaded(buf) and vim.api.nvim_buf_get_option(buf, 'buftype') == '' then
+      vim.cmd('Bdelete ' .. buf)
+    end
+  end
+end, { desc = 'Buffer delete others' })
+
+-- Move buffer left/right
+vim.keymap.set('n', '<leader>b[', ':BufferLineMovePrev<CR>', { desc = 'Buffer move left', silent = true })
+vim.keymap.set('n', '<leader>b]', ':BufferLineMoveNext<CR>', { desc = 'Buffer move right', silent = true })

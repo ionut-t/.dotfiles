@@ -105,6 +105,6 @@ return {
       vim.g.format_on_save_enabled = not vim.g.format_on_save_enabled
       local status = vim.g.format_on_save_enabled and 'enabled' or 'disabled'
       vim.notify('Format on save ' .. status, vim.log.levels.INFO)
-    end, { desc = 'Toggle [f]ormat on save' })
+    end, { desc = 'Toggle format on save' })
   end,
 }
