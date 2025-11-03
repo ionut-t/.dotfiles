@@ -20,6 +20,9 @@ end)
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+-- Remap U to redo (default is <C-r>)
+vim.keymap.set('n', 'U', '<C-r>', { desc = 'Redo' })
+
 -- Exit insert mode with jj
 vim.keymap.set('i', 'jj', '<Esc>', { desc = 'Exit insert mode' })
 
