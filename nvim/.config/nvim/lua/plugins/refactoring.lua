@@ -10,35 +10,35 @@ return {
     -- Keymaps for refactoring
     vim.keymap.set('x', '<leader>re', function()
       require('refactoring').refactor 'Extract Function'
-    end, { desc = '[R]efactor [E]xtract Function' })
+    end, { desc = 'Refactor extract function' })
 
     vim.keymap.set('x', '<leader>rf', function()
       require('refactoring').refactor 'Extract Function To File'
-    end, { desc = '[R]efactor Extract Function to [F]ile' })
+    end, { desc = 'Refactor extract function to file' })
 
     vim.keymap.set('x', '<leader>rv', function()
       require('refactoring').refactor 'Extract Variable'
-    end, { desc = '[R]efactor Extract [V]ariable' })
+    end, { desc = 'Refactor extract variable' })
 
     vim.keymap.set('n', '<leader>rI', function()
       require('refactoring').refactor 'Inline Function'
-    end, { desc = '[R]efactor [I]nline Function' })
+    end, { desc = 'Refactor inline function' })
 
     vim.keymap.set({ 'n', 'x' }, '<leader>ri', function()
       require('refactoring').refactor 'Inline Variable'
-    end, { desc = '[R]efactor [I]nline Variable' })
+    end, { desc = 'Refactor inline variable' })
 
-    vim.keymap.set('n', '<leader>rb', function()
+    vim.keymap.set('n', '<leader>rbe', function()
       require('refactoring').refactor 'Extract Block'
-    end, { desc = '[R]efactor Extract [B]lock' })
+    end, { desc = 'Refactor block extract' })
 
     vim.keymap.set('n', '<leader>rbf', function()
       require('refactoring').refactor 'Extract Block To File'
-    end, { desc = '[R]efactor Extract [B]lock to [F]ile' })
+    end, { desc = 'Refactor extract block to file' })
 
     -- Prompt for refactor
     vim.keymap.set({ 'n', 'x' }, '<leader>rr', function()
       require('refactoring').select_refactor()
-    end, { desc = '[R]efacto[r] - Select from menu' })
+    end, { desc = 'Refactor select from menu' })
   end,
 }

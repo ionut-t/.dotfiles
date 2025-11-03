@@ -63,20 +63,20 @@ return {
         -- ═══════════════════════════════════════════════════════════════════
         -- FIND namespace (<Space>f) - Files, Buffers, UI elements
         -- ═══════════════════════════════════════════════════════════════════
-        vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = '[F]ind [F]iles' })
-        vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = '[F]ind [B]uffers' })
-        vim.keymap.set('n', '<leader>fr', builtin.oldfiles, { desc = '[F]ind [R]ecent files' })
-        vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = '[F]ind [H]elp' })
-        vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = '[F]ind [K]eymaps' })
-        vim.keymap.set('n', '<leader>ft', builtin.builtin, { desc = '[F]ind [T]elescope pickers' })
+        vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Find files' })
+        vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Find buffers' })
+        vim.keymap.set('n', '<leader>fr', builtin.oldfiles, { desc = 'Find recent files' })
+        vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Find help' })
+        vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = 'Find keymaps' })
+        vim.keymap.set('n', '<leader>ft', builtin.builtin, { desc = 'Find telescope pickers' })
 
         -- Git files
-        vim.keymap.set('n', '<leader>fg', builtin.git_files, { desc = '[F]ind [G]it files' })
-        vim.keymap.set('n', '<leader>fm', builtin.git_status, { desc = '[F]ind [M]odified files (git)' })
+        vim.keymap.set('n', '<leader>fg', builtin.git_files, { desc = 'Find git files' })
+        vim.keymap.set('n', '<leader>fm', builtin.git_status, { desc = 'Find modified files (git)' })
         vim.keymap.set('n', '<leader>fc', function()
             -- Actions: <CR> checkout, <C-r> reset soft, <C-h> reset hard
             builtin.git_commits()
-        end, { desc = '[F]ind [C]ommits (git)' })
+        end, { desc = 'Find commits (git)' })
 
         -- Contextual finds
         vim.keymap.set('n', '<leader>fs', function()
@@ -89,22 +89,22 @@ return {
                 no_ignore = true,
                 file_ignore_patterns = { 'node_modules', '.git', '.venv' },
             }
-        end, { desc = '[F]ind [S]ibling files' })
+        end, { desc = 'Find sibling files' })
 
         vim.keymap.set('n', '<leader>fp', function()
             builtin.oldfiles {
                 prompt_title = 'Recent Files (Project Only)',
                 cwd_only = true,
             }
-        end, { desc = '[F]ind recent in [P]roject' })
+        end, { desc = 'Find recent in [P]roject' })
 
         -- ═══════════════════════════════════════════════════════════════════
         -- SEARCH namespace (<Space>s) - Content inside files
         -- ═══════════════════════════════════════════════════════════════════
-        vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
-        vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-        vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
-        vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
+        vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = 'Search by grep' })
+        vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = 'Search current word' })
+        vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = 'Search diagnostics' })
+        vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = 'Search resume' })
 
         -- Search in specific contexts
         vim.keymap.set('n', '<leader>sb', function()
@@ -112,14 +112,14 @@ return {
                 winblend = 10,
                 previewer = false,
             })
-        end, { desc = '[S]earch in [B]uffer' })
+        end, { desc = 'Search in buffer' })
 
         vim.keymap.set('n', '<leader>so', function()
             builtin.live_grep {
                 grep_open_files = true,
                 prompt_title = 'Live Grep in Open Files',
             }
-        end, { desc = '[S]earch in [O]pen files' })
+        end, { desc = 'Search in open files' })
 
         -- Keep legacy mappings for compatibility (can remove after getting used to new ones)
         vim.keymap.set('n', '<leader>/', function()
@@ -127,8 +127,8 @@ return {
                 winblend = 10,
                 previewer = false,
             })
-        end, { desc = '[/] Search in current buffer' })
+        end, { desc = 'Search in current buffer' })
 
-        vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find buffers (quick access)' })
+        vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = 'Find buffers (quick access)' })
     end,
 }

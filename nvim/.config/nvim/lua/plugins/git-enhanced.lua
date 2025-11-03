@@ -5,10 +5,10 @@ return {
     dependencies = { 'nvim-lua/plenary.nvim' },
     cmd = { 'DiffviewOpen', 'DiffviewFileHistory', 'DiffviewClose' },
     keys = {
-      { '<leader>gd', '<cmd>DiffviewOpen<cr>', desc = '[G]it [D]iff View' },
-      { '<leader>gh', '<cmd>DiffviewFileHistory %<cr>', desc = '[G]it File [H]istory' },
-      { '<leader>gH', '<cmd>DiffviewFileHistory<cr>', desc = '[G]it Project [H]istory' },
-      { '<leader>gc', '<cmd>DiffviewClose<cr>', desc = '[G]it Diff [C]lose' },
+      { '<leader>gd', '<cmd>DiffviewOpen<cr>', desc = 'Git diff view' },
+      { '<leader>gh', '<cmd>DiffviewFileHistory %<cr>', desc = 'Git file history' },
+      { '<leader>gH', '<cmd>DiffviewFileHistory<cr>', desc = 'Git project history' },
+      { '<leader>gc', '<cmd>DiffviewClose<cr>', desc = 'Git diff close' },
     },
     opts = {
       enhanced_diff_hl = true,
@@ -28,8 +28,8 @@ return {
     },
     cmd = 'Neogit',
     keys = {
-      { '<leader>gg', '<cmd>Neogit<cr>', desc = '[G]it Neo[g]it' },
-      { '<leader>gC', '<cmd>Neogit commit<cr>', desc = '[G]it [C]ommit' },
+      { '<leader>gg', '<cmd>Neogit<cr>', desc = 'Git neogit' },
+      { '<leader>gC', '<cmd>Neogit commit<cr>', desc = 'Git commit' },
       {
         '<leader>gb',
         function()
@@ -39,7 +39,7 @@ return {
             end
           end)
         end,
-        desc = '[G]it checkout [B]ranch',
+        desc = 'Git checkout branch',
       },
     },
     opts = {

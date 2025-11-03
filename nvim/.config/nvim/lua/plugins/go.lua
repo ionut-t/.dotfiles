@@ -60,15 +60,15 @@ return {
         vim.keymap.set(mode, lhs, rhs, { silent = true, desc = desc })
       end
 
-      -- Go-specific mappings
-      map('n', '<leader>gi', '<cmd>GoInstallDeps<CR>', 'Install Go Dependencies')
-      map('n', '<leader>gt', '<cmd>GoTest<CR>', 'Run Go Tests')
-      map('n', '<leader>gtf', '<cmd>GoTestFunc<CR>', 'Run Test Function')
-      map('n', '<leader>gr', '<cmd>GoRun<CR>', 'Run Go Program')
-      map('n', '<leader>gfs', '<cmd>GoFillStruct<CR>', 'Fill Struct')
-      map('n', '<leader>gat', '<cmd>GoAddTag<CR>', 'Add Tags to Struct')
-      map('n', '<leader>grm', '<cmd>GoRmTag<CR>', 'Remove Tags from Struct')
-      map('n', '<leader>gim', '<cmd>GoImport<CR>', 'Import Packages')
+      -- Go-specific mappings (nested under code namespace: <leader>cg)
+      map('n', '<leader>cgd', '<cmd>GoInstallDeps<CR>', 'Go install dependencies')
+      map('n', '<leader>cgta', '<cmd>GoTest<CR>', 'Go test all')
+      map('n', '<leader>cgtf', '<cmd>GoTestFunc<CR>', 'Go test function')
+      map('n', '<leader>cgr', '<cmd>GoRun<CR>', 'Go run')
+      map('n', '<leader>cgf', '<cmd>GoFillStruct<CR>', 'Go fill struct')
+      map('n', '<leader>cga', '<cmd>GoAddTag<CR>', 'Go add tags')
+      map('n', '<leader>cgx', '<cmd>GoRmTag<CR>', 'Go delete/remove tags')
+      map('n', '<leader>cgI', '<cmd>GoImport<CR>', 'Go import packages')
     end,
     event = { 'CmdlineEnter' },
     ft = { 'go', 'gomod' },

@@ -60,22 +60,22 @@ return {
       -- DAP UI keymaps
       vim.keymap.set('n', '<F5>', function()
         require('dap').continue()
-      end, { desc = 'Debug: Start/Continue' })
+      end, { desc = 'Debug start/continue' })
       vim.keymap.set('n', '<F10>', function()
         require('dap').step_over()
-      end, { desc = 'Debug: Step Over' })
+      end, { desc = 'Debug step over' })
       vim.keymap.set('n', '<F11>', function()
         require('dap').step_into()
-      end, { desc = 'Debug: Step Into' })
+      end, { desc = 'Debug step into' })
       vim.keymap.set('n', '<F12>', function()
         require('dap').step_out()
-      end, { desc = 'Debug: Step Out' })
+      end, { desc = 'Debug step out' })
       vim.keymap.set('n', '<leader>db', function()
         require('dap').toggle_breakpoint()
-      end, { desc = '[D]ebug: Toggle [B]reakpoint' })
+      end, { desc = 'Debug toggle breakpoint' })
       vim.keymap.set('n', '<leader>dB', function()
         require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ')
-      end, { desc = '[D]ebug: Set Conditional [B]reakpoint' })
+      end, { desc = 'Debug set conditional breakpoint' })
     end,
   },
   {
@@ -112,7 +112,7 @@ return {
         function()
           require('dapui').toggle()
         end,
-        desc = '[D]ebug: Toggle [U]I',
+        desc = 'Debug toggle UI',
       },
       {
         '<leader>de',
@@ -120,7 +120,7 @@ return {
           require('dapui').eval()
         end,
         mode = { 'n', 'v' },
-        desc = '[D]ebug: [E]val Expression',
+        desc = 'Debug eval expression',
       },
     },
     opts = {

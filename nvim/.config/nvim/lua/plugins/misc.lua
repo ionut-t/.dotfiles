@@ -1,6 +1,14 @@
 -- Standalone plugins with less than 10 lines of config go here
 return {
   {
+    -- Icon provider for Neovim plugins
+    'echasnovski/mini.icons',
+    version = '*',
+    config = function()
+      require('mini.icons').setup()
+    end,
+  },
+  {
     -- Tmux & split window navigation
     'christoomey/vim-tmux-navigator',
   },
@@ -25,7 +33,7 @@ return {
         function()
           require('notify').dismiss { silent = true, pending = true }
         end,
-        desc = 'Dismiss all Notifications',
+        desc = 'Dismiss all notifications',
       },
     },
     opts = {
@@ -54,53 +62,36 @@ return {
     event = 'VeryLazy',
     opts = {
       preset = 'helix',
-      delay = 200, -- Delay before showing which-key (ms)
+      delay = 200,
       icons = {
-        breadcrumb = '»', -- symbol used in the command line area that shows your active key combo
-        separator = '➜', -- symbol used between a key and it's label
-        group = '+', -- symbol prepended to a group
-      },
-      win = {
-        border = 'single', -- none, single, double, shadow, rounded
-        padding = { 1, 2 }, -- extra window padding [top/bottom, right/left]
-        title = true,
-        title_pos = 'center',
-        zindex = 1000,
-        wo = {
-          winblend = 0, -- value between 0-100 0 for fully opaque and 100 for fully transparent
-        },
-      },
-      layout = {
-        height = { min = 4, max = 25 }, -- min and max height of the columns
-        width = { min = 20, max = 50 }, -- min and max width of the columns
-        spacing = 3, -- spacing between columns
-        align = 'left', -- align columns left, center or right
-      },
-      show_help = true, -- show a help message in the command line for using WhichKey
-      show_keys = true, -- show the currently pressed key and its label as a message in the command line
-      triggers = {
-        { '<auto>', mode = 'nxsot' },
+        separator = '→',
+        group = '+',
       },
     },
     config = function(_, opts)
       local wk = require 'which-key'
       wk.setup(opts)
 
-      -- Define key group names
+      -- Define key group names (organized alphabetically, LazyVim-aligned)
       wk.add {
-        { '<leader>c', group = '[C]ode' },
-        { '<leader>d', group = '[D]ocument/Debug' },
-        { '<leader>r', group = '[R]efactor' },
-        { '<leader>s', group = '[S]earch' },
-        { '<leader>w', group = '[W]orkspace' },
-        { '<leader>t', group = '[T]est/Terminal/Toggle' },
-        { '<leader>q', group = 'Diagnostics/[Q]uality' },
-        { '<leader>e', group = '[E]xit/Session' },
-        { '<leader>g', group = '[G]it' },
-        { '<leader>b', group = '[B]uffer' },
-        { '<leader>f', group = '[F]ind (Files)' },
-        { '<leader>v', group = '[V]env (Python)' },
-        { '<leader>n', group = 'Docstri[n]g/Notes' },
+        { '<leader>b', group = '+buffer' },
+        { '<leader>c', group = '+code' },
+        { '<leader>cg', group = '+go' },
+        { '<leader>d', group = '+debug' },
+        { '<leader>e', group = '+explorer' },
+        { '<leader>f', group = '+file/find' },
+        { '<leader>g', group = '+git' },
+        { '<leader>h', group = '+hunks' },
+        { '<leader>n', group = '+notes' },
+        { '<leader>q', group = '+quit/session' },
+        { '<leader>r', group = '+refactor' },
+        { '<leader>s', group = '+search' },
+        { '<leader>t', group = '+test' },
+        { '<leader>T', group = '+terminals' },
+        { '<leader>u', group = '+ui' },
+        { '<leader>v', group = '+venv' },
+        { '<leader>w', group = '+windows' },
+        { '<leader>x', group = '+diagnostics/quickfix' },
       }
     end,
   },
