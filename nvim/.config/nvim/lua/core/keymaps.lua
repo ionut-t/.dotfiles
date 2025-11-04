@@ -23,6 +23,17 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- Remap U to redo (default is <C-r>)
 vim.keymap.set('n', 'U', '<C-r>', { desc = 'Redo' })
 
+-- Paste without yanking replaced text (visual/select mode)
+vim.keymap.set('x', 'p', '"_dP', { desc = 'Paste without yank' })
+
+-- Delete without yanking (use black hole register)
+vim.keymap.set({ 'n', 'x' }, 'd', '"_d', { desc = 'Delete without yank' })
+vim.keymap.set({ 'n', 'x' }, 'D', '"_D', { desc = 'Delete to end without yank' })
+vim.keymap.set({ 'n', 'x' }, 'x', '"_x', { desc = 'Delete char without yank' })
+vim.keymap.set({ 'n', 'x' }, 'X', '"_X', { desc = 'Delete char back without yank' })
+
+-- Note: Use 'c' (change) operations for cutting text (they yank to clipboard by default)
+
 -- Exit insert mode with jj
 vim.keymap.set('i', 'jj', '<Esc>', { desc = 'Exit insert mode' })
 
