@@ -194,6 +194,49 @@ vim.keymap.set('n', '<leader>rr', function()
 end, { desc = 'Restart/exit neovim (saves session)' })
 
 -- Buffer management
+-- Create new buffers with optional filename in current buffer's directory
+vim.keymap.set('n', '<leader>bn', function()
+  local current_dir_abs = vim.fn.expand '%:p:h'
+  local current_dir_rel = vim.fn.expand '%:.:h'
+  vim.ui.input({ prompt = 'New file in ' .. current_dir_rel .. '\nFilename: ' }, function(input)
+    if input then
+      vim.cmd 'enew'
+      if input ~= '' then
+        local full_path = current_dir_abs .. '/' .. input
+        vim.cmd('file ' .. vim.fn.fnameescape(full_path))
+      end
+    end
+  end)
+end, { desc = 'Buffer new' })
+
+vim.keymap.set('n', '<leader>bN', function()
+  local current_dir_abs = vim.fn.expand '%:p:h'
+  local current_dir_rel = vim.fn.expand '%:.:h'
+  vim.ui.input({ prompt = 'New file in ' .. current_dir_rel .. '\nFilename: ' }, function(input)
+    if input then
+      vim.cmd 'new'
+      if input ~= '' then
+        local full_path = current_dir_abs .. '/' .. input
+        vim.cmd('file ' .. vim.fn.fnameescape(full_path))
+      end
+    end
+  end)
+end, { desc = 'Buffer new (split)' })
+
+vim.keymap.set('n', '<leader>bv', function()
+  local current_dir_abs = vim.fn.expand '%:p:h'
+  local current_dir_rel = vim.fn.expand '%:.:h'
+  vim.ui.input({ prompt = 'New file in ' .. current_dir_rel .. '\nFilename: ' }, function(input)
+    if input then
+      vim.cmd 'vnew'
+      if input ~= '' then
+        local full_path = current_dir_abs .. '/' .. input
+        vim.cmd('file ' .. vim.fn.fnameescape(full_path))
+      end
+    end
+  end)
+end, { desc = 'Buffer new (vsplit)' })
+
 -- Close all buffers
 vim.keymap.set('n', '<leader>bD', function()
   vim.cmd 'bufdo Bdelete'
