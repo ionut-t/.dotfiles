@@ -34,6 +34,19 @@ vim.keymap.set({ 'n', 'x' }, 'X', '"_X', { desc = 'Delete char back without yank
 
 -- Note: Use 'c' (change) operations for cutting text (they yank to clipboard by default)
 
+-- Copy file paths to clipboard
+vim.keymap.set('n', '<leader>yp', function()
+  local path = vim.fn.expand '%:.'
+  vim.fn.setreg('+', path)
+  vim.notify('Copied relative path: ' .. path, vim.log.levels.INFO)
+end, { desc = 'Yank relative path' })
+
+vim.keymap.set('n', '<leader>yP', function()
+  local path = vim.fn.expand '%:p'
+  vim.fn.setreg('+', path)
+  vim.notify('Copied absolute path: ' .. path, vim.log.levels.INFO)
+end, { desc = 'Yank absolute path' })
+
 -- Exit insert mode with jj
 vim.keymap.set('i', 'jj', '<Esc>', { desc = 'Exit insert mode' })
 
