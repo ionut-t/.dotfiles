@@ -1,6 +1,46 @@
 return {
   'nvim-neo-tree/neo-tree.nvim',
   branch = 'v3.x',
+  cmd = 'Neotree',
+  keys = {
+    {
+      '<leader>fe',
+      function()
+        require('neo-tree.command').execute { toggle = true, dir = vim.fn.getcwd() }
+      end,
+      desc = 'Explorer NeoTree (Root Dir)',
+    },
+    {
+      '<leader>fE',
+      function()
+        require('neo-tree.command').execute { toggle = true, dir = vim.uv.cwd() }
+      end,
+      desc = 'Explorer NeoTree (cwd)',
+    },
+    { '<leader>e', '<leader>fe', desc = 'Explorer NeoTree (Root Dir)', remap = true },
+    { '<leader>E', '<leader>fE', desc = 'Explorer NeoTree (cwd)', remap = true },
+    {
+      '<leader>ge',
+      function()
+        require('neo-tree.command').execute { source = 'git_status', toggle = true }
+      end,
+      desc = 'Git Explorer',
+    },
+    {
+      '<leader>be',
+      function()
+        require('neo-tree.command').execute { source = 'buffers', toggle = true }
+      end,
+      desc = 'Buffer Explorer',
+    },
+    {
+      '\\',
+      function()
+        require('neo-tree.command').execute { action = 'reveal' }
+      end,
+      desc = 'Reveal file in NeoTree',
+    },
+  },
   dependencies = {
     'nvim-lua/plenary.nvim',
     'nvim-tree/nvim-web-devicons',
@@ -26,29 +66,44 @@ return {
       end,
     },
   },
+  deactivate = function()
+    vim.cmd [[Neotree close]]
+  end,
+  init = function()
+    -- FIX: use `autocmd` for lazy-loading neo-tree instead of directly requiring it,
+    -- because `cwd` is not set up properly.
+    vim.api.nvim_create_autocmd('BufEnter', {
+      group = vim.api.nvim_create_augroup('Neotree_start_directory', { clear = true }),
+      desc = 'Start Neo-tree with directory',
+      once = true,
+      callback = function()
+        if package.loaded['neo-tree'] then
+          return
+        else
+          local stats = vim.uv.fs_stat(vim.fn.argv(0))
+          if stats and stats.type == 'directory' then
+            require 'neo-tree'
+          end
+        end
+      end,
+    })
+  end,
   config = function()
-    -- If you want icons for diagnostic errors, you'll need to define them somewhere:
+    -- Configure diagnostic signs using vim.diagnostic.config()
     vim.fn.sign_define('DiagnosticSignError', { text = ' ', texthl = 'DiagnosticSignError' })
     vim.fn.sign_define('DiagnosticSignWarn', { text = ' ', texthl = 'DiagnosticSignWarn' })
     vim.fn.sign_define('DiagnosticSignInfo', { text = ' ', texthl = 'DiagnosticSignInfo' })
     vim.fn.sign_define('DiagnosticSignHint', { text = '󰌵', texthl = 'DiagnosticSignHint' })
 
     require('neo-tree').setup {
-      close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
+      sources = { 'filesystem', 'buffers', 'git_status' },
+      close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
       popup_border_style = 'rounded',
       enable_git_status = true,
       enable_diagnostics = true,
-      -- enable_normal_mode_for_inputs = false,                             -- Enable normal mode for input dialogs.
-      open_files_do_not_replace_types = { 'terminal', 'trouble', 'qf' }, -- when opening files, do not use windows containing these filetypes or buftypes
+      open_files_do_not_replace_types = { 'terminal', 'Trouble', 'trouble', 'qf', 'Outline' }, -- when opening files, do not use windows containing these filetypes or buftypes
       sort_case_insensitive = false, -- used when sorting files and directories in the tree
       sort_function = nil, -- use a custom function for sorting files and directories in the tree
-      -- sort_function = function (a,b)
-      --       if a.type == b.type then
-      --           return a.path > b.path
-      --       else
-      --           return a.type > b.type
-      --       end
-      --   end , -- this sorts files and directories descendantly
       default_component_configs = {
         container = {
           enable_character_fade = true,
@@ -62,7 +117,7 @@ return {
           last_indent_marker = '└',
           highlight = 'NeoTreeIndentMarker',
           -- expander config, needed for nesting files
-          with_expanders = nil, -- if nil and file nesting is enabled, will enable expanders
+          with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
           expander_collapsed = '',
           expander_expanded = '',
           expander_highlight = 'NeoTreeExpander',
@@ -133,15 +188,13 @@ return {
           nowait = true,
         },
         mappings = {
-          ['<space>'] = {
-            'toggle_node',
-            nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use
-          },
+          ['<space>'] = 'none',
           ['<2-LeftMouse>'] = 'open',
           ['<cr>'] = 'open',
           ['<esc>'] = 'cancel', -- close preview or floating neo-tree window
-          ['P'] = { 'toggle_preview', config = { use_float = true } },
+          ['P'] = { 'toggle_preview', config = { use_float = false } },
           ['l'] = 'open',
+          ['h'] = 'close_node',
           ['S'] = 'open_split',
           ['s'] = 'open_vsplit',
           -- ["S"] = "split_with_window_picker",
@@ -167,6 +220,20 @@ return {
           ['d'] = 'delete',
           ['r'] = 'rename',
           ['y'] = 'copy_to_clipboard',
+          ['Y'] = {
+            function(state)
+              local node = state.tree:get_node()
+              local path = node:get_id()
+              vim.fn.setreg('+', path, 'c')
+            end,
+            desc = 'Copy Path to Clipboard',
+          },
+          ['O'] = {
+            function(state)
+              require('lazy.util').open(state.tree:get_node().path, { system = true })
+            end,
+            desc = 'Open with System Application',
+          },
           ['x'] = 'cut_to_clipboard',
           ['p'] = 'paste_from_clipboard',
           ['c'] = 'copy', -- takes text input for destination, also accepts the optional config.show_path option like "add":
@@ -217,19 +284,15 @@ return {
             --".null-ls_*",
           },
         },
-        follow_current_file = {
-          enabled = false, -- This will find and focus the file in the active buffer every time
-          --               -- the current file is changed while the tree is open.
-          leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
-        },
+        bind_to_cwd = false,
+        follow_current_file = { enabled = true },
+        use_libuv_file_watcher = true,
         group_empty_dirs = false, -- when true, empty folders will be grouped together
         hijack_netrw_behavior = 'open_default', -- netrw disabled, opening a directory opens neo-tree
         -- in whatever position is specified in window.position
         -- "open_current",  -- netrw disabled, opening a directory opens within the
         -- window like netrw would, regardless of window.position
         -- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
-        use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
-        -- instead of relying on nvim autocmd events.
         window = {
           mappings = {
             ['<bs>'] = 'navigate_up',
@@ -268,7 +331,7 @@ return {
           --              -- the current file is changed while the tree is open.
           leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
         },
-        group_empty_dirs = true, -- when true, empty folders will be grouped together
+        group_empty_dirs = true,   -- when true, empty folders will be grouped together
         show_unloaded = true,
         window = {
           mappings = {
@@ -306,10 +369,36 @@ return {
           },
         },
       },
+      event_handlers = {
+        {
+          event = 'file_moved',
+          handler = function(data)
+            -- Auto-update references when renaming files (requires snacks.nvim or similar)
+            if pcall(require, 'snacks') then
+              require('snacks').rename.on_rename_file(data.source, data.destination)
+            end
+          end,
+        },
+        {
+          event = 'file_renamed',
+          handler = function(data)
+            -- Auto-update references when renaming files (requires snacks.nvim or similar)
+            if pcall(require, 'snacks') then
+              require('snacks').rename.on_rename_file(data.source, data.destination)
+            end
+          end,
+        },
+      },
     }
 
-    vim.cmd [[nnoremap \ :Neotree reveal<cr>]]
-    vim.keymap.set('n', '<leader>e', ':Neotree toggle position=left<CR>', { noremap = true, silent = true }) -- focus file explorer
-    vim.keymap.set('n', '<leader>ngs', ':Neotree float git_status<CR>', { noremap = true, silent = true }) -- open git status window
+    -- Auto-refresh git status after lazygit
+    vim.api.nvim_create_autocmd('TermClose', {
+      pattern = '*lazygit',
+      callback = function()
+        if package.loaded['neo-tree.sources.git_status'] then
+          require('neo-tree.sources.git_status').refresh()
+        end
+      end,
+    })
   end,
 }

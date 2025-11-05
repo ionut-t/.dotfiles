@@ -7,35 +7,7 @@ return {
     options = { 'buffers', 'curdir', 'tabpages', 'winsize' },
     need = 1, -- Minimum number of file buffers before saving
   },
-  init = function()
-    -- Auto-restore session BEFORE plugins load
-    vim.api.nvim_create_autocmd('VimEnter', {
-      group = vim.api.nvim_create_augroup('persistence_autoload', { clear = true }),
-      callback = function()
-        -- Only load session if nvim was started with no args
-        if vim.fn.argc() == 0 then
-          local session_file = vim.fn.stdpath 'state' .. '/sessions/' .. vim.fn.getcwd():gsub('/', '%%') .. '.vim'
-
-          -- Debug output
-          print('Checking for session: ' .. session_file)
-          print('File exists: ' .. vim.fn.filereadable(session_file))
-
-          if vim.fn.filereadable(session_file) == 1 then
-            print('Loading session...')
-            vim.schedule(function()
-              require('persistence').load()
-              print('Session loaded!')
-            end)
-          else
-            print('No session file found')
-          end
-        else
-          print('argc() = ' .. vim.fn.argc() .. ', skipping auto-restore')
-        end
-      end,
-      nested = true,
-    })
-  end,
+  -- Auto-restore disabled - use <leader>qs to manually restore session
   config = function(_, opts)
     require('persistence').setup(opts)
   end,
