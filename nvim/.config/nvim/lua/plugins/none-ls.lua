@@ -44,6 +44,7 @@ return {
           'scss',
           'less',
           'html',
+          'htmlangular', -- Angular component templates
           'json',
           'jsonc',
           'yaml',

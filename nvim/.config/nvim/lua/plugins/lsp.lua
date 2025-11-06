@@ -237,7 +237,7 @@ return {
 
       -- Angular Language Server
       angularls = {
-        filetypes = { 'typescript', 'html', 'typescriptreact', 'typescript.tsx' },
+        filetypes = { 'typescript', 'html', 'typescriptreact', 'typescript.tsx', 'htmlangular' },
       },
 
       lua_ls = {
