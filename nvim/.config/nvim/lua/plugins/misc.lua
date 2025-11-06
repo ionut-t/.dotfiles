@@ -1,13 +1,37 @@
 -- Standalone plugins with less than 10 lines of config go here
 return {
   {
-    -- Icon provider for Neovim plugins
-    'echasnovski/mini.icons',
-    version = '*',
+    -- Icon provider
+    'nvim-tree/nvim-web-devicons',
+    lazy = false,
+    priority = 1000,
     config = function()
-      require('mini.icons').setup()
+      require('nvim-web-devicons').setup {
+        default = true,
+        strict = true,
+        override_by_filename = {
+          [".gitignore"] = {
+            icon = "",
+            color = "#f1502f",
+            name = "Gitignore"
+          }
+        },
+      }
     end,
   },
+  -- {
+  --   -- Icon provider for Neovim plugins
+  --   'echasnovski/mini.icons',
+  --   version = '*',
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     local icons = require('mini.icons')
+  --     icons.setup()
+  --     -- Mock nvim-web-devicons for plugins that depend on it (like Neo-tree)
+  --     icons.mock_nvim_web_devicons()
+  --   end,
+  -- },
   {
     -- Tmux & split window navigation
     'christoomey/vim-tmux-navigator',

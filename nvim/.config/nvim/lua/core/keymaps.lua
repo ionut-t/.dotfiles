@@ -97,7 +97,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
-    vim.highlight.on_yank()
+    vim.hl.on_yank()
   end,
 })
 
@@ -256,6 +256,52 @@ end, { desc = 'Buffer delete others' })
 -- Move buffer left/right
 vim.keymap.set('n', '<leader>b[', ':BufferLineMovePrev<CR>', { desc = 'Buffer move left', silent = true })
 vim.keymap.set('n', '<leader>b]', ':BufferLineMoveNext<CR>', { desc = 'Buffer move right', silent = true })
+
+-- Create scratch buffer in floating window
+-- Global variable to store the scratch buffer
+_G.scratch_buf = _G.scratch_buf or nil
+
+vim.keymap.set('n', '<leader>bs', function()
+  -- Reuse existing scratch buffer or create new one
+  if not _G.scratch_buf or not vim.api.nvim_buf_is_valid(_G.scratch_buf) then
+    _G.scratch_buf = vim.api.nvim_create_buf(false, true)
+    vim.api.nvim_buf_set_option(_G.scratch_buf, 'bufhidden', 'hide')
+    vim.api.nvim_buf_set_option(_G.scratch_buf, 'filetype', 'markdown')
+  end
+  local buf = _G.scratch_buf
+
+  -- Get editor dimensions
+  local width = vim.api.nvim_get_option 'columns'
+  local height = vim.api.nvim_get_option 'lines'
+
+  -- Calculate floating window size (50% of screen)
+  local win_width = math.floor(width * 0.5)
+  local win_height = math.floor(height * 0.5)
+
+  -- Calculate position to center the window
+  local row = math.floor((height - win_height) / 2)
+  local col = math.floor((width - win_width) / 2)
+
+  -- Window options
+  local opts = {
+    relative = 'editor',
+    width = win_width,
+    height = win_height,
+    row = row,
+    col = col,
+    style = 'minimal',
+    border = 'rounded',
+    title = ' Scratch Buffer ',
+    title_pos = 'center',
+  }
+
+  -- Open floating window
+  vim.api.nvim_open_win(buf, true, opts)
+
+  -- Set keymaps to close the window
+  vim.keymap.set('n', 'q', '<cmd>q<cr>', { buffer = buf, nowait = true })
+  vim.keymap.set('n', '<Esc>', '<cmd>q<cr>', { buffer = buf, nowait = true })
+end, { desc = 'Buffer scratch' })
 
 -- UI toggles
 vim.keymap.set('n', '<leader>ud', function()
