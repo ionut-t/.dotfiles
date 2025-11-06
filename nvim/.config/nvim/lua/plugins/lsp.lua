@@ -55,9 +55,12 @@ return {
         --
         -- In this case, we create a function that lets us more easily define mappings specific
         -- for LSP related items. It sets the mode, buffer and description for us each time.
-        local map = function(keys, func, desc, mode)
+        local map = function(keys, func, desc, mode, opts)
           mode = mode or 'n'
-          vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+          opts = opts or {}
+          opts.buffer = event.buf
+          opts.desc = 'LSP: ' .. desc
+          vim.keymap.set(mode, keys, func, opts)
         end
 
         -- Jump to the definition of the word under your cursor.
@@ -87,7 +90,8 @@ return {
 
         -- Rename the variable under your cursor.
         --  Most Language Servers support renaming across files, etc.
-        map('<leader>rn', vim.lsp.buf.rename, 'Rename')
+        --  Using inc-rename for live preview with clean input
+        map('<leader>rn', ':IncRename ', 'Rename')
 
         -- Execute a code action, usually your cursor needs to be on top of an error
         -- or a suggestion from your LSP for this to activate.

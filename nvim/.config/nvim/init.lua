@@ -16,6 +16,9 @@ vim.opt.rtp:prepend(lazypath)
 -- Set up plugins
 require('lazy').setup {
   require 'plugins.misc', -- Load icons first (nvim-web-devicons)
+  require 'plugins.snacks', -- Snacks.nvim utilities
+  require 'plugins.dressing', -- Improved UI for vim.ui.select and vim.ui.input
+  require 'plugins.inc-rename', -- LSP rename with live preview
   require 'plugins.neotree',
   require 'plugins.oil',
   require 'plugins.theme',
