@@ -300,35 +300,10 @@ return {
         snacks.toggle.diagnostics():map '<leader>ud'
         snacks.toggle.line_number():map '<leader>ul'
 
-        snacks.toggle
-          .option('conceallevel', {
-            name = 'Conceal',
-            off = 0,
-            on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2,
-            get = function()
-              return vim.wo.conceallevel
-            end,
-            set = function(state)
-              vim.wo.conceallevel = state
-            end,
-          })
-          :map '<leader>uc'
+        -- Note: Conceal toggle removed - hides/shows concealed text (e.g., markdown links)
+        -- Note: Background toggle removed - not needed
 
         snacks.toggle.treesitter():map '<leader>uT'
-
-        snacks.toggle
-          .option('background', {
-            name = 'Dark Background',
-            off = 'light',
-            on = 'dark',
-            get = function()
-              return vim.o.background
-            end,
-            set = function(state)
-              vim.o.background = state
-            end,
-          })
-          :map '<leader>ub'
 
         snacks.toggle.inlay_hints():map '<leader>uh'
         snacks.toggle.indent():map '<leader>ug'

@@ -9,14 +9,14 @@ return {
       insert_only = false,
       start_in_insert = true,
       border = 'rounded',
-      relative = 'cursor',
+      relative = 'editor', -- Changed from 'cursor' to 'editor' for consistent positioning
       prefer_width = 40,
       width = nil,
       max_width = { 140, 0.9 },
       min_width = { 20, 0.2 },
       win_options = {
         winblend = 0,
-        wrap = false,
+        wrap = true, -- Enable wrapping for long prompts
       },
       -- Custom mapping to override inc-rename prompts
       get_config = function(opts)

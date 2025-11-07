@@ -1,29 +1,11 @@
 return {
   'akinsho/toggleterm.nvim',
   version = '*',
-  keys = {
-    { '<C-\\>', '<cmd>ToggleTerm<cr>', desc = 'Toggle terminal', mode = { 'n', 't' } },
-    { '<leader>Tf', '<cmd>ToggleTerm direction=float<cr>', desc = 'Terminal float' },
-    { '<leader>Th', '<cmd>ToggleTerm direction=horizontal<cr>', desc = 'Terminal horizontal' },
-    { '<leader>Tv', '<cmd>ToggleTerm direction=vertical size=80<cr>', desc = 'Terminal vertical' },
-  },
+  cmd = 'ToggleTerm',
   opts = {
-    size = function(term)
-      if term.direction == 'horizontal' then
-        return 15
-      elseif term.direction == 'vertical' then
-        return vim.o.columns * 0.4
-      end
-    end,
-    open_mapping = [[<c-\>]],
     hide_numbers = true,
-    shade_terminals = true,
-    shading_factor = 2,
+    shade_terminals = false,
     start_in_insert = true,
-    insert_mappings = true,
-    terminal_mappings = true,
-    persist_size = true,
-    persist_mode = true,
     direction = 'float',
     close_on_exit = true,
     shell = vim.o.shell,
@@ -31,13 +13,24 @@ return {
     float_opts = {
       border = 'curved',
       winblend = 0,
-      highlights = {
-        border = 'Normal',
-        background = 'Normal',
-      },
-    },
-    winbar = {
-      enabled = false,
+      width = function()
+        return math.floor(vim.o.columns * 0.5)
+      end,
+      height = function()
+        return math.floor(vim.o.lines * 0.5)
+      end,
     },
   },
+  config = function(_, opts)
+    require('toggleterm').setup(opts)
+
+    -- Add easy close keymaps for terminal buffers
+    vim.api.nvim_create_autocmd('TermOpen', {
+      pattern = 'term://*toggleterm#*',
+      callback = function()
+        -- Esc exits insert mode, then use :close or <leader>tt to close
+        vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], { buffer = 0, nowait = true })
+      end,
+    })
+  end,
 }

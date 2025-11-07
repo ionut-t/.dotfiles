@@ -102,49 +102,32 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- Open terminal in current file's directory
-vim.keymap.set('n', '<leader>Tt', function()
-  -- Get the directory of the current file, handling oil:// paths
-  local path = vim.fn.expand '%:p'
-  local file_dir
+-- Track the last directory to detect when we need a new terminal
+_G.last_term_dir = nil
+_G.term_count = 1
 
-  -- Check if this is an oil path and convert it
-  if path:match '^oil://' then
-    -- Convert oil:// path to real path (remove the oil:// prefix)
-    file_dir = path:gsub('^oil://', '')
-  else
-    -- Regular file, get its directory
-    file_dir = vim.fn.expand '%:p:h'
+vim.keymap.set('n', '<leader>tt', function()
+  local current_dir = vim.fn.expand '%:p:h'
+
+  -- If we're in a different directory, increment terminal count to get a new one
+  if _G.last_term_dir and _G.last_term_dir ~= current_dir then
+    _G.term_count = _G.term_count + 1
   end
+  _G.last_term_dir = current_dir
 
-  -- Open a split for the terminal
-  vim.cmd 'split'
-  vim.cmd 'resize 15'
-  -- Open terminal with the cd command
-  vim.cmd('terminal cd "' .. file_dir .. '" && $SHELL')
-  -- Automatically enter insert mode in the terminal
-  vim.cmd 'startinsert'
-end, { desc = 'Terminal in file directory' })
+  vim.cmd(_G.term_count .. 'ToggleTerm dir=' .. vim.fn.fnameescape(current_dir))
+end, { desc = 'Toggle terminal in current dir' })
 
--- Open terminal in vertical split in current file's directory
-vim.keymap.set('n', '<leader>Tv', function()
-  -- Get the directory of the current file, handling oil:// paths
-  local path = vim.fn.expand '%:p'
-  local file_dir
-
-  -- Check if this is an oil path and convert it
-  if path:match '^oil://' then
-    -- Convert oil:// path to real path (remove the oil:// prefix)
-    file_dir = path:gsub('^oil://', '')
-  else
-    -- Regular file, get its directory
-    file_dir = vim.fn.expand '%:p:h'
+-- Kill all terminals and reset counter
+vim.keymap.set('n', '<leader>tk', function()
+  local terms = require('toggleterm.terminal').get_all()
+  for _, term in pairs(terms) do
+    term:shutdown()
   end
-
-  vim.cmd 'vsplit'
-  -- Open terminal with the cd command
-  vim.cmd('terminal cd "' .. file_dir .. '" && $SHELL')
-  vim.cmd 'startinsert'
-end, { desc = 'Terminal vertical in file directory' })
+  _G.last_term_dir = nil
+  _G.term_count = 1
+  vim.notify('All terminals closed', vim.log.levels.INFO)
+end, { desc = 'Kill all terminals' })
 
 -- Reload a specific plugin module (useful for plugin config changes)
 vim.keymap.set('n', '<leader>rp', function()
@@ -238,7 +221,7 @@ vim.keymap.set('n', '<leader>bv', function()
 end, { desc = 'Buffer new (vsplit)' })
 
 -- Close all buffers
-vim.keymap.set('n', '<leader>bD', function()
+vim.keymap.set('n', '<leader>bA', function()
   vim.cmd 'bufdo Bdelete'
 end, { desc = 'Buffer delete all' })
 
@@ -257,55 +240,8 @@ end, { desc = 'Buffer delete others' })
 vim.keymap.set('n', '<leader>b[', ':BufferLineMovePrev<CR>', { desc = 'Buffer move left', silent = true })
 vim.keymap.set('n', '<leader>b]', ':BufferLineMoveNext<CR>', { desc = 'Buffer move right', silent = true })
 
--- Create scratch buffer in floating window
--- Global variable to store the scratch buffer
-_G.scratch_buf = _G.scratch_buf or nil
-
-vim.keymap.set('n', '<leader>bs', function()
-  -- Reuse existing scratch buffer or create new one
-  if not _G.scratch_buf or not vim.api.nvim_buf_is_valid(_G.scratch_buf) then
-    _G.scratch_buf = vim.api.nvim_create_buf(false, true)
-    vim.api.nvim_buf_set_option(_G.scratch_buf, 'bufhidden', 'hide')
-    vim.api.nvim_buf_set_option(_G.scratch_buf, 'filetype', 'markdown')
-  end
-  local buf = _G.scratch_buf
-
-  -- Get editor dimensions
-  local width = vim.api.nvim_get_option 'columns'
-  local height = vim.api.nvim_get_option 'lines'
-
-  -- Calculate floating window size (50% of screen)
-  local win_width = math.floor(width * 0.5)
-  local win_height = math.floor(height * 0.5)
-
-  -- Calculate position to center the window
-  local row = math.floor((height - win_height) / 2)
-  local col = math.floor((width - win_width) / 2)
-
-  -- Window options
-  local opts = {
-    relative = 'editor',
-    width = win_width,
-    height = win_height,
-    row = row,
-    col = col,
-    style = 'minimal',
-    border = 'rounded',
-    title = ' Scratch Buffer ',
-    title_pos = 'center',
-  }
-
-  -- Open floating window
-  vim.api.nvim_open_win(buf, true, opts)
-
-  -- Set keymaps to close the window
-  vim.keymap.set('n', 'q', '<cmd>q<cr>', { buffer = buf, nowait = true })
-  vim.keymap.set('n', '<Esc>', '<cmd>q<cr>', { buffer = buf, nowait = true })
-end, { desc = 'Buffer scratch' })
+-- Note: Scratch buffer moved to snacks.nvim
+-- Use <leader>. for scratch buffer, <leader>S to select from multiple scratch buffers
 
 -- UI toggles
-vim.keymap.set('n', '<leader>ud', function()
-  vim.diagnostic.enable(not vim.diagnostic.is_enabled())
-  local status = vim.diagnostic.is_enabled() and 'enabled' or 'disabled'
-  vim.notify('Diagnostics ' .. status, vim.log.levels.INFO)
-end, { desc = 'Toggle diagnostics' })
+-- Note: Diagnostic toggle moved to snacks.nvim (<leader>ud)
