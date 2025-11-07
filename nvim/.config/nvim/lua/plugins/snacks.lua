@@ -260,20 +260,92 @@ return {
         end
         vim.print = _G.dd -- Override print to use snacks.debug
 
-        -- Create some toggle commands
-        snacks.toggle.option('spell', { name = 'Spelling' }):map '<leader>us'
-        snacks.toggle.option('wrap', { name = 'Wrap' }):map '<leader>uw'
-        snacks.toggle.option('relativenumber', { name = 'Relative Number' }):map '<leader>uL'
-        snacks.toggle.diagnostics():map '<leader>uD'
-        snacks.toggle.line_number():map '<leader>ul'
+        -- Create some toggle commands with state display
         snacks.toggle
-          .option('conceallevel', { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 })
+          .option('spell', {
+            name = 'Spelling',
+            get = function()
+              return vim.wo.spell
+            end,
+            set = function(state)
+              vim.wo.spell = state
+            end,
+          })
+          :map '<leader>us'
+
+        snacks.toggle
+          .option('wrap', {
+            name = 'Wrap',
+            get = function()
+              return vim.wo.wrap
+            end,
+            set = function(state)
+              vim.wo.wrap = state
+            end,
+          })
+          :map '<leader>uw'
+
+        snacks.toggle
+          .option('relativenumber', {
+            name = 'Relative Number',
+            get = function()
+              return vim.wo.relativenumber
+            end,
+            set = function(state)
+              vim.wo.relativenumber = state
+            end,
+          })
+          :map '<leader>uL'
+
+        snacks.toggle.diagnostics():map '<leader>ud'
+        snacks.toggle.line_number():map '<leader>ul'
+
+        snacks.toggle
+          .option('conceallevel', {
+            name = 'Conceal',
+            off = 0,
+            on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2,
+            get = function()
+              return vim.wo.conceallevel
+            end,
+            set = function(state)
+              vim.wo.conceallevel = state
+            end,
+          })
           :map '<leader>uc'
+
         snacks.toggle.treesitter():map '<leader>uT'
-        snacks.toggle.option('background', { off = 'light', on = 'dark', name = 'Dark Background' }):map '<leader>ub'
+
+        snacks.toggle
+          .option('background', {
+            name = 'Dark Background',
+            off = 'light',
+            on = 'dark',
+            get = function()
+              return vim.o.background
+            end,
+            set = function(state)
+              vim.o.background = state
+            end,
+          })
+          :map '<leader>ub'
+
         snacks.toggle.inlay_hints():map '<leader>uh'
         snacks.toggle.indent():map '<leader>ug'
         snacks.toggle.dim():map '<leader>uD'
+
+        -- Toggle auto-format on save
+        snacks.toggle
+          .new({
+            name = 'Auto Format',
+            get = function()
+              return vim.g.format_on_save_enabled == true
+            end,
+            set = function(state)
+              vim.g.format_on_save_enabled = state
+            end,
+          })
+          :map '<leader>uf'
       end,
     })
   end,
