@@ -77,6 +77,7 @@ return {
     }
 
     -- Global variable to track format-on-save state
+    -- Toggled via snacks.nvim: <leader>uf
     vim.g.format_on_save_enabled = true
 
     local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
@@ -100,12 +101,5 @@ return {
         end
       end,
     }
-
-    -- Keymap to toggle format-on-save
-    vim.keymap.set('n', '<leader>uf', function()
-      vim.g.format_on_save_enabled = not vim.g.format_on_save_enabled
-      local status = vim.g.format_on_save_enabled and 'enabled' or 'disabled'
-      vim.notify('Format on save ' .. status, vim.log.levels.INFO)
-    end, { desc = 'Toggle format on save' })
   end,
 }
