@@ -19,6 +19,7 @@ require('lazy').setup {
   require 'plugins.snacks', -- Snacks.nvim utilities
   require 'plugins.dressing', -- Improved UI for vim.ui.select and vim.ui.input
   require 'plugins.inc-rename', -- LSP rename with live preview
+  require 'plugins.harpoon', -- Quick file navigation
   require 'plugins.neotree',
   require 'plugins.oil',
   require 'plugins.theme',
