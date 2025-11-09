@@ -101,6 +101,15 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Delete without copying to clipboard (dd = delete line, d = delete motion)
+vim.keymap.set('n', 'dd', '"_dd', { desc = 'Delete line (no copy)' })
+vim.keymap.set('n', 'd', '"_d', { desc = 'Delete (no copy)' })
+vim.keymap.set('v', 'd', '"_d', { desc = 'Delete selection (no copy)' })
+
+-- Delete and copy (dx = cut line, x = cut motion in visual)
+vim.keymap.set('n', 'dx', 'dd', { desc = 'Cut line' })
+vim.keymap.set('v', 'x', 'd', { desc = 'Cut selection' })
+
 -- Open terminal in current file's directory
 -- Track the last directory to detect when we need a new terminal
 _G.last_term_dir = nil
@@ -186,6 +195,9 @@ vim.keymap.set('n', '<leader>bn', function()
       vim.cmd 'enew'
       if input ~= '' then
         local full_path = current_dir_abs .. '/' .. input
+        -- Create parent directories if they don't exist
+        local parent_dir = vim.fn.fnamemodify(full_path, ':h')
+        vim.fn.mkdir(parent_dir, 'p')
         vim.cmd('file ' .. vim.fn.fnameescape(full_path))
       end
     end
@@ -200,6 +212,9 @@ vim.keymap.set('n', '<leader>bN', function()
       vim.cmd 'new'
       if input ~= '' then
         local full_path = current_dir_abs .. '/' .. input
+        -- Create parent directories if they don't exist
+        local parent_dir = vim.fn.fnamemodify(full_path, ':h')
+        vim.fn.mkdir(parent_dir, 'p')
         vim.cmd('file ' .. vim.fn.fnameescape(full_path))
       end
     end
@@ -214,6 +229,9 @@ vim.keymap.set('n', '<leader>bv', function()
       vim.cmd 'vnew'
       if input ~= '' then
         local full_path = current_dir_abs .. '/' .. input
+        -- Create parent directories if they don't exist
+        local parent_dir = vim.fn.fnamemodify(full_path, ':h')
+        vim.fn.mkdir(parent_dir, 'p')
         vim.cmd('file ' .. vim.fn.fnameescape(full_path))
       end
     end
