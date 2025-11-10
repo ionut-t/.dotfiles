@@ -116,6 +116,9 @@ return {
         { '<leader>v', group = '+venv' },
         { '<leader>w', group = '+windows' },
         { '<leader>x', group = '+diagnostics/quickfix' },
+        -- Mark operations (no leader prefix)
+        { 'm', group = '+marks' },
+        { 'dm', group = '+delete marks' },
       }
     end,
   },
