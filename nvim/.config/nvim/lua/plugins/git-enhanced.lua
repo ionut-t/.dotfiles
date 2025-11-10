@@ -31,7 +31,7 @@ return {
       { '<leader>gg', '<cmd>Neogit<cr>', desc = 'Git neogit' },
       { '<leader>gC', '<cmd>Neogit commit<cr>', desc = 'Git commit' },
       {
-        '<leader>gb',
+        '<leader>gc',
         function()
           vim.ui.input({ prompt = 'Go back to branch (or - for previous): ' }, function(branch)
             if branch and branch ~= '' then

@@ -110,12 +110,15 @@ return {
         { '<leader>q', group = '+quit/session' },
         { '<leader>r', group = '+refactor' },
         { '<leader>s', group = '+search' },
-        { '<leader>t', group = '+test' },
-        { '<leader>T', group = '+terminals' },
+        { '<leader>t', group = '+terminal' },
+        { '<leader>T', group = '+test' },
         { '<leader>u', group = '+ui' },
         { '<leader>v', group = '+venv' },
         { '<leader>w', group = '+windows' },
         { '<leader>x', group = '+diagnostics/quickfix' },
+        -- Mark operations (no leader prefix)
+        { 'm', group = '+marks' },
+        { 'dm', group = '+delete marks' },
       }
     end,
   },

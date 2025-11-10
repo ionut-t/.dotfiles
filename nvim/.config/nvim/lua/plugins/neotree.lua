@@ -350,26 +350,8 @@ return {
           },
         },
       },
-      event_handlers = {
-        {
-          event = 'file_moved',
-          handler = function(data)
-            -- Auto-update references when renaming files (requires snacks.nvim or similar)
-            if pcall(require, 'snacks') then
-              require('snacks').rename.on_rename_file(data.source, data.destination)
-            end
-          end,
-        },
-        {
-          event = 'file_renamed',
-          handler = function(data)
-            -- Auto-update references when renaming files (requires snacks.nvim or similar)
-            if pcall(require, 'snacks') then
-              require('snacks').rename.on_rename_file(data.source, data.destination)
-            end
-          end,
-        },
-      },
+      -- Note: Auto-update references on file rename would require additional LSP integration
+      -- event_handlers removed for now as snacks.nvim doesn't provide rename.on_rename_file
     }
 
     -- Auto-refresh git status after lazygit
