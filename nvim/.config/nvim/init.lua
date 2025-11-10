@@ -26,6 +26,7 @@ require('lazy').setup {
   require 'plugins.bufferline',
   require 'plugins.lualine',
   require 'plugins.treesitter',
+  require 'plugins.treesitter-context',
   require 'plugins.telescope',
   require 'plugins.lsp',
   require 'plugins.autocompletion',
