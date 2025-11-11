@@ -305,6 +305,24 @@ return {
 
         snacks.toggle.treesitter():map '<leader>uT'
 
+        -- Toggle treesitter context
+        snacks.toggle
+          .new({
+            name = 'Treesitter Context',
+            get = function()
+              return require('treesitter-context').enabled()
+            end,
+            set = function(state)
+              local tsc = require 'treesitter-context'
+              if state then
+                tsc.enable()
+              else
+                tsc.disable()
+              end
+            end,
+          })
+          :map '<leader>uc'
+
         snacks.toggle.inlay_hints():map '<leader>uh'
         snacks.toggle.indent():map '<leader>ug'
         snacks.toggle.dim():map '<leader>uD'
