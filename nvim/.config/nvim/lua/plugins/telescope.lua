@@ -17,11 +17,42 @@ return {
     config = function()
         require('telescope').setup {
             defaults = {
+                -- Better path display for large projects
+                path_display = { "truncate" },
+
+                -- Vertical layout: search on top, preview on bottom
+                layout_strategy = "vertical",
+                layout_config = {
+                    vertical = {
+                        width = 0.9,
+                        height = 0.95,
+                        preview_height = 0.5,
+                        mirror = true,
+                    },
+                },
+
                 mappings = {
                     i = {
                         ['<C-k>'] = require('telescope.actions').move_selection_previous,
                         ['<C-j>'] = require('telescope.actions').move_selection_next,
                         ['<C-l>'] = require('telescope.actions').select_default,
+                        ['<CR>'] = function(prompt_bufnr)
+                            local actions = require('telescope.actions')
+                            local action_state = require('telescope.actions.state')
+                            local picker = action_state.get_current_picker(prompt_bufnr)
+                            local multi = picker:get_multi_selection()
+
+                            if #multi > 0 then
+                                -- Open all selected files
+                                actions.close(prompt_bufnr)
+                                for _, entry in ipairs(multi) do
+                                    vim.cmd(string.format('edit %s', entry.path or entry.filename))
+                                end
+                            else
+                                -- Normal behavior if no multi-selection
+                                actions.select_default(prompt_bufnr)
+                            end
+                        end,
                     },
                 },
             },
