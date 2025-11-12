@@ -115,7 +115,10 @@ endif
 call plug#begin('~/.vim/plugged')
   " Catppuccin theme
   Plug 'catppuccin/vim', { 'as': 'catppuccin' }
-  
+
 Plug 'tpope/vim-eunuch'
 call plug#end()
+
+" Set colorscheme after plugins are loaded
+colorscheme catppuccin_mocha
 
