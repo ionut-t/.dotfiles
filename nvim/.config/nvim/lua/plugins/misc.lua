@@ -86,7 +86,7 @@ return {
     event = 'VeryLazy',
     opts = {
       preset = 'helix',
-      delay = 200,
+      delay = 500,
       icons = {
         separator = '→',
         group = '+',
