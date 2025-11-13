@@ -236,6 +236,7 @@ return {
       end,
       desc = 'Notification History',
     },
+
     {
       '<leader>nd',
       function()
@@ -243,6 +244,48 @@ return {
       end,
       desc = 'Dismiss All Notifications',
     },
+
+    -- Snacks Picker
+    -- {
+    --   '<leader>ff',
+    --   function()
+    --     require('snacks').picker.files()
+    --   end,
+    --   desc = 'Find Files (Snacks Picker)',
+    -- },
+
+    {
+      '<leader>fC',
+      function()
+        require('snacks').picker.files { cwd = '~/.dotfiles/nvim/.config/nvim/lua' }
+      end,
+      desc = 'Find Config File',
+    },
+
+    {
+      '<leader>fs',
+      function()
+        require('snacks').picker.grep()
+      end,
+      desc = 'Grep word',
+    },
+
+    {
+      '<leader>fws',
+      function()
+        require('snacks').picker.grep_word()
+      end,
+      desc = 'Search Visual selection or Word',
+      mode = { 'n', 'v' },
+    },
+
+    -- {
+    --   '<leader>fk',
+    --   function()
+    --     require('snacks').picker.keymaps { layout = 'ivy' }
+    --   end,
+    --   desc = 'Search Keymaps (Snacks Picker)',
+    -- },
   },
 
   init = function()
