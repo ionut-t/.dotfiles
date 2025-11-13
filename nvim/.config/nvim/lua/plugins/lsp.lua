@@ -90,8 +90,10 @@ return {
 
         -- Rename the variable under your cursor.
         --  Most Language Servers support renaming across files, etc.
-        --  Using inc-rename for live preview with clean input
-        map('<leader>rn', ':IncRename ', 'Rename')
+        --  Using inc-rename for live preview with current word pre-populated
+        map('<leader>rn', function()
+          return ':IncRename ' .. vim.fn.expand('<cword>')
+        end, 'Rename', { 'n' }, { expr = true })
 
         -- Execute a code action, usually your cursor needs to be on top of an error
         -- or a suggestion from your LSP for this to activate.
