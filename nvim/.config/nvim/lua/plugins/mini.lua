@@ -31,8 +31,8 @@ return {
       local MiniFiles = require 'mini.files'
       MiniFiles.setup {
         mappings = {
-          go_in = '<CR>', -- Map both Enter and L to enter directories or open files
-          go_in_plus = 'L',
+          go_in = 'L',
+          go_in_plus = '<CR>', -- Enter closes after opening file
           go_out = '-',
           go_out_plus = 'H',
         },
