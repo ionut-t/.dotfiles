@@ -7,6 +7,7 @@ set nocompatible          " Don't be compatible with vi
 syntax enable             " Enable syntax highlighting
 set encoding=utf-8        " Use UTF-8 encoding
 set number                " Show line numbers
+set relativenumber        " Show relative line numbers
 set ruler                 " Show cursor position
 set showcmd               " Show incomplete commands
 set showmode              " Show current mode
