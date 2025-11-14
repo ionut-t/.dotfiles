@@ -90,8 +90,10 @@ return {
 
         -- Rename the variable under your cursor.
         --  Most Language Servers support renaming across files, etc.
-        --  Using inc-rename for live preview with clean input
-        map('<leader>rn', ':IncRename ', 'Rename')
+        --  Using inc-rename for live preview with current word pre-populated
+        map('<leader>rn', function()
+          return ':IncRename ' .. vim.fn.expand('<cword>')
+        end, 'Rename', { 'n' }, { expr = true })
 
         -- Execute a code action, usually your cursor needs to be on top of an error
         -- or a suggestion from your LSP for this to activate.
@@ -180,8 +182,19 @@ return {
       --
       -- TypeScript/JavaScript handled by typescript-tools.nvim plugin
       -- See plugins/typescript.lua for configuration
-      ruff = {},
+
+      -- Python LSP servers (toggle between them with <leader>pt)
+      ruff = {
+        -- Ruff LSP provides fast linting but limited completion
+        init_options = {
+          settings = {
+            -- Respect project's pyproject.toml/ruff.toml
+            lineLength = 88,
+          },
+        },
+      },
       pylsp = {
+        -- pylsp provides better completion/hover but slower linting
         settings = {
           pylsp = {
             plugins = {
@@ -193,6 +206,11 @@ return {
               pylsp_mypy = { enabled = false },
               pylsp_black = { enabled = false },
               pylsp_isort = { enabled = false },
+              -- Enable LSP features
+              jedi_completion = { enabled = true },
+              jedi_hover = { enabled = true },
+              jedi_references = { enabled = true },
+              jedi_signature_help = { enabled = true },
             },
           },
         },
@@ -301,14 +319,24 @@ return {
     local ensure_installed = vim.tbl_keys(servers or {})
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
+    -- Python LSP preference (default to pylsp)
+    vim.g.active_python_lsp = 'pylsp'
+
     require('mason-lspconfig').setup {
       handlers = {
         function(server_name)
           -- Skip formatters/linters that aren't LSP servers
-          local non_lsp_tools = { 'stylua', 'prettier', 'eslint_d', 'gofumpt', 'goimports', 'shfmt', 'ruff' }
+          local non_lsp_tools = { 'stylua', 'prettier', 'eslint_d', 'gofumpt', 'goimports', 'shfmt' }
           for _, tool in ipairs(non_lsp_tools) do
             if server_name == tool then
               return -- Don't try to set up as LSP
+            end
+          end
+
+          -- For Python LSPs, only setup the active one
+          if server_name == 'ruff' or server_name == 'pylsp' then
+            if server_name ~= vim.g.active_python_lsp then
+              return -- Skip inactive Python LSP
             end
           end
 
@@ -321,5 +349,33 @@ return {
         end,
       },
     }
+
+    -- Python LSP Toggle Function
+    vim.keymap.set('n', '<leader>pt', function()
+      local bufnr = vim.api.nvim_get_current_buf()
+      local filetype = vim.bo[bufnr].filetype
+
+      if filetype ~= 'python' then
+        vim.notify('Not a Python file', vim.log.levels.WARN)
+        return
+      end
+
+      local current = vim.g.active_python_lsp
+      local next_lsp = current == 'ruff' and 'pylsp' or 'ruff'
+
+      -- Stop all Python LSP clients
+      for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
+        if client.name == 'ruff' or client.name == 'pylsp' then
+          vim.lsp.stop_client(client.id)
+        end
+      end
+
+      -- Update preference and start next LSP
+      vim.g.active_python_lsp = next_lsp
+      vim.defer_fn(function()
+        vim.cmd('edit') -- Reload buffer to trigger LSP attach
+        vim.notify('Switched to ' .. next_lsp, vim.log.levels.INFO)
+      end, 200)
+    end, { desc = 'Toggle Python LSP (ruff/pylsp)' })
   end,
 }

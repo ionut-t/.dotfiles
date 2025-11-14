@@ -13,28 +13,28 @@ return {
   end,
   keys = {
     {
-      '<leader>qs',
+      '<leader>ws',
       function()
         require('persistence').load()
       end,
       desc = 'Restore session for current dir',
     },
     {
-      '<leader>ql',
+      '<leader>wl',
       function()
         require('persistence').load { last = true }
       end,
       desc = 'Restore last session (any dir)',
     },
     {
-      '<leader>qd',
+      '<leader>wd',
       function()
         require('persistence').stop()
       end,
       desc = "Don't save session on exit",
     },
     {
-      '<leader>qx',
+      '<leader>wx',
       function()
         vim.ui.input({ prompt = 'Delete all sessions? (y/n): ' }, function(input)
           if input == 'y' or input == 'Y' then

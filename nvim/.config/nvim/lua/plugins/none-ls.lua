@@ -72,8 +72,17 @@ return {
       formatting.terraform_fmt,
 
       -- Python (ruff handles both linting and formatting)
-      require('none-ls.formatting.ruff').with { extra_args = { '--extend-select', 'I' } },
-      require 'none-ls.formatting.ruff_format',
+      -- Configured to respect project's ruff.toml or pyproject.toml
+      require('none-ls.formatting.ruff').with({
+        cwd = function()
+          return vim.fn.getcwd()
+        end,
+      }),
+      require('none-ls.formatting.ruff_format').with({
+        cwd = function()
+          return vim.fn.getcwd()
+        end,
+      }),
     }
 
     -- Global variable to track format-on-save state
