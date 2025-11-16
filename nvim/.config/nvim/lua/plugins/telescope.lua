@@ -12,7 +12,7 @@ return {
             end,
         },
         { 'nvim-telescope/telescope-ui-select.nvim' },
-        { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
+        { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
     },
     config = function()
         require('telescope').setup {
@@ -96,7 +96,7 @@ return {
         -- ═══════════════════════════════════════════════════════════════════
         vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Find files' })
         vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Find buffers' })
-        -- vim.keymap.set('n', '<leader>fr', builtin.oldfiles, { desc = 'Find recent files' })
+        vim.keymap.set('n', '<leader>fr', builtin.oldfiles, { desc = 'Find recent files' })
         vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Find help' })
         vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = 'Find keymaps' })
         vim.keymap.set('n', '<leader>ft', builtin.builtin, { desc = 'Find telescope pickers' })

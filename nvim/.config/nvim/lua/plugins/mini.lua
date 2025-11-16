@@ -1,9 +1,9 @@
 return {
   -- Mini Nvim
-  { 'echasnovski/mini.nvim', version = false },
+  { 'nvim-mini/mini.nvim', version = false },
   -- Comments
   {
-    'echasnovski/mini.comment',
+    'nvim-mini/mini.comment',
     version = false,
     dependencies = {
       'JoosepAlviste/nvim-ts-context-commentstring',
@@ -26,15 +26,15 @@ return {
   },
   -- File explorer (this works properly with oil unlike nvim-tree)
   {
-    'echasnovski/mini.files',
+    'nvim-mini/mini.files',
     config = function()
       local MiniFiles = require 'mini.files'
       MiniFiles.setup {
         mappings = {
-          go_in = 'L',
+          go_in = 'l',
           go_in_plus = '<CR>', -- Enter closes after opening file
           go_out = '-',
-          go_out_plus = 'H',
+          go_out_plus = 'h',
         },
       }
       vim.keymap.set('n', '<leader>er', '<cmd>lua MiniFiles.open()<CR>', { desc = 'Toggle mini file explorer' }) -- toggle file explorer
@@ -46,15 +46,14 @@ return {
   },
   -- Surround
   {
-    'echasnovski/mini.surround',
-    event = { 'BufReadPre', 'BufNewFile' },
+    'nvim-mini/mini.surround',
     opts = {
       -- Add custom surroundings to be used on top of builtin ones. For more
       -- information with examples, see `:h MiniSurround.config`.
       custom_surroundings = nil,
 
       -- Duration (in ms) of highlight when calling `MiniSurround.highlight()`
-      highlight_duration = 300,
+      highlight_duration = 3000,
 
       -- Module mappings. Use `''` (empty string) to disable one.
       -- INFO:
@@ -93,7 +92,7 @@ return {
   },
   -- Get rid of whitespace
   {
-    'echasnovski/mini.trailspace',
+    'nvim-mini/mini.trailspace',
     event = { 'BufReadPost', 'BufNewFile' },
     config = function()
       local miniTrailspace = require 'mini.trailspace'
@@ -115,19 +114,44 @@ return {
     end,
   },
   -- Split & join
+  -- {
+  --   'nvim-mini/mini.splitjoin',
+  --   config = function()
+  --     local miniSplitJoin = require 'mini.splitjoin'
+  --     miniSplitJoin.setup {
+  --       mappings = { toggle = '' }, -- Disable default mapping
+  --     }
+  --     vim.keymap.set({ 'n', 'x' }, 'sj', function()
+  --       miniSplitJoin.join()
+  --     end, { desc = 'Join arguments' })
+  --     vim.keymap.set({ 'n', 'x' }, 'sk', function()
+  --       miniSplitJoin.split()
+  --     end, { desc = 'Split arguments' })
+  --   end,
+  -- },
+  -- AI
   {
-    'echasnovski/mini.splitjoin',
-    config = function()
-      local miniSplitJoin = require 'mini.splitjoin'
-      miniSplitJoin.setup {
-        mappings = { toggle = '' }, -- Disable default mapping
-      }
-      vim.keymap.set({ 'n', 'x' }, 'sj', function()
-        miniSplitJoin.join()
-      end, { desc = 'Join arguments' })
-      vim.keymap.set({ 'n', 'x' }, 'sk', function()
-        miniSplitJoin.split()
-      end, { desc = 'Split arguments' })
-    end,
+    'nvim-mini/mini.ai',
+    event = 'VeryLazy',
+
+    dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects' },
+
+    opts = {
+      mappings = {
+        around = 'a',
+        inside = 'i',
+        around_next = 'an',
+        inside_next = 'in',
+        around_last = 'al',
+        inside_last = 'il',
+        goto_left = 'g[',
+        goto_right = 'g]',
+      },
+      n_lines = 50,
+      search_method = 'cover',
+      silent = false,
+    },
   },
+
+  { 'nvim-mini/mini.bracketed', version = '*' },
 }

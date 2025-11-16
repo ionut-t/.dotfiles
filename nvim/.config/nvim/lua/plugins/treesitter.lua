@@ -20,11 +20,8 @@ return { -- Highlight, edit, and navigate code
       'dockerfile',
       'toml',
       'json',
-      'java',
-      'groovy',
       'go',
       'gitignore',
-      'graphql',
       'yaml',
       'make',
       'cmake',
@@ -34,22 +31,16 @@ return { -- Highlight, edit, and navigate code
       'tsx',
       'css',
       'html',
+      'rust',
+      'zig',
     },
     -- Autoinstall languages that are not installed
     auto_install = true,
-    highlight = {
-      enable = true,
-      -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
-      --  If you are experiencing weird indenting issues, add the language to
-      --  the list of additional_vim_regex_highlighting and disabled languages for indent.
-      additional_vim_regex_highlighting = { 'ruby' },
-    },
-    indent = { enable = true, disable = { 'ruby' } },
-
-    -- Text objects for better code navigation and selection
+    highlight = { enable = true },
+    indent = { enable = true }, -- Text objects for better code navigation and selection
     textobjects = {
       select = {
-        enable = true,
+        enable = false, -- Handled by mini.ai
         lookahead = true, -- Automatically jump forward to textobj
         keymaps = {
           -- You can use the capture groups defined in textobjects.scm

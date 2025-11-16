@@ -2,7 +2,7 @@ return {
   'nvim-treesitter/nvim-treesitter-context',
   dependencies = { 'nvim-treesitter/nvim-treesitter' },
   config = function()
-    require('treesitter-context').setup({
+    require('treesitter-context').setup {
       enable = true,
       max_lines = 3, -- How many lines the context window should span
       min_window_height = 0,
@@ -12,7 +12,7 @@ return {
       mode = 'cursor', -- 'cursor' or 'topline'
       separator = nil, -- Use a string like '-' to add a separator line
       zindex = 20,
-    })
+    }
 
     -- Set up keymap for jumping to context
     -- Note: Toggle is handled by snacks.nvim (<leader>uc)

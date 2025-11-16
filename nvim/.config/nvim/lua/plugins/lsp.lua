@@ -92,7 +92,7 @@ return {
         --  Most Language Servers support renaming across files, etc.
         --  Using inc-rename for live preview with current word pre-populated
         map('<leader>rn', function()
-          return ':IncRename ' .. vim.fn.expand('<cword>')
+          return ':IncRename ' .. vim.fn.expand '<cword>'
         end, 'Rename', { 'n' }, { expr = true })
 
         -- Execute a code action, usually your cursor needs to be on top of an error
@@ -364,7 +364,7 @@ return {
       local next_lsp = current == 'ruff' and 'pylsp' or 'ruff'
 
       -- Stop all Python LSP clients
-      for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
+      for _, client in ipairs(vim.lsp.get_clients { bufnr = bufnr }) do
         if client.name == 'ruff' or client.name == 'pylsp' then
           vim.lsp.stop_client(client.id)
         end
@@ -373,7 +373,7 @@ return {
       -- Update preference and start next LSP
       vim.g.active_python_lsp = next_lsp
       vim.defer_fn(function()
-        vim.cmd('edit') -- Reload buffer to trigger LSP attach
+        vim.cmd 'edit' -- Reload buffer to trigger LSP attach
         vim.notify('Switched to ' .. next_lsp, vim.log.levels.INFO)
       end, 200)
     end, { desc = 'Toggle Python LSP (ruff/pylsp)' })
