@@ -14,6 +14,17 @@ return {
       -- Git browse commits, diff view
     },
 
+    -- Lazygit integration
+    lazygit = {
+      enabled = true,
+      -- Automatically configure lazygit to use the colors of your Neovim theme
+      configure = true,
+      -- Floating window configuration
+      win = {
+        style = 'lazygit',
+      },
+    },
+
     -- Scratch buffers for quick notes
     scratch = {
       enabled = true,
@@ -152,11 +163,24 @@ return {
           winhighlight = 'NormalFloat:Normal',
         },
       },
+      lazygit = {
+        border = 'rounded',
+        width = 0.9,
+        height = 0.9,
+        backdrop = 60,
+      },
     },
   },
 
   keys = {
     -- Git commands
+    {
+      '<leader>gG',
+      function()
+        require('snacks').lazygit()
+      end,
+      desc = 'Lazygit',
+    },
     {
       '<leader>gb',
       function()
@@ -185,6 +209,27 @@ return {
         require('snacks').lazygit.log()
       end,
       desc = 'Git Log',
+    },
+    {
+      '<leader>gs',
+      function()
+        require('snacks').picker.git_branches()
+      end,
+      desc = 'Git Branches',
+    },
+    {
+      '<leader>gp',
+      function()
+        require('snacks').picker.gh_pr()
+      end,
+      desc = 'GitHub Pull Requests (open)',
+    },
+    {
+      '<leader>gP',
+      function()
+        require('snacks').picker.gh_pr { state = 'all' }
+      end,
+      desc = 'GitHub Pull Requests (all)',
     },
 
     -- Scratch buffer
@@ -246,13 +291,13 @@ return {
     },
 
     -- Snacks Picker
-    -- {
-    --   '<leader>ff',
-    --   function()
-    --     require('snacks').picker.files()
-    --   end,
-    --   desc = 'Find Files (Snacks Picker)',
-    -- },
+    {
+      '<leader>FF',
+      function()
+        require('snacks').picker.files()
+      end,
+      desc = 'Find Files (Snacks Picker)',
+    },
 
     {
       '<leader>fC',
@@ -279,13 +324,94 @@ return {
       mode = { 'n', 'v' },
     },
 
-    -- {
-    --   '<leader>fk',
-    --   function()
-    --     require('snacks').picker.keymaps { layout = 'ivy' }
-    --   end,
-    --   desc = 'Search Keymaps (Snacks Picker)',
-    -- },
+    {
+      '<M-k>',
+      function()
+        require('snacks').picker.keymaps { layout = 'ivy' }
+      end,
+      desc = 'Search Keymaps (Snacks Picker)',
+    },
+
+    -- Buffers
+    {
+      '<leader><leader>',
+      function()
+        require('snacks').picker.buffers {
+          on_show = function()
+            vim.cmd.stopinsert()
+          end,
+          layout = 'ivy',
+          hidden = false,
+          sort_lastused = true,
+          current = true,
+          win = {
+            input = {
+              keys = {
+                d = 'bufdelete',
+              },
+            },
+            list = {
+              keys = {
+                d = 'bufdelete',
+              },
+            },
+          },
+        }
+      end,
+      desc = 'Buffers',
+    },
+    {
+      '<leader>bd',
+      function()
+        require('snacks').bufdelete.delete()
+      end,
+      desc = 'Delete Buffer',
+    },
+    {
+      '<leader>bD',
+      function()
+        require('snacks').bufdelete.all()
+      end,
+      desc = 'Delete All Buffers',
+    },
+    {
+      '<leader>bo',
+      function()
+        require('snacks').bufdelete.other()
+      end,
+      desc = 'Delete Other Buffers',
+    },
+
+    {
+      'folke/snacks.nvim',
+      opts = {
+        image = {},
+      },
+    },
+
+    -- Search
+    {
+      '<leader>sm',
+      function()
+        require('snacks').picker.marks()
+      end,
+      desc = 'Marks',
+    },
+    {
+      '<leader>sM',
+      function()
+        require('snacks').picker.man()
+      end,
+      desc = 'Man Pages',
+    },
+
+    {
+      '<leader>sq',
+      function()
+        require('snacks').picker.qflist()
+      end,
+      desc = 'Quickfix List',
+    },
   },
 
   init = function()

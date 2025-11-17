@@ -61,8 +61,8 @@ vim.keymap.set('n', '<leader>xn', vim.diagnostic.goto_next, { desc = 'Next diagn
 vim.keymap.set('n', '<leader>xp', vim.diagnostic.goto_prev, { desc = 'Previous diagnostic' })
 
 -- Keep [d / ]d for muscle memory
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Previous diagnostic' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Next diagnostic' })
+-- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Previous diagnostic' })
+-- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Next diagnostic' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -72,11 +72,11 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Next diagnostic' }
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
--- TIP: Disable arrow keys in normal mode
--- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
--- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
--- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
--- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
+-- TIP: Disable arrow keys
+vim.keymap.set({ 'n', 'v' }, '<left>', '<cmd>echo "Use h to move!!"<CR>')
+vim.keymap.set({ 'n', 'v' }, '<right>', '<cmd>echo "Use l to move!!"<CR>')
+vim.keymap.set({ 'n', 'v' }, '<up>', '<cmd>echo "Use k to move!!"<CR>')
+vim.keymap.set({ 'n', 'v' }, '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
@@ -101,9 +101,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
--- Quick command and search mode entry from insert mode
+-- Quick command mode entry from insert mode
 vim.keymap.set('i', '::', '<Esc>:', { desc = 'Exit to command mode' })
-vim.keymap.set('i', '//', '<Esc>/', { desc = 'Exit to search mode' })
 
 -- Delete without copying to clipboard (dd = delete line, d = delete motion)
 vim.keymap.set('n', 'dd', '"_dd', { desc = 'Delete line (no copy)' })
@@ -241,22 +240,6 @@ vim.keymap.set('n', '<leader>bv', function()
     end
   end)
 end, { desc = 'Buffer new (vsplit)' })
-
--- Close all buffers
-vim.keymap.set('n', '<leader>bA', function()
-  vim.cmd 'bufdo Bdelete'
-end, { desc = 'Buffer delete all' })
-
--- Close all buffers except current
-vim.keymap.set('n', '<leader>bo', function()
-  local current = vim.api.nvim_get_current_buf()
-  local buffers = vim.api.nvim_list_bufs()
-  for _, buf in ipairs(buffers) do
-    if buf ~= current and vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].buftype == '' then
-      vim.cmd('Bdelete ' .. buf)
-    end
-  end
-end, { desc = 'Buffer delete others' })
 
 -- Move buffer left/right
 vim.keymap.set('n', '<leader>b[', ':BufferLineMovePrev<CR>', { desc = 'Buffer move left', silent = true })

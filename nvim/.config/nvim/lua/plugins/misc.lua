@@ -10,11 +10,11 @@ return {
         default = true,
         strict = true,
         override_by_filename = {
-          [".gitignore"] = {
-            icon = "",
-            color = "#f1502f",
-            name = "Gitignore"
-          }
+          ['.gitignore'] = {
+            icon = '',
+            color = '#f1502f',
+            name = 'Gitignore',
+          },
         },
       }
     end,
@@ -81,48 +81,6 @@ return {
     end,
   },
   {
-    -- Hints keybinds
-    'folke/which-key.nvim',
-    event = 'VeryLazy',
-    opts = {
-      preset = 'helix',
-      delay = 500,
-      icons = {
-        separator = '→',
-        group = '+',
-      },
-    },
-    config = function(_, opts)
-      local wk = require 'which-key'
-      wk.setup(opts)
-
-      -- Define key group names (organized alphabetically, LazyVim-aligned)
-      wk.add {
-        { '<leader>b', group = '+buffer' },
-        { '<leader>c', group = '+code' },
-        { '<leader>cg', group = '+go' },
-        { '<leader>d', group = '+debug' },
-        { '<leader>e', group = '+explorer' },
-        { '<leader>f', group = '+file/find' },
-        { '<leader>g', group = '+git' },
-        { '<leader>h', group = '+hunks' },
-        { '<leader>n', group = '+notes' },
-        { '<leader>q', group = '+quit/session' },
-        { '<leader>r', group = '+refactor' },
-        { '<leader>s', group = '+search' },
-        { '<leader>t', group = '+terminal' },
-        { '<leader>T', group = '+test' },
-        { '<leader>u', group = '+ui' },
-        { '<leader>v', group = '+venv' },
-        { '<leader>w', group = '+windows' },
-        { '<leader>x', group = '+diagnostics/quickfix' },
-        -- Mark operations (no leader prefix)
-        { 'm', group = '+marks' },
-        { 'dm', group = '+delete marks' },
-      }
-    end,
-  },
-  {
     -- Autoclose parentheses, brackets, quotes, etc.
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
@@ -156,18 +114,8 @@ return {
 
       -- Enhance search navigation with match count
       local kopts = { noremap = true, silent = true }
-      vim.api.nvim_set_keymap(
-        'n',
-        'n',
-        [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
-        kopts
-      )
-      vim.api.nvim_set_keymap(
-        'n',
-        'N',
-        [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
-        kopts
-      )
+      vim.api.nvim_set_keymap('n', 'n', [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]], kopts)
+      vim.api.nvim_set_keymap('n', 'N', [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]], kopts)
       vim.api.nvim_set_keymap('n', '*', [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
       vim.api.nvim_set_keymap('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
       vim.api.nvim_set_keymap('n', 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)

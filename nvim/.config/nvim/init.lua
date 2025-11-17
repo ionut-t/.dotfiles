@@ -15,9 +15,10 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Set up plugins
 require('lazy').setup {
-  require 'plugins.misc', -- Load icons first (nvim-web-devicons)
+  require 'plugins.whichkey',
+  require 'plugins.misc',
   require 'plugins.snacks', -- Snacks.nvim utilities
-  require 'plugins.dressing', -- Improved UI for vim.ui.select and vim.ui.input
+  require 'plugins.dressing',
   require 'plugins.inc-rename', -- LSP rename with live preview
   require 'plugins.harpoon', -- Quick file navigation
   require 'plugins.marks', -- Mark lines within buffers
@@ -37,7 +38,6 @@ require('lazy').setup {
   require 'plugins.alpha',
   require 'plugins.indent-blankline',
   require 'plugins.noice',
-  require 'plugins.comment',
   require 'plugins.angular',
   require 'plugins.typescript',
   require 'plugins.go',
