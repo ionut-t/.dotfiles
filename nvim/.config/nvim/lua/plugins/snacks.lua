@@ -325,7 +325,7 @@ return {
     },
 
     {
-      '<leader>fK',
+      '<M-k>',
       function()
         require('snacks').picker.keymaps { layout = 'ivy' }
       end,
@@ -333,6 +333,33 @@ return {
     },
 
     -- Buffers
+    {
+      '<leader><leader>',
+      function()
+        require('snacks').picker.buffers {
+          on_show = function()
+            vim.cmd.stopinsert()
+          end,
+          layout = 'ivy',
+          hidden = false,
+          sort_lastused = true,
+          current = true,
+          win = {
+            input = {
+              keys = {
+                d = 'bufdelete',
+              },
+            },
+            list = {
+              keys = {
+                d = 'bufdelete',
+              },
+            },
+          },
+        }
+      end,
+      desc = 'Buffers',
+    },
     {
       '<leader>bd',
       function()

@@ -159,7 +159,5 @@ return {
                 previewer = false,
             })
         end, { desc = 'Search in current buffer' })
-
-        vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = 'Find buffers (quick access)' })
     end,
 }

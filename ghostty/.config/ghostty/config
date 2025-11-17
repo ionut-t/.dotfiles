@@ -1,6 +1,9 @@
 # ghostty +show-config --default --docs
 # ghostty +list-themes
 
+# Enable Option key as Alt for key bindings
+macos-option-as-alt = true
+
 font-family = FiraCode Nerd Font Mono
 
 # font-family = MesloLGSDZ Nerd Font Mono Italic
