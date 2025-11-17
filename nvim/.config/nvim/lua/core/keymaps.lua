@@ -4,6 +4,10 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+-- Disable Space's default behavior (moving cursor right) to prevent conflicts
+-- This ensures Space ONLY works as leader key, even before plugins load
+vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
