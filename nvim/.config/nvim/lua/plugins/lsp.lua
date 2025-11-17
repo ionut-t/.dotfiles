@@ -186,12 +186,6 @@ return {
       -- Python LSP servers (toggle between them with <leader>pt)
       ruff = {
         -- Ruff LSP provides fast linting but limited completion
-        init_options = {
-          settings = {
-            -- Respect project's pyproject.toml/ruff.toml
-            lineLength = 88,
-          },
-        },
       },
       pylsp = {
         -- pylsp provides better completion/hover but slower linting
