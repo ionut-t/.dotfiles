@@ -73,16 +73,20 @@ return {
 
       -- Python (ruff handles both linting and formatting)
       -- Configured to respect project's ruff.toml or pyproject.toml
-      require('none-ls.formatting.ruff').with({
-        cwd = function()
-          return vim.fn.getcwd()
+      require('none-ls.formatting.ruff').with {
+        -- Find project root by looking for config files or .git
+        cwd = function(params)
+          local root = vim.fs.root(params.bufname, { 'pyproject.toml', 'ruff.toml', '.ruff.toml', '.git' })
+          return root or vim.fs.dirname(params.bufname)
         end,
-      }),
-      require('none-ls.formatting.ruff_format').with({
-        cwd = function()
-          return vim.fn.getcwd()
+      },
+      require('none-ls.formatting.ruff_format').with {
+        -- Find project root by looking for config files or .git
+        cwd = function(params)
+          local root = vim.fs.root(params.bufname, { 'pyproject.toml', 'ruff.toml', '.ruff.toml', '.git' })
+          return root or vim.fs.dirname(params.bufname)
         end,
-      }),
+      },
     }
 
     -- Global variable to track format-on-save state
