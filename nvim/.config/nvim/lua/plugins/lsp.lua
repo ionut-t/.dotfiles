@@ -40,6 +40,9 @@ return {
     -- If you're wondering about lsp vs treesitter, you can check out the wonderfully
     -- and elegantly composed help section, `:help lsp-vs-treesitter`
 
+    -- NOTE: LSP hover and signature help styling is now handled by noice.nvim
+    -- See plugins/noice.lua for configuration
+
     --  This function gets run when an LSP attaches to a particular buffer.
     --    That is to say, every time a new file is opened that is associated with
     --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
@@ -98,7 +101,28 @@ return {
 
         -- Show hover documentation
         --  See type information, function signatures, and documentation strings
-        map('K', vim.lsp.buf.hover, 'Hover Documentation')
+        --  Press K twice to focus the hover window for scrolling
+        map('K', function()
+          -- Check if there's already a hover window open
+          for _, win in ipairs(vim.api.nvim_list_wins()) do
+            local config = vim.api.nvim_win_get_config(win)
+            if config.relative ~= '' then -- It's a floating window
+              local buf = vim.api.nvim_win_get_buf(win)
+              local ft = vim.bo[buf].filetype
+              -- Check if it's a hover or markdown window
+              if ft == 'markdown' or vim.bo[buf].buftype == 'nofile' then
+                -- Focus the existing hover window
+                vim.api.nvim_set_current_win(win)
+                return
+              end
+            end
+          end
+          -- No hover window found, open one
+          vim.lsp.buf.hover()
+        end, 'Hover Documentation')
+
+        -- Show signature help (function parameters) in insert mode
+        map('<C-k>', vim.lsp.buf.signature_help, 'Signature help', 'i')
 
         -- Format the current buffer
         map('<leader>cf', function()
