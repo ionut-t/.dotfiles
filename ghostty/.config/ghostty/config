@@ -1,8 +1,9 @@
 # ghostty +show-config --default --docs
 # ghostty +list-themes
 
-# Enable Option key as Alt for key bindings
-macos-option-as-alt = true
+# Enable left Option key as Alt for key bindings
+# Right Option key remains for special characters (é, ñ, etc.)
+macos-option-as-alt = left
 
 font-family = FiraCode Nerd Font Mono
 
