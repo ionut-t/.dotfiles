@@ -47,7 +47,9 @@ return {
   -- Surround
   {
     'nvim-mini/mini.surround',
-    opts = {
+    event = 'VeryLazy',
+    config = function()
+      require('mini.surround').setup {
       -- Add custom surroundings to be used on top of builtin ones. For more
       -- information with examples, see `:h MiniSurround.config`.
       custom_surroundings = nil,
@@ -88,7 +90,8 @@ return {
 
       -- Whether to disable showing non-error feedback
       silent = false,
-    },
+      }
+    end,
   },
   -- Get rid of whitespace
   {
