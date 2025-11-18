@@ -33,7 +33,8 @@ require('lazy').setup {
   require 'plugins.treesitter-context',
   require 'plugins.telescope',
   require 'plugins.lsp',
-  require 'plugins.autocompletion',
+  require 'plugins.autocompletion', -- Old nvim-cmp (disabled)
+  require 'plugins.blink-cmp', -- New blink.cmp completion
   require 'plugins.none-ls',
   require 'plugins.gitsigns',
   require 'plugins.alpha',
