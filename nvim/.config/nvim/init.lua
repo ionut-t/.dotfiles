@@ -22,6 +22,7 @@ require('lazy').setup {
   require 'plugins.inc-rename', -- LSP rename with live preview
   require 'plugins.harpoon', -- Quick file navigation
   require 'plugins.marks', -- Mark lines within buffers
+  require 'plugins.multi-cursor',
   -- require 'plugins.neotree',
   require 'plugins.oil',
   require 'plugins.mini', -- Mini.nvim modules
