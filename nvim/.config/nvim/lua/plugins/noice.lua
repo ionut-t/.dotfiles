@@ -13,6 +13,27 @@ return {
         ['vim.lsp.util.stylize_markdown'] = true,
         ['cmp.entry.get_documentation'] = true,
       },
+      hover = {
+        enabled = true,
+        view = 'hover', -- Use custom hover view with padding
+      },
+      signature = {
+        enabled = true,
+        view = 'hover', -- Use same view for signature help
+      },
+    },
+    views = {
+      hover = {
+        border = {
+          style = 'rounded',
+          padding = { 0, 1 }, -- Add horizontal padding (top/bottom, left/right)
+        },
+        position = { row = 2, col = 2 },
+        size = {
+          max_width = 80,
+          max_height = 30,
+        },
+      },
     },
     -- You can enable a preset for easier configuration
     presets = {

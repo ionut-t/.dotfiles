@@ -1,5 +1,6 @@
-return { -- Autocompletion
+return { -- Autocompletion (DISABLED - using blink-cmp.lua instead)
   'hrsh7th/nvim-cmp',
+  enabled = false, -- Disabled in favor of blink.cmp
   dependencies = {
     -- Snippet Engine & its associated nvim-cmp source
     {

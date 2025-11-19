@@ -22,6 +22,7 @@ require('lazy').setup {
   require 'plugins.inc-rename', -- LSP rename with live preview
   require 'plugins.harpoon', -- Quick file navigation
   require 'plugins.marks', -- Mark lines within buffers
+  require 'plugins.flash', -- Fast navigation with labeled jumps
   require 'plugins.multi-cursor',
   -- require 'plugins.neotree',
   require 'plugins.oil',
@@ -33,7 +34,8 @@ require('lazy').setup {
   require 'plugins.treesitter-context',
   require 'plugins.telescope',
   require 'plugins.lsp',
-  require 'plugins.autocompletion',
+  require 'plugins.autocompletion', -- Old nvim-cmp (disabled)
+  require 'plugins.blink-cmp', -- New blink.cmp completion
   require 'plugins.none-ls',
   require 'plugins.gitsigns',
   require 'plugins.alpha',
