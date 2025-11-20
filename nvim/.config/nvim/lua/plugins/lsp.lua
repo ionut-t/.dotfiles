@@ -101,25 +101,7 @@ return {
 
         -- Show hover documentation
         --  See type information, function signatures, and documentation strings
-        --  Press K twice to focus the hover window for scrolling
-        map('K', function()
-          -- Check if there's already a hover window open
-          for _, win in ipairs(vim.api.nvim_list_wins()) do
-            local config = vim.api.nvim_win_get_config(win)
-            if config.relative ~= '' then -- It's a floating window
-              local buf = vim.api.nvim_win_get_buf(win)
-              local ft = vim.bo[buf].filetype
-              -- Check if it's a hover or markdown window
-              if ft == 'markdown' or vim.bo[buf].buftype == 'nofile' then
-                -- Focus the existing hover window
-                vim.api.nvim_set_current_win(win)
-                return
-              end
-            end
-          end
-          -- No hover window found, open one
-          vim.lsp.buf.hover()
-        end, 'Hover Documentation')
+        map('K', vim.lsp.buf.hover, 'Hover Documentation')
 
         -- Show signature help (function parameters) in insert mode
         map('<C-k>', vim.lsp.buf.signature_help, 'Signature help', 'i')
