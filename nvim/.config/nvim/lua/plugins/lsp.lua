@@ -106,11 +106,6 @@ return {
         -- Show signature help (function parameters) in insert mode
         map('<C-k>', vim.lsp.buf.signature_help, 'Signature help', 'i')
 
-        -- Format the current buffer
-        map('<leader>cf', function()
-          vim.lsp.buf.format { async = false }
-        end, 'Code format')
-
         -- WARN: This is not Goto Definition, this is Goto Declaration.
         --  For example, in C this would take you to the header.
         map('gD', vim.lsp.buf.declaration, 'Goto declaration')
@@ -312,8 +307,20 @@ return {
 
     -- You can add other tools here that you want Mason to install
     -- for you, so that they are available from within Neovim.
-    -- NOTE: Formatters like stylua, prettier, etc. are managed by none-ls.lua
     local ensure_installed = vim.tbl_keys(servers or {})
+    vim.list_extend(ensure_installed, {
+      'prettier', -- ts/js/html/css/json/yaml/markdown formatter
+      'stylua', -- lua formatter
+      'shfmt', -- Shell formatter
+      'checkmake', -- linter for Makefiles
+      'ruff', -- Python linter and formatter
+      'gofumpt', -- Go formatter (stricter version of gofmt)
+      'goimports', -- Go imports formatter
+      'sql-formatter', -- SQL formatter
+      'golangci-lint', -- Go linter
+      'sqlfluff', -- SQL linter
+      'shellcheck', -- Shell script linter
+    })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
     -- Python LSP preference (default to pylsp)
