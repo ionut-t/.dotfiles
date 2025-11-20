@@ -57,6 +57,7 @@ require('lazy').setup {
   -- require 'plugins.testing',
   require 'plugins.terminal',
   require 'plugins.search',
+  require 'plugins.tiny-diagnostic',
 }
 
 vim.cmd.colorscheme 'catppuccin'

@@ -381,5 +381,36 @@ return {
         vim.notify('Switched to ' .. next_lsp, vim.log.levels.INFO)
       end, 200)
     end, { desc = 'Toggle Python LSP (ruff/pylsp)' })
+
+    -- Configure diagnostics for tiny-inline-diagnostic.nvim
+    local diagnostic_config = {
+      underline = false,
+      virtual_text = false,
+      update_in_insert = false,
+      severity_sort = true,
+      signs = {
+        text = {
+          [vim.diagnostic.severity.ERROR] = ' ',
+          [vim.diagnostic.severity.WARN] = ' ',
+          [vim.diagnostic.severity.HINT] = ' ',
+          [vim.diagnostic.severity.INFO] = ' ',
+        },
+      },
+    }
+
+    vim.diagnostic.config(diagnostic_config)
+
+    -- Persist signs on mode changes
+    vim.api.nvim_create_autocmd('ModeChanged', {
+      group = vim.api.nvim_create_augroup('lsp-diagnostic-signs-persist', { clear = true }),
+      callback = function()
+        vim.diagnostic.config(diagnostic_config)
+      end,
+    })
+
+    -- Ensure virtual_text stays disabled
+    vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+      virtual_text = false,
+    })
   end,
 }
