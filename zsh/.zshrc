@@ -52,6 +52,8 @@ zinit snippet OMZP::kubectl
 zinit snippet OMZP::kubectx
 zinit snippet OMZP::command-not-found
 
+zinit load atuinsh/atuin
+
 # Load completions
 autoload -Uz compinit && compinit
 zinit cdreplay -q
@@ -175,6 +177,7 @@ eval "$(zoxide init --cmd cd zsh)"
 eval "$(thefuck --alias)"
 eval "$(thefuck --alias fk)"
 eval "$(zoxide init zsh)"
+eval "$(atuin init zsh)"
 
 # Tool themes
 export BAT_THEME=catppuccin_mocha
