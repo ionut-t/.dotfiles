@@ -144,6 +144,22 @@ return {
       end,
     })
 
+    -- Disable LSP reference highlighting globally by making it invisible
+    -- This fixed the annoying highlight of strings (Angular inline templates, etc.)
+    local function disable_lsp_highlight()
+      vim.api.nvim_set_hl(0, 'LspReferenceText', { bg = 'NONE', underline = false })
+      vim.api.nvim_set_hl(0, 'LspReferenceRead', { bg = 'NONE', underline = false })
+      vim.api.nvim_set_hl(0, 'LspReferenceWrite', { bg = 'NONE', underline = false })
+    end
+
+    -- Apply immediately
+    disable_lsp_highlight()
+
+    -- Reapply after colorscheme changes
+    vim.api.nvim_create_autocmd('ColorScheme', {
+      callback = disable_lsp_highlight,
+    })
+
     -- LSP servers and clients are able to communicate to each other what features they support.
     --  By default, Neovim doesn't support everything that is in the LSP specification.
     --  When you add blink.cmp, Neovim now has *more* capabilities.
