@@ -3,6 +3,14 @@ return {
   priority = 1000,
   lazy = false,
   opts = {
+    picker = {
+      formatters = {
+        file = {
+          filename_first = true,
+        },
+      },
+    },
+
     -- Always-on performance features
     bigfile = { enabled = true }, -- Disable heavy features for large files
     quickfile = { enabled = true }, -- Speed up file loading
@@ -65,10 +73,10 @@ return {
       enabled = true,
       toggles = {
         dim = true,
-        git_signs = false,
+        git_signs = true,
         mini_indentscope = false,
-        diagnostics = false,
-        inlay_hints = false,
+        diagnostics = true,
+        inlay_hints = true,
       },
       zoom = {
         width = 120,
@@ -218,6 +226,27 @@ return {
       desc = 'Git Branches',
     },
     {
+      '<leader>gL',
+      function()
+        require('snacks').picker.git_log_line()
+      end,
+      desc = 'Git Log Line',
+    },
+    {
+      '<leader>gx',
+      function()
+        require('snacks').picker.git_status()
+      end,
+      desc = 'Git Status',
+    },
+    {
+      '<leader>gS',
+      function()
+        require('snacks').picker.git_stash()
+      end,
+      desc = 'Git Stash',
+    },
+    {
       '<leader>gp',
       function()
         require('snacks').picker.gh_pr()
@@ -292,11 +321,23 @@ return {
 
     -- Snacks Picker
     {
-      '<leader>FF',
+      '<leader>fi',
       function()
-        require('snacks').picker.files()
+        require('snacks').picker.files {
+          layout = {
+            preset = 'ivy',
+          },
+        }
       end,
-      desc = 'Find Files (Snacks Picker)',
+      desc = 'Find files (ivy)',
+    },
+
+    {
+      '<leader>fr',
+      function()
+        Snacks.picker.recent()
+      end,
+      desc = 'Recent',
     },
 
     {
@@ -318,10 +359,36 @@ return {
     {
       '<leader>fws',
       function()
-        require('snacks').picker.grep_word()
+        require('snacks').picker.grep_word {
+          on_show = function()
+            vim.cmd.stopinsert()
+          end,
+        }
       end,
       desc = 'Search Visual selection or Word',
       mode = { 'n', 'v' },
+    },
+
+    {
+      '<leader>sc',
+      function()
+        require('snacks').picker.command_history()
+      end,
+      desc = 'Command History',
+    },
+    {
+      '<leader>sC',
+      function()
+        require('snacks').picker.commands()
+      end,
+      desc = 'Commands',
+    },
+    {
+      '<leader>su',
+      function()
+        require('snacks').picker.undo()
+      end,
+      desc = 'Undo History',
     },
 
     {

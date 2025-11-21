@@ -36,7 +36,8 @@ require('lazy').setup {
   require 'plugins.lsp',
   require 'plugins.autocompletion', -- Old nvim-cmp (disabled)
   require 'plugins.blink-cmp', -- New blink.cmp completion
-  require 'plugins.none-ls',
+  require 'plugins.formatter',
+  require 'plugins.linter',
   require 'plugins.gitsigns',
   require 'plugins.alpha',
   require 'plugins.indent-blankline',
@@ -56,6 +57,7 @@ require('lazy').setup {
   -- require 'plugins.testing',
   require 'plugins.terminal',
   require 'plugins.search',
+  require 'plugins.tiny-diagnostic',
 }
 
 vim.cmd.colorscheme 'catppuccin'

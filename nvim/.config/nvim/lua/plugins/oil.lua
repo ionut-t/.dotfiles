@@ -1,27 +1,7 @@
 return {
   {
     'stevearc/oil.nvim',
-    lazy = false,
     dependencies = { 'nvim-tree/nvim-web-devicons' },
-    init = function()
-      -- Open oil when opening a directory
-      vim.api.nvim_create_autocmd('VimEnter', {
-        group = vim.api.nvim_create_augroup('Oil_start_directory', { clear = true }),
-        desc = 'Start Oil when opening a directory',
-        nested = true,
-        callback = function()
-          if vim.fn.argc() == 0 then
-            return
-          end
-          local stats = vim.uv.fs_stat(vim.fn.argv(0))
-          if stats and stats.type == 'directory' then
-            vim.schedule(function()
-              require('oil').open()
-            end)
-          end
-        end,
-      })
-    end,
     config = function()
       CustomOilBar = function()
         local path = vim.fn.expand '%'
