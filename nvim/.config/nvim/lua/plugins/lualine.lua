@@ -75,7 +75,7 @@ return {
             end,
             color = function()
               if vim.bo.modified then
-                return { fg = '#e5c07b', gui = 'bold' }
+                return { fg = '#89dceb', gui = 'bold' }
               else
                 return { gui = 'bold' }
               end
