@@ -11,6 +11,8 @@ return {
   },
   opts = {},
   config = function()
+    local max_path_length = 100
+
     require('snipe').setup {
       ui = {
         ---@type integer
@@ -56,8 +58,15 @@ return {
         buffer_format = {
           'icon',
           'filename',
-          '',
-          'directory',
+          ' -> ',
+          function(buf)
+            local bufname = vim.api.nvim_buf_get_name(buf.id)
+            local dir = vim.fn.fnamemodify(bufname, ':~:.:h')
+            if #dir > max_path_length then
+              return '...' .. dir:sub(-max_path_length - 3), 'Comment'
+            end
+            return dir, 'Comment'
+          end,
           function(buf)
             if vim.fn.isdirectory(vim.api.nvim_buf_get_name(buf.id)) == 1 then
               return ' ', 'SnipeText'

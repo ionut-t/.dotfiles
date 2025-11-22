@@ -60,6 +60,7 @@ require('lazy').setup {
   require 'plugins.tiny-diagnostic',
   require 'plugins.snipe',
   require 'plugins.autotag',
+  require 'plugins.neotest',
 }
 
 vim.cmd.colorscheme 'catppuccin'
