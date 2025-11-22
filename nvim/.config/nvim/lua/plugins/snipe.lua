@@ -11,7 +11,7 @@ return {
   },
   opts = {},
   config = function()
-    local max_path_length = 100
+    local max_path_length = 40
 
     require('snipe').setup {
       ui = {
