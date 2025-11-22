@@ -25,7 +25,7 @@ return {
         -- for config options
         ---@type vim.api.keyset.win_config
         open_win_override = {
-          -- title = "My Window Title",
+          title = 'Opened Buffers',
           border = 'rounded', -- single | rounded
         },
 
@@ -54,7 +54,6 @@ return {
         --  fun(buffer_object): string,string - function that takes snipe.Buffer object as an argument
         --    and returns a string to be inserted and optional highlight group name
         buffer_format = {
-          '->',
           'icon',
           'filename',
           '',

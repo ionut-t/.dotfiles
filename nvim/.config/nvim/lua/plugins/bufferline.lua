@@ -1,4 +1,5 @@
 return {
+  enabled = false,
   'akinsho/bufferline.nvim',
   dependencies = {
     'moll/vim-bbye',
