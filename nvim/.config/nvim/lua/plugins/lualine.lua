@@ -1,72 +1,187 @@
 return {
   'nvim-lualine/lualine.nvim',
-  config = function()
-    local mode = {
-      'mode',
-      fmt = function(str)
-        return ' ' .. str
-        -- return ' ' .. str:sub(1, 1) -- displays only the first character of the mode
-      end,
+  event = 'VeryLazy',
+  init = function()
+    vim.g.lualine_laststatus = vim.o.laststatus
+    if vim.fn.argc(-1) > 0 then
+      vim.o.statusline = ' '
+    else
+      vim.o.laststatus = 0
+    end
+  end,
+  opts = function()
+    local lualine_require = require 'lualine_require'
+    lualine_require.require = require
+
+    local icons = {
+      diagnostics = { Error = ' ', Warn = ' ', Hint = ' ', Info = ' ' },
+      git = { added = ' ', modified = ' ', removed = ' ' },
     }
 
-    local filename = {
-      'filename',
-      file_status = true, -- displays file status (readonly status, modified status)
-      path = 0, -- 0 = just filename, 1 = relative path, 2 = absolute path
-    }
-
-    local hide_in_width = function()
-      return vim.fn.winwidth(0) > 100
+    local function fg(name)
+      return function()
+        local hl = vim.api.nvim_get_hl(0, { name = name })
+        return hl and hl.fg and { fg = string.format('#%06x', hl.fg) } or nil
+      end
     end
 
-    local diagnostics = {
-      'diagnostics',
-      sources = { 'nvim_diagnostic' },
-      sections = { 'error', 'warn', 'info', 'hint' },
-      symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
-      colored = false,
-      update_in_insert = false,
-      always_visible = false,
-      cond = hide_in_width,
-    }
+    vim.o.laststatus = vim.g.lualine_laststatus
 
-    local diff = {
-      'diff',
-      colored = false,
-      symbols = { added = ' ', modified = ' ', removed = ' ' }, -- changes diff symbols
-      cond = hide_in_width,
-    }
-
-    require('lualine').setup {
+    local opts = {
       options = {
-        icons_enabled = true,
-        theme = 'catppuccin', -- Match editor theme (catppuccin-mocha)
-        -- Some useful glyphs:
-        -- https://www.nerdfonts.com/cheat-sheet
-        --        
+        theme = 'auto',
+        globalstatus = vim.o.laststatus == 3,
+        disabled_filetypes = { statusline = { 'dashboard', 'alpha', 'ministarter', 'snacks_dashboard' } },
         section_separators = { left = '', right = '' },
         component_separators = { left = '', right = '' },
-        disabled_filetypes = { 'alpha', 'neo-tree' },
-        always_divide_middle = true,
       },
       sections = {
-        lualine_a = { mode },
+        lualine_a = { 'mode' },
         lualine_b = { 'branch' },
-        lualine_c = { filename },
-        lualine_x = { diagnostics, diff, { 'encoding', cond = hide_in_width }, { 'filetype', cond = hide_in_width } },
-        lualine_y = { 'location' },
-        lualine_z = { 'progress' },
+
+        lualine_c = {
+          -- 1. File Type Icon
+          {
+            'filetype',
+            icon_only = true,
+            separator = '',
+            padding = { left = 1, right = 0 },
+          },
+
+          -- 2. PRETTY PATH: Parent Directory Only (Dimmed)
+          {
+            function()
+              -- Gets the immediate parent directory name
+              local dir = vim.fn.expand '%:p:h:t'
+              -- Check if we are at the root (dir is same as cwd name) or no parent
+              if dir == vim.fn.expand '%:p:h:h:t' or dir == '' then
+                return ''
+              end
+              return dir .. '/'
+            end,
+            color = fg 'Comment',
+            separator = '',
+            padding = { left = 0, right = 0 },
+          },
+
+          -- 3. PRETTY PATH: Filename (Bold + Modified Status)
+          {
+            function()
+              local file = vim.fn.expand '%:t'
+              if file == '' then
+                return '[No Name]'
+              end
+              return file .. (vim.bo.modified and ' ●' or '')
+            end,
+            color = function()
+              if vim.bo.modified then
+                return { fg = '#e5c07b', gui = 'bold' }
+              else
+                return { gui = 'bold' }
+              end
+            end,
+            padding = { left = 0, right = 1 },
+          },
+        },
+        lualine_x = {
+          {
+            'diagnostics',
+            symbols = {
+              error = icons.diagnostics.Error,
+              warn = icons.diagnostics.Warn,
+              info = icons.diagnostics.Info,
+              hint = icons.diagnostics.Hint,
+            },
+          },
+          {
+            function()
+              return require('snacks').profiler.status()
+            end,
+            cond = function()
+              return package.loaded['snacks']
+            end,
+          },
+          {
+            function()
+              return require('noice').api.status.command.get()
+            end,
+            cond = function()
+              return package.loaded['noice'] and require('noice').api.status.command.has()
+            end,
+            color = fg 'Statement',
+          },
+          {
+            function()
+              return require('noice').api.status.mode.get()
+            end,
+            cond = function()
+              return package.loaded['noice'] and require('noice').api.status.mode.has()
+            end,
+            color = fg 'Constant',
+          },
+          {
+            function()
+              return '  ' .. require('dap').status()
+            end,
+            cond = function()
+              return package.loaded['dap'] and require('dap').status() ~= ''
+            end,
+            color = fg 'Debug',
+          },
+          {
+            require('lazy.status').updates,
+            cond = require('lazy.status').has_updates,
+            color = fg 'Special',
+          },
+          {
+            'diff',
+            symbols = icons.git,
+            source = function()
+              local gitsigns = vim.b.gitsigns_status_dict
+              if gitsigns then
+                return {
+                  added = gitsigns.added,
+                  modified = gitsigns.changed,
+                  removed = gitsigns.removed,
+                }
+              end
+            end,
+          },
+        },
+        lualine_y = {
+          { 'location', separator = '|' },
+          { 'progress' },
+        },
+        lualine_z = {
+          -- Root Directory
+          {
+            function()
+              return ' ' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
+            end,
+          },
+        },
       },
-      inactive_sections = {
-        lualine_a = {},
-        lualine_b = {},
-        lualine_c = { { 'filename', path = 1 } },
-        lualine_x = { { 'location', padding = 0 } },
-        lualine_y = {},
-        lualine_z = {},
-      },
-      tabline = {},
-      extensions = { 'fugitive' },
+      extensions = { 'neo-tree', 'lazy', 'fzf' },
     }
+
+    if vim.g.trouble_lualine and package.loaded['trouble'] then
+      local trouble = require 'trouble'
+      local symbols = trouble.statusline {
+        mode = 'symbols',
+        groups = {},
+        title = false,
+        filter = { range = true },
+        format = '{kind_icon}{symbol.name:Normal}',
+        hl_group = 'lualine_c_normal',
+      }
+      table.insert(opts.sections.lualine_c, {
+        symbols and symbols.get,
+        cond = function()
+          return vim.b.trouble_lualine ~= false and symbols.has()
+        end,
+      })
+    end
+
+    return opts
   end,
 }
