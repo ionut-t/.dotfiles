@@ -15,6 +15,29 @@ return {
         { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
     },
     config = function()
+        -- Function to switch focus between picker and preview
+        local focus_preview = function(prompt_bufnr)
+            local action_state = require("telescope.actions.state")
+            local picker = action_state.get_current_picker(prompt_bufnr)
+            local prompt_win = picker.prompt_win
+            local previewer = picker.previewer
+
+            if not previewer then
+                return
+            end
+
+            local winid = previewer.state.winid
+            local bufnr = previewer.state.bufnr
+
+            -- Set up Tab to return to prompt from preview
+            vim.keymap.set("n", "<Tab>", function()
+                vim.cmd(string.format("noautocmd lua vim.api.nvim_set_current_win(%s)", prompt_win))
+            end, { buffer = bufnr })
+
+            -- Switch to preview window
+            vim.cmd(string.format("noautocmd lua vim.api.nvim_set_current_win(%s)", winid))
+        end
+
         require('telescope').setup {
             defaults = {
                 -- Better path display for large projects
@@ -36,6 +59,7 @@ return {
                         ['<C-k>'] = require('telescope.actions').move_selection_previous,
                         ['<C-j>'] = require('telescope.actions').move_selection_next,
                         ['<C-l>'] = require('telescope.actions').select_default,
+                        ['<Tab>'] = focus_preview,
                         ['<CR>'] = function(prompt_bufnr)
                             local actions = require('telescope.actions')
                             local action_state = require('telescope.actions.state')
@@ -53,6 +77,9 @@ return {
                                 actions.select_default(prompt_bufnr)
                             end
                         end,
+                    },
+                    n = {
+                        ['<Tab>'] = focus_preview,
                     },
                 },
             },

@@ -9,6 +9,40 @@ return {
           filename_first = true,
         },
       },
+      actions = {
+        -- Custom action to switch to preview and set up return keybinding
+        goto_preview = function(picker)
+          if picker.preview and picker.preview.win and picker.preview.win.win then
+            local preview_win = picker.preview.win.win
+            local list_win = picker.list and picker.list.win and picker.list.win.win
+
+            -- Switch to preview
+            vim.api.nvim_set_current_win(preview_win)
+
+            -- Set up Tab keybinding in preview buffer to return to list
+            if list_win then
+              local preview_buf = vim.api.nvim_win_get_buf(preview_win)
+              vim.keymap.set('n', '<Tab>', function()
+                if vim.api.nvim_win_is_valid(list_win) then
+                  vim.api.nvim_set_current_win(list_win)
+                end
+              end, { buffer = preview_buf, nowait = true, silent = true })
+            end
+          end
+        end,
+      },
+      win = {
+        input = {
+          keys = {
+            ['<Tab>'] = { 'goto_preview', mode = { 'n' } },
+          },
+        },
+        list = {
+          keys = {
+            ['<Tab>'] = { 'goto_preview', mode = { 'n' } },
+          },
+        },
+      },
     },
 
     -- Always-on performance features
