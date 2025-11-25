@@ -40,8 +40,8 @@ return {
         lsp_inlay_hints = {
           enable = true,
           -- show_parameter_hints = true,
-          parameter_hints_prefix = ' ',
-          other_hints_prefix = ' ',
+          parameter_hints_prefix = 'ƒ',
+          other_hints_prefix = '➤',
         },
       }
 
