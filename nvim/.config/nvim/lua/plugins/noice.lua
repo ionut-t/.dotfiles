@@ -37,7 +37,7 @@ return {
     },
     -- You can enable a preset for easier configuration
     presets = {
-      bottom_search = false, -- true to Use a classic bottom cmdline for search
+      bottom_search = true, -- true to Use a classic bottom cmdline for search
       command_palette = true, -- Position the cmdline and popupmenu together
       long_message_to_split = true, -- Long messages will be sent to a split
       inc_rename = true, -- Enables an input dialog for inc-rename.nvim

@@ -35,25 +35,7 @@ return {
 
         -- Customize icons (optional)
         icons = { breakpoint = '🔴', currentpos = '👉' },
-
-        -- Auto-format and import on save
-        lsp_inlay_hints = {
-          enable = true,
-          -- show_parameter_hints = true,
-          parameter_hints_prefix = 'ƒ',
-          other_hints_prefix = '➤',
-        },
       }
-
-      -- Format on save
-      local format_sync_grp = vim.api.nvim_create_augroup('GoFormat', {})
-      vim.api.nvim_create_autocmd('BufWritePre', {
-        pattern = '*.go',
-        callback = function()
-          require('go.format').gofmt()
-        end,
-        group = format_sync_grp,
-      })
 
       -- Key mappings
       local function map(mode, lhs, rhs, desc)

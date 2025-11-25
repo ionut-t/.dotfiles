@@ -1,5 +1,26 @@
 return {
   'stevearc/conform.nvim',
+  event = { 'BufReadPre', 'BufNewFile' },
+  cmd = { 'ConformInfo' },
+  keys = {
+    {
+      '<leader>cf',
+      function()
+        require('conform').format {
+          lsp_fallback = true,
+          async = false,
+          timeout_ms = 500,
+        }
+      end,
+      mode = { 'n', 'v' },
+      desc = 'Code format',
+    },
+    {
+      '<leader>uf',
+      '<cmd>FormatToggle<cr>',
+      desc = 'Toggle format on save',
+    },
+  },
   config = function()
     require('conform').setup {
       formatters_by_ft = {
@@ -37,7 +58,7 @@ return {
       end,
     }
 
-    -- Toggle format on save
+    -- Toggle format on save (keymaps defined in keys spec above for lazy loading)
     vim.g.format_on_save_enabled = true
     vim.api.nvim_create_user_command('FormatToggle', function()
       vim.g.format_on_save_enabled = not vim.g.format_on_save_enabled
@@ -47,17 +68,5 @@ return {
         vim.notify 'Format on save disabled'
       end
     end, {})
-
-    vim.keymap.set({ 'n', 'v' }, '<leader>cf', function()
-      require('conform').format {
-        lsp_fallback = true,
-        async = false,
-        timeout_ms = 500,
-      }
-    end, { desc = 'Code format' })
-
-    -- The none-ls setup had a toggle for format on save bound to <leader>uf.
-    -- I'm keeping that convention here.
-    vim.keymap.set('n', '<leader>uf', '<cmd>FormatToggle<cr>', { desc = 'Toggle format on save' })
   end,
 }
