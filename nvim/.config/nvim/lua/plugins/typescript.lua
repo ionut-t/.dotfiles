@@ -3,15 +3,6 @@ return {
   enabled = true,
   dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
   ft = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
-  keys = {
-    { '<leader>co', '<cmd>TSToolsOrganizeImports<cr>', desc = 'Code organize imports' },
-    { '<leader>cO', '<cmd>TSToolsSortImports<cr>', desc = 'Code sort imports' },
-    { '<leader>cu', '<cmd>TSToolsRemoveUnused<cr>', desc = 'Code remove unused' },
-    { '<leader>cz', '<cmd>TSToolsGoToSourceDefinition<cr>', desc = 'Code go to source definition' },
-    { '<leader>cR', '<cmd>TSToolsRenameFile<cr>', desc = 'Code rename file' },
-    { '<leader>ci', '<cmd>TSToolsAddMissingImports<cr>', desc = 'Code add missing imports' },
-    { '<leader>cF', '<cmd>TSToolsFixAll<cr>', desc = 'Code fix all' },
-  },
   opts = {
     settings = {
       -- Spawn additional tsserver instance to calculate diagnostics on it
@@ -50,5 +41,14 @@ return {
   },
   config = function(_, opts)
     require('typescript-tools').setup(opts)
+
+    -- Keymaps (only available in TS/JS files since plugin is ft-loaded)
+    vim.keymap.set('n', '<leader>co', '<cmd>TSToolsOrganizeImports<cr>', { desc = 'Organise imports' })
+    vim.keymap.set('n', '<leader>cO', '<cmd>TSToolsSortImports<cr>', { desc = 'Sort imports' })
+    vim.keymap.set('n', '<leader>cu', '<cmd>TSToolsRemoveUnused<cr>', { desc = 'Remove unused' })
+    vim.keymap.set('n', '<leader>cz', '<cmd>TSToolsGoToSourceDefinition<cr>', { desc = 'Go to source definition' })
+    vim.keymap.set('n', '<leader>cR', '<cmd>TSToolsRenameFile<cr>', { desc = 'Rename file' })
+    vim.keymap.set('n', '<leader>ci', '<cmd>TSToolsAddMissingImports<cr>', { desc = 'Add missing imports' })
+    vim.keymap.set('n', '<leader>cF', '<cmd>TSToolsFixAll<cr>', { desc = 'Fix all' })
   end,
 }

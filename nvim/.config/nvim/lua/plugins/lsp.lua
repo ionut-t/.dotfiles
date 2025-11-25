@@ -50,11 +50,6 @@ return {
           -- Format is handled by conform.nvim (<leader>cf in formatter.lua)
           map('<leader>cs', vim.lsp.buf.signature_help, 'Signature help')
           map('<leader>cd', vim.diagnostic.open_float, 'Line diagnostics')
-          map('<leader>cwa', vim.lsp.buf.add_workspace_folder, 'Add workspace folder')
-          map('<leader>cwr', vim.lsp.buf.remove_workspace_folder, 'Remove workspace folder')
-          map('<leader>cwl', function()
-            print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-          end, 'List workspace folders')
         end
 
         -- The following two autocommands are used to highlight references of the
