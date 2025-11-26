@@ -48,14 +48,14 @@ return {
       view = 'cmdline_popup', -- View for rendering the cmdline (cmdline_popup for floating)
       opts = {}, -- Global options for the cmdline
       format = {
-        -- Customize cmdline icons
-        cmdline = { pattern = '^:', icon = '', lang = 'vim' },
-        search_down = { kind = 'search', pattern = '^/', icon = ' ', lang = 'regex' },
-        search_up = { kind = 'search', pattern = '^%?', icon = ' ', lang = 'regex' },
-        filter = { pattern = '^:%s*!', icon = '$', lang = 'bash' },
-        lua = { pattern = { '^:%s*lua%s+', '^:%s*lua%s*=%s*', '^:%s*=%s*' }, icon = '', lang = 'lua' },
-        help = { pattern = '^:%s*he?l?p?%s+', icon = '' },
-        input = {}, -- Used by input()
+        -- Customize cmdline icons with Nerd Fonts
+        cmdline = { pattern = '^:', icon = '', lang = 'vim' },
+        search_down = { kind = 'search', pattern = '^/', icon = ' ', lang = 'regex' },
+        search_up = { kind = 'search', pattern = '^%?', icon = ' ', lang = 'regex' },
+        filter = { pattern = '^:%s*!', icon = '', lang = 'bash' },
+        lua = { pattern = { '^:%s*lua%s+', '^:%s*lua%s*=%s*', '^:%s*=%s*' }, icon = '', lang = 'lua' },
+        help = { pattern = '^:%s*he?l?p?%s+', icon = '' },
+        input = { view = 'cmdline_input', icon = '󰥻 ' }, -- Used by input()
       },
     },
     messages = {
@@ -69,7 +69,30 @@ return {
     popupmenu = {
       enabled = true, -- Enables the Noice popupmenu UI
       backend = 'nui', -- Backend to use to show regular cmdline completions
-      kind_icons = {}, -- Icons for completion item kinds
+      -- Optional: Add icons to completion kinds (requires lspkind or similar usually, but valid here)
+      kind_icons = {
+        Class = ' ',
+        Color = ' ',
+        Constant = ' ',
+        Constructor = ' ',
+        Enum = ' ',
+        EnumMember = ' ',
+        Field = '󰜢 ',
+        File = ' ',
+        Folder = ' ',
+        Function = ' ',
+        Interface = 'ﰮ ',
+        Keyword = ' ',
+        Method = 'ƒ ',
+        Module = ' ',
+        Property = ' ',
+        Snippet = ' ',
+        Struct = ' ',
+        Text = ' ',
+        Unit = ' ',
+        Value = ' ',
+        Variable = ' ',
+      },
     },
     notify = {
       enabled = true,
