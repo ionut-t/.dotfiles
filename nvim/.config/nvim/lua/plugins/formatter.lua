@@ -1,3 +1,5 @@
+local timeout_ms = 2500
+
 return {
   'stevearc/conform.nvim',
   event = { 'BufReadPre', 'BufNewFile' },
@@ -9,7 +11,7 @@ return {
         require('conform').format {
           lsp_fallback = true,
           async = false,
-          timeout_ms = 500,
+          timeout_ms = timeout_ms,
         }
       end,
       mode = { 'n', 'v' },
@@ -51,7 +53,7 @@ return {
       format_on_save = function()
         if vim.g.format_on_save_enabled then
           return {
-            timeout_ms = 500,
+            timeout_ms = timeout_ms,
             lsp_fallback = true,
           }
         end
