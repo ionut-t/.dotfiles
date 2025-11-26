@@ -1,55 +1,28 @@
 return {
   'kevinhwang91/nvim-ufo',
-  dependencies = {
-    'kevinhwang91/promise-async',
-  },
-  event = 'BufReadPost',
-  opts = {
+  dependencies = { 'kevinhwang91/promise-async' },
+  config = function()
+    vim.opt.foldcolumn = '1'
+    vim.opt.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+    vim.opt.foldlevelstart = 99
+    vim.opt.foldenable = true
+    vim.o.fillchars = 'eob: ,fold: ,foldopen:,foldsep: ,foldinner: ,foldclose:'
 
-    open_fold_hl_timeout = 150,
-    close_fold_kinds_for_ft = {
-      default = { 'imports', 'comment' },
-      json = { 'array' },
-      c = { 'comment', 'region' },
-    },
-    close_fold_current_line_for_ft = {
-      default = true,
-      c = false,
-    },
-    preview = {
-      win_config = {
-        border = { '', '─', '', '', '', '─', '', '' },
-        winhighlight = 'Normal:Folded',
-        winblend = 0,
-      },
-      mappings = {
-        scrollU = '<C-u>',
-        scrollD = '<C-d>',
-        jumpTop = '[',
-        jumpBot = ']',
-      },
-    },
-    provider_selector = function(bufnr, filetype, buftype)
-      return { 'treesitter', 'indent' }
-    end,
-  },
-  config = function(_, opts)
-    require('ufo').setup(opts)
-
-    -- Open all folds when opening a buffer
-    vim.api.nvim_create_autocmd('BufReadPost', {
-      callback = function()
-        vim.defer_fn(function()
-          require('ufo').openAllFolds()
-        end, 100)
-      end,
-    })
-
-    -- Using ufo provider need remap `zR` and `zM`
-    vim.keymap.set('n', 'zR', require('ufo').openAllFolds, { desc = 'Open all folds' })
-    vim.keymap.set('n', 'zM', require('ufo').closeAllFolds, { desc = 'Close all folds' })
-    vim.keymap.set('n', 'zr', require('ufo').openFoldsExceptKinds, { desc = 'Open folds except kinds' })
-    vim.keymap.set('n', 'zm', require('ufo').closeFoldsWith, { desc = 'Close folds with' })
-    vim.keymap.set('n', 'zp', require('ufo').peekFoldedLinesUnderCursor, { desc = 'Peek folded lines' })
+    -- Option 2: nvim lsp as LSP client
+    -- Tell the server the capability of foldingRange,
+    -- Neovim hasn't added foldingRange to default capabilities, users must add it manually
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities.textDocument.foldingRange = {
+      dynamicRegistration = false,
+      lineFoldingOnly = true,
+    }
+    local language_servers = vim.lsp.get_clients() -- or list servers manually like {'gopls', 'clangd'}
+    for _, ls in ipairs(language_servers) do
+      require('lspconfig')[ls].setup {
+        capabilities = capabilities,
+        -- you can add other fields for setting up lsp server in this table
+      }
+    end
+    require('ufo').setup()
   end,
 }
