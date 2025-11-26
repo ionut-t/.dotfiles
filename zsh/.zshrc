@@ -203,6 +203,7 @@ alias tks="tmux kill-session"
 alias vim="/Applications/MacVim.app/Contents/bin/Vim"
 alias code="code-insiders"
 alias ws="webstorm"
+alias v="nvim"
 
 # Utilities
 alias c='clear'

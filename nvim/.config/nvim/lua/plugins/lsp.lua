@@ -201,17 +201,8 @@ return {
         },
       },
       pyright = {
-        -- Pyright for type checking and completions
-        settings = {
-          python = {
-            analysis = {
-              typeCheckingMode = 'basic', -- "off", "basic", or "strict"
-              autoSearchPaths = true,
-              useLibraryCodeForTypes = true,
-              diagnosticMode = 'workspace',
-            },
-          },
-        },
+        -- Pyright reads settings from pyrightconfig.json in project root
+        -- No settings needed here - let pyrightconfig.json handle it
       },
       html = { filetypes = { 'html', 'twig', 'hbs' } },
       cssls = {},
@@ -330,6 +321,7 @@ return {
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
     require('mason-lspconfig').setup {
+      automatic_installation = { exclude = { 'pylsp' } },
       handlers = {
         function(server_name)
           -- Skip formatters/linters that aren't LSP servers
@@ -338,6 +330,11 @@ return {
             if server_name == tool then
               return -- Don't try to set up as LSP
             end
+          end
+
+          -- Skip pylsp - we use pyright instead
+          if server_name == 'pylsp' then
+            return
           end
 
           local server = servers[server_name] or {}
