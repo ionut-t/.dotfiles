@@ -40,6 +40,25 @@ return {
 
         require('telescope').setup {
             defaults = {
+                -- Improved ripgrep arguments for better search
+                vimgrep_arguments = {
+                    'rg',
+                    '--color=never',
+                    '--no-heading',
+                    '--with-filename',
+                    '--line-number',
+                    '--column',
+                    '--smart-case',
+                    '--hidden',             -- Search hidden files by default
+                    '--glob=!.git/',        -- Exclude .git directory
+                    '--glob=!node_modules/',
+                    '--glob=!.next/',
+                    '--glob=!dist/',
+                    '--glob=!build/',
+                    '--glob=!*.min.js',
+                    '--trim',               -- Trim whitespace
+                },
+
                 -- Better path display for large projects
                 path_display = { "truncate" },
 
@@ -177,6 +196,55 @@ return {
                 prompt_title = 'Live Grep in Open Files',
             }
         end, { desc = 'Search in open files' })
+
+        -- Enhanced search with telescope-live-grep-args
+        vim.keymap.set('n', '<leader>sG', function()
+            require('telescope').extensions.live_grep_args.live_grep_args()
+        end, { desc = 'Search with args (advanced)' })
+
+        -- Search for TODO/FIXME/NOTE comments
+        vim.keymap.set('n', '<leader>sT', function()
+            builtin.live_grep {
+                prompt_title = 'Search TODOs',
+                default_text = 'TODO|FIXME|NOTE|HACK|XXX',
+            }
+        end, { desc = 'Search TODOs' })
+
+        -- Visual mode search: search for selected text
+        vim.keymap.set('v', '<leader>s', function()
+            -- Get visual selection
+            vim.cmd('noau normal! "vy"')
+            local text = vim.fn.getreg('v')
+            vim.fn.setreg('v', {})
+
+            -- Escape special characters
+            text = string.gsub(text, '([^%w])', '%%%1')
+
+            builtin.grep_string({ search = text })
+        end, { desc = 'Search selection' })
+
+        -- Search without respecting .gitignore
+        vim.keymap.set('n', '<leader>sN', function()
+            builtin.live_grep {
+                prompt_title = 'Search (no ignore)',
+                additional_args = function()
+                    return { '--no-ignore' }
+                end,
+            }
+        end, { desc = 'Search (no ignore)' })
+
+        -- Search only in current filetype
+        vim.keymap.set('n', '<leader>st', function()
+            local ft = vim.bo.filetype
+            if ft == '' then
+                vim.notify('No filetype detected', vim.log.levels.WARN)
+                return
+            end
+            builtin.live_grep {
+                prompt_title = 'Search in ' .. ft .. ' files',
+                type_filter = ft,
+            }
+        end, { desc = 'Search in current filetype' })
 
         -- Keep legacy mappings for compatibility (can remove after getting used to new ones)
         vim.keymap.set('n', '<leader>/', function()

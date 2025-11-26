@@ -35,6 +35,48 @@ return {
   opts = {
     open_cmd = 'vnew',
     is_insert_mode = true, -- Start in insert mode
+    replace_engine = {
+      ['sed'] = {
+        cmd = 'sed',
+        args = { '-i', '', '-E' },
+      },
+    },
+    default = {
+      find = {
+        cmd = 'rg',
+        options = { 'hidden', 'ignore-case', 'smart-case' },
+      },
+      replace = {
+        cmd = 'sd',
+      },
+    },
+    find_engine = {
+      ['rg'] = {
+        cmd = 'rg',
+        args = {
+          '--color=never',
+          '--no-heading',
+          '--with-filename',
+          '--line-number',
+          '--column',
+          '--hidden',
+          '--glob=!.git/',
+          '--glob=!node_modules/',
+        },
+        options = {
+          ['ignore-case'] = {
+            value = '--ignore-case',
+            icon = '[I]',
+            desc = 'ignore case',
+          },
+          ['hidden'] = {
+            value = '--hidden',
+            desc = 'hidden file',
+            icon = '[H]',
+          },
+        },
+      },
+    },
   },
   config = function(_, opts)
     require('spectre').setup(opts)

@@ -31,6 +31,7 @@ require('lazy').setup {
   require 'plugins.treesitter',
   require 'plugins.treesitter-context',
   require 'plugins.telescope',
+  require 'plugins.telescope-live-grep-args', -- Advanced ripgrep integration
   require 'plugins.lsp',
   require 'plugins.blink-cmp',
   require 'plugins.formatter',

@@ -36,9 +36,8 @@ return {
         map('K', vim.lsp.buf.hover, 'Hover documentation')
         map('gK', vim.lsp.buf.signature_help, 'Signature help')
 
-        -- Symbols
-        map('<leader>sd', require('telescope.builtin').lsp_document_symbols, 'Search document symbols')
-        map('<leader>sw', require('telescope.builtin').lsp_dynamic_workspace_symbols, 'Search workspace symbols')
+        -- Note: <leader>sd and <leader>sw handled by Telescope (see telescope.lua)
+        -- LSP symbols accessible via Telescope's diagnostics and workspace symbol search
 
         local client = vim.lsp.get_client_by_id(event.data.client_id)
         if client and client.supports_method 'textDocument/codeAction' then
