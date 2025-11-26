@@ -30,6 +30,7 @@ require('lazy').setup {
   require 'plugins.lualine',
   require 'plugins.treesitter',
   require 'plugins.treesitter-context',
+  require 'plugins.ufo', -- Folding with preview
   require 'plugins.telescope',
   require 'plugins.telescope-live-grep-args', -- Advanced ripgrep integration
   require 'plugins.lsp',

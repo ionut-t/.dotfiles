@@ -75,3 +75,9 @@ vim.opt.sessionoptions = {
   'skiprtp',
   'folds',
 }
+
+-- Folding settings (for nvim-ufo)
+vim.o.foldcolumn = '0' -- Hide fold column (set to '1' to show)
+vim.o.foldlevel = 99 -- Start with all folds open
+vim.o.foldlevelstart = 99 -- Open files with all folds open
+vim.o.foldenable = true
