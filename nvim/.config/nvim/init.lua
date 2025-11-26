@@ -18,13 +18,11 @@ require('lazy').setup {
   require 'plugins.whichkey',
   require 'plugins.misc',
   require 'plugins.snacks', -- Snacks.nvim utilities
-  require 'plugins.dressing',
   require 'plugins.inc-rename', -- LSP rename with live preview
   require 'plugins.harpoon', -- Quick file navigation
   require 'plugins.marks', -- Mark lines within buffers
   require 'plugins.flash', -- Fast navigation with labeled jumps
   require 'plugins.multi-cursor',
-  -- require 'plugins.neotree',
   require 'plugins.oil',
   require 'plugins.mini', -- Mini.nvim modules
   require 'plugins.theme',
@@ -33,9 +31,9 @@ require('lazy').setup {
   require 'plugins.treesitter',
   require 'plugins.treesitter-context',
   require 'plugins.telescope',
+  require 'plugins.telescope-live-grep-args', -- Advanced ripgrep integration
   require 'plugins.lsp',
-  require 'plugins.autocompletion', -- Old nvim-cmp (disabled)
-  require 'plugins.blink-cmp', -- New blink.cmp completion
+  require 'plugins.blink-cmp',
   require 'plugins.formatter',
   require 'plugins.linter',
   require 'plugins.gitsigns',

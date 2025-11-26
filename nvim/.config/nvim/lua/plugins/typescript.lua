@@ -29,7 +29,7 @@ return {
       code_lens = 'off',
       -- By default code lenses are displayed on all referencable values and for some of you it can
       -- be too much this option reduce count of them by removing member references from lenses
-      disable_member_code_lens = true,
+      disable_member_code_lens = false,
       -- JSXCloseTag
       -- WARNING: it is disabled by default (maybe you configuration or distro already uses nvim-ts-autotag,
       -- that maybe have a conflict if enable this feature. )
@@ -42,13 +42,13 @@ return {
   config = function(_, opts)
     require('typescript-tools').setup(opts)
 
-    -- Keymaps
-    vim.keymap.set('n', '<leader>co', '<cmd>TSToolsOrganizeImports<cr>', { desc = 'Code organize imports' })
-    vim.keymap.set('n', '<leader>cO', '<cmd>TSToolsSortImports<cr>', { desc = 'Code sort imports' })
-    vim.keymap.set('n', '<leader>cu', '<cmd>TSToolsRemoveUnused<cr>', { desc = 'Code remove unused' })
-    vim.keymap.set('n', '<leader>cz', '<cmd>TSToolsGoToSourceDefinition<cr>', { desc = 'Code go to source definition' })
-    vim.keymap.set('n', '<leader>cR', '<cmd>TSToolsRenameFile<cr>', { desc = 'Code rename file' })
-    vim.keymap.set('n', '<leader>cI', '<cmd>TSToolsAddMissingImports<cr>', { desc = 'Code add missing imports' })
-    vim.keymap.set('n', '<leader>cF', '<cmd>TSToolsFixAll<cr>', { desc = 'Code fix all' })
+    -- Keymaps (only available in TS/JS files since plugin is ft-loaded)
+    vim.keymap.set('n', '<leader>co', '<cmd>TSToolsOrganizeImports<cr>', { desc = 'Organise imports' })
+    vim.keymap.set('n', '<leader>cO', '<cmd>TSToolsSortImports<cr>', { desc = 'Sort imports' })
+    vim.keymap.set('n', '<leader>cu', '<cmd>TSToolsRemoveUnused<cr>', { desc = 'Remove unused' })
+    vim.keymap.set('n', '<leader>cz', '<cmd>TSToolsGoToSourceDefinition<cr>', { desc = 'Go to source definition' })
+    vim.keymap.set('n', '<leader>cR', '<cmd>TSToolsRenameFile<cr>', { desc = 'Rename file' })
+    vim.keymap.set('n', '<leader>ci', '<cmd>TSToolsAddMissingImports<cr>', { desc = 'Add missing imports' })
+    vim.keymap.set('n', '<leader>cF', '<cmd>TSToolsFixAll<cr>', { desc = 'Fix all' })
   end,
 }

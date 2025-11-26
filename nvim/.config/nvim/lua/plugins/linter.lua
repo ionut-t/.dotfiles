@@ -1,5 +1,15 @@
 return {
   'mfussenegger/nvim-lint',
+  event = { 'BufReadPost', 'BufNewFile', 'BufWritePost' },
+  keys = {
+    {
+      '<leader>cl',
+      function()
+        require('lint').try_lint()
+      end,
+      desc = 'Trigger linting for current buffer',
+    },
+  },
   config = function()
     local lint = require 'lint'
     lint.linters_by_ft = {
@@ -19,9 +29,5 @@ return {
         require('lint').try_lint()
       end,
     })
-
-    vim.keymap.set('n', '<leader>cl', function()
-      require('lint').try_lint()
-    end, { desc = 'Trigger linting for current buffer' })
   end,
 }

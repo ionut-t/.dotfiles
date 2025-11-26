@@ -35,25 +35,7 @@ return {
 
         -- Customize icons (optional)
         icons = { breakpoint = '🔴', currentpos = '👉' },
-
-        -- Auto-format and import on save
-        lsp_inlay_hints = {
-          enable = true,
-          -- show_parameter_hints = true,
-          parameter_hints_prefix = ' ',
-          other_hints_prefix = ' ',
-        },
       }
-
-      -- Format on save
-      local format_sync_grp = vim.api.nvim_create_augroup('GoFormat', {})
-      vim.api.nvim_create_autocmd('BufWritePre', {
-        pattern = '*.go',
-        callback = function()
-          require('go.format').gofmt()
-        end,
-        group = format_sync_grp,
-      })
 
       -- Key mappings
       local function map(mode, lhs, rhs, desc)
@@ -61,14 +43,13 @@ return {
       end
 
       -- Go-specific mappings (nested under code namespace: <leader>cg)
-      map('n', '<leader>cgd', '<cmd>GoInstallDeps<CR>', 'Go install dependencies')
-      map('n', '<leader>cgta', '<cmd>GoTest<CR>', 'Go test all')
-      map('n', '<leader>cgtf', '<cmd>GoTestFunc<CR>', 'Go test function')
-      map('n', '<leader>cgr', '<cmd>GoRun<CR>', 'Go run')
-      map('n', '<leader>cgf', '<cmd>GoFillStruct<CR>', 'Go fill struct')
-      map('n', '<leader>cga', '<cmd>GoAddTag<CR>', 'Go add tags')
-      map('n', '<leader>cgx', '<cmd>GoRmTag<CR>', 'Go delete/remove tags')
-      map('n', '<leader>cgI', '<cmd>GoImport<CR>', 'Go import packages')
+      map('n', '<leader>cD', '<cmd>GoInstallDeps<CR>', 'Install dependencies')
+      map('n', '<leader>Ta', '<cmd>GoTest<CR>', 'Test all (go)')
+      map('n', '<leader>Tf', '<cmd>GoTestFunc<CR>', 'Test function (go)')
+      map('n', '<leader>cs', '<cmd>GoFillStruct<CR>', 'Fill struct')
+      map('n', '<leader>ca', '<cmd>GoAddTag<CR>', 'Add tags')
+      map('n', '<leader>cx', '<cmd>GoRmTag<CR>', 'Delete/remove tags')
+      map('n', '<leader>cI', '<cmd>GoImport<CR>', 'Import packages')
     end,
     event = { 'CmdlineEnter' },
     ft = { 'go', 'gomod' },

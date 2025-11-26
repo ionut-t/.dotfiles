@@ -48,3 +48,30 @@ vim.g.neovide_ligatures = true
 vim.g.lazyvim_rust_diagnostics = 'rust-analyzer'
 
 vim.o.winborder = 'rounded' -- Set rounded borders for floating windows (default: 'single')
+
+-- Performance optimizations
+vim.o.lazyredraw = false -- Don't redraw while executing macros (set to true if needed, but can cause UI issues)
+vim.o.synmaxcol = 240 -- Max column for syntax highlight (improves performance on long lines)
+vim.o.redrawtime = 1500 -- Time in ms for redrawing the display (default: 2000)
+
+-- Better diff algorithm
+vim.opt.diffopt:append { 'algorithm:patience', 'indent-heuristic' }
+
+-- Enable persistent undo with better directory
+vim.o.undodir = vim.fn.stdpath 'data' .. '/undo'
+vim.fn.mkdir(vim.o.undodir, 'p')
+
+-- Faster completion
+vim.o.pumblend = 10 -- Popup menu transparency (0-30)
+
+-- Better session options
+vim.opt.sessionoptions = {
+  'buffers',
+  'curdir',
+  'tabpages',
+  'winsize',
+  'help',
+  'globals',
+  'skiprtp',
+  'folds',
+}

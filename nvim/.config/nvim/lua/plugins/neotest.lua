@@ -4,12 +4,19 @@ return {
     'nvim-neotest/nvim-nio',
     'nvim-lua/plenary.nvim',
     'nvim-treesitter/nvim-treesitter',
-    'marilari88/neotest-vitest', -- Vitest adapter
+    'marilari88/neotest-vitest',
+    {
+      'fredrikaverpil/neotest-golang',
+      version = '*', -- Optional, but recommended; track releases
+      build = function()
+        vim.system({ 'go', 'install', 'gotest.tools/gotestsum@latest' }):wait() -- Optional, but recommended
+      end,
+    },
   },
   config = function()
     require('neotest').setup {
       adapters = {
-        require('neotest-vitest')({
+        require 'neotest-vitest' {
           -- Filter dirs when searching for test files
           filter_dir = function(name, rel_path, root)
             return name ~= 'node_modules'
@@ -26,16 +33,53 @@ return {
             end
             return false
           end,
-        }),
+        },
+        require 'neotest-golang' {},
       },
     }
   end,
   keys = {
-    { '<leader>Tt', function() require('neotest').run.run() end, desc = 'Run nearest test' },
-    { '<leader>Tf', function() require('neotest').run.run(vim.fn.expand('%')) end, desc = 'Run test file' },
-    { '<leader>Tw', function() require('neotest').run.run({ vitestCommand = 'vitest --watch' }) end, desc = 'Run watch mode' },
-    { '<leader>Ts', function() require('neotest').summary.toggle() end, desc = 'Toggle test summary' },
-    { '<leader>To', function() require('neotest').output.open({ enter = true }) end, desc = 'Show test output' },
-    { '<leader>Tp', function() require('neotest').output_panel.toggle() end, desc = 'Toggle output panel' },
+    {
+      '<leader>Tt',
+      function()
+        require('neotest').run.run()
+      end,
+      desc = 'Run nearest test',
+    },
+    {
+      '<leader>Tf',
+      function()
+        require('neotest').run.run(vim.fn.expand '%')
+      end,
+      desc = 'Run test file',
+    },
+    {
+      '<leader>Tw',
+      function()
+        require('neotest').run.run { vitestCommand = 'vitest --watch' }
+      end,
+      desc = 'Run watch mode',
+    },
+    {
+      '<leader>Ts',
+      function()
+        require('neotest').summary.toggle()
+      end,
+      desc = 'Toggle test summary',
+    },
+    {
+      '<leader>To',
+      function()
+        require('neotest').output.open { enter = true }
+      end,
+      desc = 'Show test output',
+    },
+    {
+      '<leader>Tp',
+      function()
+        require('neotest').output_panel.toggle()
+      end,
+      desc = 'Toggle output panel',
+    },
   },
 }
