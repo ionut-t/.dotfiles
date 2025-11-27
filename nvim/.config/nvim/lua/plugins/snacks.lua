@@ -228,14 +228,14 @@ return {
       function()
         require('snacks').git.blame_line()
       end,
-      desc = 'Git Blame Line',
+      desc = 'Blame line',
     },
     {
       '<leader>gB',
       function()
         require('snacks').gitbrowse()
       end,
-      desc = 'Git Browse',
+      desc = 'Browse',
       mode = { 'n', 'v' },
     },
     {
@@ -243,56 +243,56 @@ return {
       function()
         require('snacks').lazygit.log_file()
       end,
-      desc = 'Git File History',
+      desc = 'File history',
     },
     {
       '<leader>gl',
       function()
         require('snacks').lazygit.log()
       end,
-      desc = 'Git Log',
+      desc = 'Log',
     },
     {
       '<leader>gs',
       function()
         require('snacks').picker.git_branches()
       end,
-      desc = 'Git Branches',
+      desc = 'Branches',
     },
     {
       '<leader>gL',
       function()
         require('snacks').picker.git_log_line()
       end,
-      desc = 'Git Log Line',
+      desc = 'Log line',
     },
     {
       '<leader>gx',
       function()
         require('snacks').picker.git_status()
       end,
-      desc = 'Git Status',
+      desc = 'Status',
     },
     {
       '<leader>gS',
       function()
         require('snacks').picker.git_stash()
       end,
-      desc = 'Git Stash',
+      desc = 'Stash',
     },
     {
       '<leader>gp',
       function()
         require('snacks').picker.gh_pr()
       end,
-      desc = 'GitHub Pull Requests (open)',
+      desc = 'Pull Requests (open)',
     },
     {
       '<leader>gP',
       function()
         require('snacks').picker.gh_pr { state = 'all' }
       end,
-      desc = 'GitHub Pull Requests (all)',
+      desc = 'Pull Requests (all)',
     },
 
     -- Scratch buffer
@@ -301,14 +301,14 @@ return {
       function()
         require('snacks').scratch()
       end,
-      desc = 'Toggle Scratch Buffer',
+      desc = 'Scratch buffer',
     },
     {
       '<leader>S',
       function()
         require('snacks').scratch.select()
       end,
-      desc = 'Select Scratch Buffer',
+      desc = 'Select scratch buffer',
     },
 
     -- Zen mode
@@ -317,7 +317,7 @@ return {
       function()
         require('snacks').zen()
       end,
-      desc = 'Toggle Zen Mode',
+      desc = 'Toggle Zen mode',
     },
     {
       '<leader>Z',
@@ -342,7 +342,7 @@ return {
       function()
         require('snacks').notifier.show_history()
       end,
-      desc = 'Notification History',
+      desc = 'Notification history',
     },
 
     {
@@ -350,7 +350,7 @@ return {
       function()
         require('snacks').notifier.hide()
       end,
-      desc = 'Dismiss All Notifications',
+      desc = 'Dismiss all notifications',
     },
 
     -- Snacks Picker
@@ -363,13 +363,13 @@ return {
           },
         }
       end,
-      desc = 'Find files (ivy)',
+      desc = 'Files (ivy)',
     },
 
     {
       '<leader>fr',
       function()
-        Snacks.picker.recent()
+        require('snacks').picker.recent()
       end,
       desc = 'Recent',
     },
@@ -379,7 +379,7 @@ return {
       function()
         require('snacks').picker.files { cwd = '~/.dotfiles/nvim/.config/nvim/lua' }
       end,
-      desc = 'Find config file',
+      desc = 'Config file',
     },
 
     {
@@ -406,7 +406,7 @@ return {
           },
         }
       end,
-      desc = 'Find selected',
+      desc = 'Selected bytes',
       mode = { 'n', 'v' },
     },
 
@@ -466,28 +466,28 @@ return {
           },
         }
       end,
-      desc = 'Buffers',
+      desc = 'Opened buffers',
     },
     {
       '<leader>bd',
       function()
         require('snacks').bufdelete.delete()
       end,
-      desc = 'Delete Buffer',
+      desc = 'Delete',
     },
     {
       '<leader>bD',
       function()
         require('snacks').bufdelete.all()
       end,
-      desc = 'Delete all buffers',
+      desc = 'Delete all',
     },
     {
       '<leader>bo',
       function()
         require('snacks').bufdelete.other()
       end,
-      desc = 'Delete other buffers',
+      desc = 'Delete other',
     },
 
     {

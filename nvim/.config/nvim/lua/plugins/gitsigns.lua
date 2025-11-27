@@ -48,19 +48,19 @@ return {
       end, { expr = true, desc = 'Previous git hunk' })
 
       -- Actions
-      map('n', '<leader>hs', gs.stage_hunk, { desc = 'Hunk stage' })
-      map('n', '<leader>hr', gs.reset_hunk, { desc = 'Hunk reset' })
+      map('n', '<leader>hs', gs.stage_hunk, { desc = 'Stage' })
+      map('n', '<leader>hr', gs.reset_hunk, { desc = 'Reset' })
       map('v', '<leader>hs', function()
         gs.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
-      end, { desc = 'Hunk stage' })
+      end, { desc = 'Stage' })
       map('v', '<leader>hr', function()
         gs.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
-      end, { desc = 'Hunk reset' })
-      map('n', '<leader>hu', gs.undo_stage_hunk, { desc = 'Hunk undo stage' })
-      map('n', '<leader>hp', gs.preview_hunk, { desc = 'Hunk preview' })
+      end, { desc = 'Reset' })
+      map('n', '<leader>hu', gs.undo_stage_hunk, { desc = 'Undo stage' })
+      map('n', '<leader>hp', gs.preview_hunk, { desc = 'Preview' })
       map('n', '<leader>hb', function()
         gs.blame_line { full = true }
-      end, { desc = 'Hunk blame line' })
+      end, { desc = 'Blame line' })
     end,
   },
 }

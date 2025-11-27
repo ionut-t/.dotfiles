@@ -26,7 +26,6 @@ require('lazy').setup {
   require 'plugins.oil',
   require 'plugins.mini', -- Mini.nvim modules
   require 'plugins.theme',
-  require 'plugins.bufferline',
   require 'plugins.lualine',
   require 'plugins.treesitter',
   require 'plugins.treesitter-context',
