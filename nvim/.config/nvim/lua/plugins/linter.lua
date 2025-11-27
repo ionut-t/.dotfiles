@@ -13,7 +13,7 @@ return {
   config = function()
     local lint = require 'lint'
     lint.linters_by_ft = {
-      python = { 'ruff' },
+      -- python linting handled by ruff LSP (no redundant nvim-lint needed)
       make = { 'checkmake' },
       go = { 'golangcilint' },
       sql = { 'sqlfluff' },

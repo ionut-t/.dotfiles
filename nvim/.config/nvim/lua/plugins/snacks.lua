@@ -379,27 +379,34 @@ return {
       function()
         require('snacks').picker.files { cwd = '~/.dotfiles/nvim/.config/nvim/lua' }
       end,
-      desc = 'Find Config File',
+      desc = 'Find config file',
     },
 
     {
       '<leader>fs',
       function()
-        require('snacks').picker.grep()
+        require('snacks').picker.grep {
+          layout = {
+            preset = 'ivy',
+          },
+        }
       end,
       desc = 'Grep word',
     },
 
     {
-      '<leader>fws',
+      '<leader>fw',
       function()
         require('snacks').picker.grep_word {
           on_show = function()
             vim.cmd.stopinsert()
           end,
+          layout = {
+            preset = 'ivy',
+          },
         }
       end,
-      desc = 'Search Visual selection or Word',
+      desc = 'Find selected',
       mode = { 'n', 'v' },
     },
 
@@ -408,7 +415,7 @@ return {
       function()
         require('snacks').picker.command_history()
       end,
-      desc = 'Command History',
+      desc = 'Command history',
     },
     {
       '<leader>sC',
@@ -422,7 +429,7 @@ return {
       function()
         require('snacks').picker.undo()
       end,
-      desc = 'Undo History',
+      desc = 'Undo history',
     },
 
     {
@@ -430,7 +437,7 @@ return {
       function()
         require('snacks').picker.keymaps { layout = 'ivy' }
       end,
-      desc = 'Search Keymaps (Snacks Picker)',
+      desc = 'Search keymaps',
     },
 
     -- Buffers
@@ -473,14 +480,14 @@ return {
       function()
         require('snacks').bufdelete.all()
       end,
-      desc = 'Delete All Buffers',
+      desc = 'Delete all buffers',
     },
     {
       '<leader>bo',
       function()
         require('snacks').bufdelete.other()
       end,
-      desc = 'Delete Other Buffers',
+      desc = 'Delete other buffers',
     },
 
     {
@@ -503,7 +510,7 @@ return {
       function()
         require('snacks').picker.man()
       end,
-      desc = 'Man Pages',
+      desc = 'Man pages',
     },
 
     {
@@ -511,7 +518,7 @@ return {
       function()
         require('snacks').picker.qflist()
       end,
-      desc = 'Quickfix List',
+      desc = 'Quickfix list',
     },
   },
 
