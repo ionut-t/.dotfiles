@@ -433,7 +433,7 @@ return {
     },
 
     {
-      '<M-k>',
+      '<M-l>',
       function()
         require('snacks').picker.keymaps { layout = 'ivy' }
       end,
