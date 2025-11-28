@@ -34,6 +34,7 @@ return {
       color_overrides = {},
       custom_highlights = function(colors)
         return {
+          LineNr = { fg = colors.overlay0 },
           CursorLineNr = { fg = colors.blue, style = { 'bold' } },
         }
       end,

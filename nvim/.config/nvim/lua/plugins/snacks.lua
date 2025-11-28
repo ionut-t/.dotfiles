@@ -28,8 +28,8 @@ return {
         {
           pane = 2,
           { section = 'keys', gap = 1, padding = 1 },
-          { section = 'startup' },
           { section = 'recent_files', icon = ' ', title = 'Recent Files', indent = 3, padding = 2 },
+          { section = 'startup' },
         },
       },
     },
