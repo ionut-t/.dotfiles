@@ -3,6 +3,36 @@ return {
   priority = 1000,
   lazy = false,
   opts = {
+    dashboard = {
+      preset = {
+        pick = nil,
+        ---@type snacks.dashboard.Item[]
+        keys = {
+          { icon = ' ', key = 'f', desc = 'Find File', action = ":lua Snacks.dashboard.pick('files')" },
+          { icon = ' ', key = 'n', desc = 'New File', action = ':ene | startinsert' },
+          { icon = ' ', key = 'g', desc = 'Find Text', action = ":lua Snacks.dashboard.pick('live_grep')" },
+          { icon = ' ', key = 'r', desc = 'Recent Files', action = ":lua Snacks.dashboard.pick('oldfiles')" },
+          { icon = ' ', key = 'c', desc = 'Config', action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
+          { icon = ' ', key = 's', desc = 'Restore Session', section = 'session' },
+          { icon = '󰒲 ', key = 'l', desc = 'Lazy', action = ':Lazy', enabled = package.loaded.lazy ~= nil },
+          { icon = ' ', key = 'q', desc = 'Quit', action = ':qa' },
+        },
+      },
+      sections = {
+        {
+          section = 'terminal',
+          cmd = 'chafa ~/.dotfiles/nvim/.config/nvim/nvim_dashboard.png --format symbols --symbols vhalf --size 60x17 --stretch; sleep .1',
+          height = 17,
+          padding = 1,
+        },
+        {
+          pane = 2,
+          { section = 'keys', gap = 1, padding = 1 },
+          { section = 'startup' },
+          { section = 'recent_files', icon = ' ', title = 'Recent Files', indent = 3, padding = 2 },
+        },
+      },
+    },
     picker = {
       formatters = {
         file = {
@@ -152,11 +182,6 @@ return {
         debug = ' ',
         trace = ' ',
       },
-    },
-
-    -- Dashboard (optional - you have alpha)
-    dashboard = {
-      enabled = false, -- Set to true if you want to replace alpha
     },
 
     -- Terminal (optional - you have toggleterm)
