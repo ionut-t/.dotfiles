@@ -26,7 +26,6 @@ require('lazy').setup {
   require 'plugins.oil',
   require 'plugins.mini', -- Mini.nvim modules
   require 'plugins.theme',
-  require 'plugins.bufferline',
   require 'plugins.lualine',
   require 'plugins.treesitter',
   require 'plugins.treesitter-context',
@@ -38,7 +37,6 @@ require('lazy').setup {
   require 'plugins.formatter',
   require 'plugins.linter',
   require 'plugins.gitsigns',
-  require 'plugins.alpha',
   require 'plugins.indent-blankline',
   require 'plugins.noice',
   require 'plugins.angular',
@@ -60,6 +58,7 @@ require('lazy').setup {
   require 'plugins.snipe',
   require 'plugins.autotag',
   require 'plugins.neotest',
+  require 'plugins.hardtime',
 }
 
 vim.cmd.colorscheme 'catppuccin'

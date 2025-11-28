@@ -16,12 +16,12 @@ return {
     vim.keymap.set('n', '<leader>ma', function()
       harpoon:list():add()
       vim.notify('Added to Harpoon', vim.log.levels.INFO)
-    end, { desc = 'Harpoon add file' })
+    end, { desc = 'Add file' })
 
     -- Toggle harpoon menu
     vim.keymap.set('n', '<leader>mm', function()
       harpoon.ui:toggle_quick_menu(harpoon:list())
-    end, { desc = 'Harpoon menu' })
+    end, { desc = 'Menu' })
 
     -- Jump to specific files (1-4)
     vim.keymap.set('n', '<leader>1', function()

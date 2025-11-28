@@ -37,11 +37,11 @@ return {
           go_out_plus = 'h',
         },
       }
-      vim.keymap.set('n', '<leader>er', '<cmd>lua MiniFiles.open()<CR>', { desc = 'Explore root directory' }) -- toggle file explorer
+      vim.keymap.set('n', '<leader>er', '<cmd>lua MiniFiles.open()<CR>', { desc = 'Root directory' }) -- toggle file explorer
       vim.keymap.set('n', '<leader>ee', function()
         MiniFiles.open(vim.api.nvim_buf_get_name(0), false)
         MiniFiles.reveal_cwd()
-      end, { desc = 'Explore current directory' })
+      end, { desc = 'Current directory' })
     end,
   },
   -- Surround
@@ -105,7 +105,7 @@ return {
       }
       vim.keymap.set('n', '<leader>cw', function()
         miniTrailspace.trim()
-      end, { desc = 'Erase Whitespace' })
+      end, { desc = 'Erase whitespace' })
 
       -- Ensure highlight never reappears by removing it on CursorMoved
       vim.api.nvim_create_autocmd('CursorMoved', {

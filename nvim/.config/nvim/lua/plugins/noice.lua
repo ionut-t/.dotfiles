@@ -21,7 +21,6 @@ return {
       signature = {
         enabled = true,
         view = 'hover', -- Use same view for signature help
-        silent = true,
       },
     },
     views = {

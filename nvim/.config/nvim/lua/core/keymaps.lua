@@ -36,20 +36,18 @@ vim.keymap.set({ 'n', 'x' }, 'D', '"_D', { desc = 'Delete to end without yank' }
 vim.keymap.set({ 'n', 'x' }, 'x', '"_x', { desc = 'Delete char without yank' })
 vim.keymap.set({ 'n', 'x' }, 'X', '"_X', { desc = 'Delete char back without yank' })
 
--- Note: Use 'c' (change) operations for cutting text (they yank to clipboard by default)
-
 -- Copy file paths to clipboard
-vim.keymap.set('n', '<leader>yp', function()
+vim.keymap.set('n', '<leader>yr', function()
   local path = vim.fn.expand '%:.'
   vim.fn.setreg('+', path)
   vim.notify('Copied relative path: ' .. path, vim.log.levels.INFO)
-end, { desc = 'Yank relative path' })
+end, { desc = 'Relative' })
 
-vim.keymap.set('n', '<leader>yP', function()
+vim.keymap.set('n', '<leader>ya', function()
   local path = vim.fn.expand '%:p'
   vim.fn.setreg('+', path)
   vim.notify('Copied absolute path: ' .. path, vim.log.levels.INFO)
-end, { desc = 'Yank absolute path' })
+end, { desc = 'Absolute' })
 
 -- Exit insert mode with jj
 vim.keymap.set('i', 'jj', '<Esc>', { desc = 'Exit insert mode' })
@@ -109,9 +107,9 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 vim.keymap.set('i', '::', '<Esc>:', { desc = 'Exit to command mode' })
 
 -- Delete without copying to clipboard (dd = delete line, d = delete motion)
-vim.keymap.set('n', 'dd', '"_dd', { desc = 'Delete line (no copy)' })
-vim.keymap.set('n', 'd', '"_d', { desc = 'Delete (no copy)' })
-vim.keymap.set('v', 'd', '"_d', { desc = 'Delete selection (no copy)' })
+vim.keymap.set('n', 'dd', '"_dd', { desc = 'Delete line' })
+vim.keymap.set('n', 'd', '"_d', { desc = 'Delete' })
+vim.keymap.set('v', 'd', '"_d', { desc = 'Delete selection' })
 
 -- Delete and copy (dx = cut line, x = cut motion in visual)
 vim.keymap.set('n', 'dx', 'dd', { desc = 'Cut line' })
@@ -209,7 +207,7 @@ vim.keymap.set('n', '<leader>bn', function()
       end
     end
   end)
-end, { desc = 'Buffer new' })
+end, { desc = 'New' })
 
 vim.keymap.set('n', '<leader>bN', function()
   local current_dir_abs = vim.fn.expand '%:p:h'
@@ -226,7 +224,7 @@ vim.keymap.set('n', '<leader>bN', function()
       end
     end
   end)
-end, { desc = 'Buffer new (split)' })
+end, { desc = 'New (split)' })
 
 vim.keymap.set('n', '<leader>bv', function()
   local current_dir_abs = vim.fn.expand '%:p:h'
@@ -243,17 +241,17 @@ vim.keymap.set('n', '<leader>bv', function()
       end
     end
   end)
-end, { desc = 'Buffer new (vsplit)' })
-
--- Move buffer left/right
-vim.keymap.set('n', '<leader>b[', ':BufferLineMovePrev<CR>', { desc = 'Buffer move left', silent = true })
-vim.keymap.set('n', '<leader>b]', ':BufferLineMoveNext<CR>', { desc = 'Buffer move right', silent = true })
+end, { desc = 'New (vsplit)' })
 
 -- Replace the word cursor is on globally
 vim.keymap.set('n', '<leader>rws', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = 'Replace word cursor is on globally' })
 
-vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'moves lines down in visual selection' })
-vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'moves lines up in visual selection' })
+vim.keymap.set('v', '<M-j>', ":m '>+1<CR>gv=gv", { desc = 'moves lines down in visual selection' })
+vim.keymap.set('v', '<M-k>', ":m '<-2<CR>gv=gv", { desc = 'moves lines up in visual selection' })
+
+-- Move line down/up in normal mode
+vim.keymap.set('n', '<M-j>', ':m .+1<CR>==', { desc = 'Move line down' })
+vim.keymap.set('n', '<M-k>', ':m .-2<CR>==', { desc = 'Move line up' })
 
 vim.keymap.set('n', 'J', 'mzJ`z')
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'move down in buffer with cursor centered' })
