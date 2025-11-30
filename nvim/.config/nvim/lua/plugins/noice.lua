@@ -3,7 +3,6 @@ return {
   event = 'VeryLazy',
   dependencies = {
     'MunifTanjim/nui.nvim',
-    'rcarriga/nvim-notify',
   },
   opts = {
     lsp = {
@@ -13,16 +12,19 @@ return {
         ['vim.lsp.util.stylize_markdown'] = true,
         ['cmp.entry.get_documentation'] = true,
       },
+
       hover = {
         enabled = true,
         view = 'hover', -- Use custom hover view with padding
         silent = true,
       },
+
       signature = {
         enabled = true,
         view = 'hover', -- Use same view for signature help
       },
     },
+
     views = {
       hover = {
         border = {
@@ -36,6 +38,7 @@ return {
         },
       },
     },
+
     -- You can enable a preset for easier configuration
     presets = {
       bottom_search = false, -- true to Use a classic bottom cmdline for search
@@ -44,6 +47,7 @@ return {
       inc_rename = true, -- Enables an input dialog for inc-rename.nvim
       lsp_doc_border = false, -- Add a border to hover docs and signature help
     },
+
     cmdline = {
       enabled = true, -- Enable the Noice cmdline UI
       view = 'cmdline_popup', -- View for rendering the cmdline (cmdline_popup for floating)
@@ -59,14 +63,7 @@ return {
         input = { view = 'cmdline_input', icon = '󰥻 ' }, -- Used by input()
       },
     },
-    messages = {
-      enabled = true, -- Enables the Noice messages UI
-      view = 'notify', -- Default view for messages
-      view_error = 'notify', -- View for errors
-      view_warn = 'notify', -- View for warnings
-      view_history = 'messages', -- View for :messages
-      view_search = 'virtualtext', -- View for search count messages
-    },
+
     popupmenu = {
       enabled = true, -- Enables the Noice popupmenu UI
       backend = 'nui', -- Backend to use to show regular cmdline completions
@@ -95,10 +92,7 @@ return {
         Variable = ' ',
       },
     },
-    notify = {
-      enabled = true,
-      view = 'notify',
-    },
+
     routes = {
       {
         filter = {
@@ -108,29 +102,6 @@ return {
         },
         opts = { skip = true },
       },
-    },
-  },
-  keys = {
-    {
-      '<leader>snh',
-      function()
-        require('noice').cmd 'history'
-      end,
-      desc = 'Search noice history',
-    },
-    {
-      '<leader>snl',
-      function()
-        require('noice').cmd 'last'
-      end,
-      desc = 'Search noice last message',
-    },
-    {
-      '<leader>snd',
-      function()
-        require('noice').cmd 'dismiss'
-      end,
-      desc = 'Search noice dismiss all',
     },
   },
 }

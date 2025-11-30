@@ -23,7 +23,7 @@ return {
       { '<leader>g', group = 'Git', icon = '' },
       { '<leader>h', group = 'Hunks', icon = '' },
       { '<leader>m', group = 'Marks', icon = '' },
-      { '<leader>n', group = 'Notes', icon = '' },
+      { '<leader>n', group = 'Messages', icon = '' },
       { '<leader>q', group = 'Quit', icon = '󰗼' },
       { '<leader>r', group = 'Refactor', icon = '󰑕' },
       { '<leader>s', group = 'Search', icon = '' },

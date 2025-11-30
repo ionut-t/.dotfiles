@@ -166,9 +166,8 @@ return {
       },
     },
 
-    -- Notification system (optional - you have noice)
     notifier = {
-      enabled = false, -- Set to true if you want to replace noice
+      enabled = true,
       timeout = 3000,
       width = { min = 40, max = 0.4 },
       height = { min = 1, max = 0.6 },
@@ -176,11 +175,11 @@ return {
       padding = true,
       sort = { 'level', 'added' },
       icons = {
-        error = ' ',
-        warn = ' ',
-        info = ' ',
-        debug = ' ',
-        trace = ' ',
+        error = ' ',
+        warn = ' ',
+        info = ' ',
+        debug = ' ',
+        trace = ' ',
       },
     },
 
