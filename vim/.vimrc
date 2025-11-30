@@ -112,6 +112,8 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+set rtp+=/opt/homebrew/opt/fzf
+
 " Plugin list
 call plug#begin('~/.vim/plugged')
   " Catppuccin theme

@@ -127,7 +127,15 @@ return {
       },
       extensions = {
         ['ui-select'] = {
-          require('telescope.themes').get_dropdown(),
+          require('telescope.themes').get_dropdown {
+            -- Ensure all items are visible, especially first item
+            layout_config = {
+              height = 0.4,
+              width = 0.6,
+            },
+            -- Show more items to avoid cutting off
+            results_height = 15,
+          },
         },
       },
     }

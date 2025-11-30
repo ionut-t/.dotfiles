@@ -3,10 +3,10 @@ return {
   event = 'VeryLazy',
   init = function()
     vim.g.VM_maps = {
-      ['Find Under'] = '<C-d>', -- Start selecting next occurrence (like Cmd+D)
-      ['Find Subword Under'] = '<C-d>', -- Same as above
-      ['Skip Region'] = '<C-x>', -- Skip current and select next
-      ['Remove Region'] = '<C-p>', -- Remove current selection
+      ['Find Under'] = '<M-d>', -- Start selecting next occurrence (like Cmd+D)
+      ['Find Subword Under'] = '<M-d>', -- Same as above
+      ['Skip Region'] = '<M-x>', -- Skip current and select next
+      ['Remove Region'] = '<M-p>', -- Remove current selection
       ['Goto Next'] = '', -- Disable to avoid conflicts
       ['Goto Prev'] = '', -- Disable to avoid conflicts
     }
@@ -29,7 +29,7 @@ return {
     vim.g.VM_silent_exit = 1
   end,
   keys = {
-    { '<C-d>', mode = { 'n', 'v' }, desc = 'Multi-cursor: Select next occurrence' },
-    { '<C-x>', mode = { 'n', 'v' }, desc = 'Multi-cursor: Skip current' },
+    { '<M-d>', mode = { 'n', 'v' }, desc = 'Multi-cursor: Select next occurrence' },
+    { '<M-x>', mode = { 'n', 'v' }, desc = 'Multi-cursor: Skip current' },
   },
 }

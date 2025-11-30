@@ -154,7 +154,7 @@ return {
 
     -- Improved statuscolumn
     statuscolumn = {
-      enabled = false, -- Disable if you're happy with default
+      enabled = true,
       left = { 'mark', 'sign' },
       right = { 'fold', 'git' },
       folds = {
@@ -196,7 +196,7 @@ return {
 
     -- Scroll animation
     scroll = {
-      enabled = false, -- Can enable if you want smooth scrolling
+      enabled = false,
     },
 
     -- Words highlighting under cursor
@@ -244,21 +244,21 @@ return {
     {
       '<leader>gG',
       function()
-        require('snacks').lazygit()
+        Snacks.lazygit()
       end,
       desc = 'Lazygit',
     },
     {
       '<leader>gb',
       function()
-        require('snacks').git.blame_line()
+        Snacks.git.blame_line()
       end,
       desc = 'Blame line',
     },
     {
       '<leader>gB',
       function()
-        require('snacks').gitbrowse()
+        Snacks.gitbrowse()
       end,
       desc = 'Browse',
       mode = { 'n', 'v' },
@@ -266,56 +266,56 @@ return {
     {
       '<leader>gf',
       function()
-        require('snacks').lazygit.log_file()
+        Snacks.lazygit.log_file()
       end,
       desc = 'File history',
     },
     {
       '<leader>gl',
       function()
-        require('snacks').lazygit.log()
+        Snacks.lazygit.log()
       end,
       desc = 'Log',
     },
     {
       '<leader>gs',
       function()
-        require('snacks').picker.git_branches()
+        Snacks.picker.git_branches()
       end,
       desc = 'Branches',
     },
     {
       '<leader>gL',
       function()
-        require('snacks').picker.git_log_line()
+        Snacks.picker.git_log_line()
       end,
       desc = 'Log line',
     },
     {
       '<leader>gx',
       function()
-        require('snacks').picker.git_status()
+        Snacks.picker.git_status()
       end,
       desc = 'Status',
     },
     {
       '<leader>gS',
       function()
-        require('snacks').picker.git_stash()
+        Snacks.picker.git_stash()
       end,
       desc = 'Stash',
     },
     {
       '<leader>gp',
       function()
-        require('snacks').picker.gh_pr()
+        Snacks.picker.gh_pr()
       end,
       desc = 'Pull Requests (open)',
     },
     {
       '<leader>gP',
       function()
-        require('snacks').picker.gh_pr { state = 'all' }
+        Snacks.picker.gh_pr { state = 'all' }
       end,
       desc = 'Pull Requests (all)',
     },
@@ -324,14 +324,14 @@ return {
     {
       '<leader>.',
       function()
-        require('snacks').scratch()
+        Snacks.scratch()
       end,
       desc = 'Scratch buffer',
     },
     {
       '<leader>S',
       function()
-        require('snacks').scratch.select()
+        Snacks.scratch.select()
       end,
       desc = 'Select scratch buffer',
     },
@@ -340,14 +340,14 @@ return {
     {
       '<leader>z',
       function()
-        require('snacks').zen()
+        Snacks.zen()
       end,
       desc = 'Toggle Zen mode',
     },
     {
       '<leader>Z',
       function()
-        require('snacks').zen.zoom()
+        Snacks.zen.zoom()
       end,
       desc = 'Toggle Zoom',
     },
@@ -356,7 +356,7 @@ return {
     {
       '<leader>ud',
       function()
-        require('snacks').dim()
+        Snacks.dim()
       end,
       desc = 'Toggle Dim',
     },
@@ -365,7 +365,7 @@ return {
     {
       '<leader>nh',
       function()
-        require('snacks').notifier.show_history()
+        Snacks.notifier.show_history()
       end,
       desc = 'Notification history',
     },
@@ -373,7 +373,7 @@ return {
     {
       '<leader>nd',
       function()
-        require('snacks').notifier.hide()
+        Snacks.notifier.hide()
       end,
       desc = 'Dismiss all notifications',
     },
@@ -382,7 +382,7 @@ return {
     {
       '<leader>fi',
       function()
-        require('snacks').picker.files {
+        Snacks.picker.files {
           layout = {
             preset = 'ivy',
           },
@@ -394,7 +394,7 @@ return {
     {
       '<leader>fr',
       function()
-        require('snacks').picker.recent()
+        Snacks.picker.recent()
       end,
       desc = 'Recent',
     },
@@ -402,7 +402,7 @@ return {
     {
       '<leader>fC',
       function()
-        require('snacks').picker.files { cwd = '~/.dotfiles/nvim/.config/nvim/lua' }
+        Snacks.picker.files { cwd = '~/.dotfiles/nvim/.config/nvim/lua' }
       end,
       desc = 'Config file',
     },
@@ -410,7 +410,7 @@ return {
     {
       '<leader>fs',
       function()
-        require('snacks').picker.grep {
+        Snacks.picker.grep {
           layout = {
             preset = 'ivy',
           },
@@ -422,7 +422,7 @@ return {
     {
       '<leader>fw',
       function()
-        require('snacks').picker.grep_word {
+        Snacks.picker.grep_word {
           on_show = function()
             vim.cmd.stopinsert()
           end,
@@ -438,21 +438,21 @@ return {
     {
       '<leader>sc',
       function()
-        require('snacks').picker.command_history()
+        Snacks.picker.command_history()
       end,
       desc = 'Command history',
     },
     {
       '<leader>sC',
       function()
-        require('snacks').picker.commands()
+        Snacks.picker.commands()
       end,
       desc = 'Commands',
     },
     {
       '<leader>su',
       function()
-        require('snacks').picker.undo()
+        Snacks.picker.undo()
       end,
       desc = 'Undo history',
     },
@@ -460,7 +460,7 @@ return {
     {
       '<M-l>',
       function()
-        require('snacks').picker.keymaps { layout = 'ivy' }
+        Snacks.picker.keymaps { layout = 'ivy' }
       end,
       desc = 'Search keymaps',
     },
@@ -469,7 +469,7 @@ return {
     {
       '<leader><leader>',
       function()
-        require('snacks').picker.buffers {
+        Snacks.picker.buffers {
           on_show = function()
             vim.cmd.stopinsert()
           end,
@@ -496,21 +496,21 @@ return {
     {
       '<leader>bd',
       function()
-        require('snacks').bufdelete.delete()
+        Snacks.bufdelete.delete()
       end,
       desc = 'Delete',
     },
     {
       '<leader>bD',
       function()
-        require('snacks').bufdelete.all()
+        Snacks.bufdelete.all()
       end,
       desc = 'Delete all',
     },
     {
       '<leader>bo',
       function()
-        require('snacks').bufdelete.other()
+        Snacks.bufdelete.other()
       end,
       desc = 'Delete other',
     },
@@ -524,16 +524,125 @@ return {
 
     -- Search
     {
-      '<leader>sm',
+      '<leader>mM',
       function()
-        require('snacks').picker.marks()
+        local current_buf = vim.api.nvim_get_current_buf()
+        local current_file = vim.api.nvim_buf_get_name(current_buf)
+        local items = {}
+
+        -- Get buffer-local marks (a-z)
+        for _, mark in ipairs(vim.fn.getmarklist(current_buf)) do
+          local m = mark.mark:sub(2, 2)
+          if m:match '[a-z]' then
+            local fname = vim.fn.fnamemodify(current_file, ':t')
+            table.insert(items, {
+              idx = #items + 1,
+              text = string.format('  %s  %s:%d:%d', m, fname, mark.pos[2], mark.pos[3]),
+              file = current_file,
+              pos = { mark.pos[2], mark.pos[3] - 1 },
+            })
+          end
+        end
+
+        -- Get global marks (A-Z)
+        for _, mark in ipairs(vim.fn.getmarklist()) do
+          local m = mark.mark:sub(2, 2)
+          if m:match '[A-Z]' and mark.file and mark.file ~= '' then
+            local fname = vim.fn.fnamemodify(mark.file, ':t')
+            table.insert(items, {
+              idx = #items + 1,
+              text = string.format('  %s  %s:%d:%d', m, fname, mark.pos[2], mark.pos[3]),
+              file = mark.file,
+              pos = { mark.pos[2], mark.pos[3] - 1 },
+            })
+          end
+        end
+
+        Snacks.picker.pick {
+          title = 'All marks',
+          items = items,
+          on_show = function()
+            vim.cmd.stopinsert()
+          end,
+          layout = {
+            preset = 'ivy',
+          },
+        }
+      end,
+      desc = 'All marks',
+    },
+    {
+      '<leader>mm',
+      function()
+        local current_buf = vim.api.nvim_get_current_buf()
+        local current_file = vim.api.nvim_buf_get_name(current_buf)
+        local cwd = vim.fn.getcwd()
+        local items = {}
+
+        -- Get buffer-local marks (a-z) only if current file is in project
+        if current_file:match('^' .. vim.pesc(cwd)) then
+          for _, mark in ipairs(vim.fn.getmarklist(current_buf)) do
+            local m = mark.mark:sub(2, 2)
+            if m:match '[a-z]' then
+              local fname = vim.fn.fnamemodify(current_file, ':t')
+              table.insert(items, {
+                idx = #items + 1,
+                text = string.format('  %s  %s:%d:%d', m, fname, mark.pos[2], mark.pos[3]),
+                file = current_file,
+                pos = { mark.pos[2], mark.pos[3] - 1 },
+              })
+            end
+          end
+        end
+
+        -- Get global marks (A-Z) only if within project
+        for _, mark in ipairs(vim.fn.getmarklist()) do
+          local m = mark.mark:sub(2, 2)
+          if m:match '[A-Z]' and mark.file and mark.file ~= '' then
+            -- Check if mark's file is within current project
+            if mark.file:match('^' .. vim.pesc(cwd)) then
+              local fname = vim.fn.fnamemodify(mark.file, ':t')
+              table.insert(items, {
+                idx = #items + 1,
+                text = string.format('  %s  %s:%d:%d', m, fname, mark.pos[2], mark.pos[3]),
+                file = mark.file,
+                pos = { mark.pos[2], mark.pos[3] - 1 },
+              })
+            end
+          end
+        end
+
+        Snacks.picker.pick {
+          title = 'Marks',
+          items = items,
+          on_show = function()
+            vim.cmd.stopinsert()
+          end,
+          layout = {
+            preset = 'ivy',
+          },
+        }
       end,
       desc = 'Marks',
     },
     {
+      '<leader>ss',
+      function()
+        Snacks.picker.lsp_symbols {
+          layout = {
+            preset = 'ivy',
+          },
+          on_show = function()
+            vim.cmd.stopinsert()
+          end,
+        }
+      end,
+      desc = 'LSP Symbols',
+    },
+    {
       '<leader>sM',
       function()
-        require('snacks').picker.man()
+        Snacks.picker.man()
       end,
       desc = 'Man pages',
     },
@@ -541,7 +650,7 @@ return {
     {
       '<leader>sq',
       function()
-        require('snacks').picker.qflist()
+        Snacks.picker.qflist()
       end,
       desc = 'Quickfix list',
     },

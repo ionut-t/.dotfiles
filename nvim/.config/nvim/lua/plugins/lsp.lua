@@ -158,6 +158,12 @@ return {
     -- Enable file watching for better workspace handling
     capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
 
+    -- Enable folding range for nvim-ufo plugin
+    capabilities.textDocument.foldingRange = {
+      dynamicRegistration = false,
+      lineFoldingOnly = true,
+    }
+
     -- Enable the following language servers
     --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
     --
@@ -173,11 +179,47 @@ return {
         settings = {
           gopls = {
             analyses = {
-              unusedparams = true,
+              -- Enable all available analyses for code actions
+              fieldalignment = true,
+              nilness = true,
               shadow = true,
+              unusedparams = true,
+              unusedwrite = true,
+              useany = true,
+              unusedvariable = true,
+              -- Enable simplification suggestions with fixes
+              simplifycompositelit = true,
+              simplifyrange = true,
+              simplifyslice = true,
+              infertypeargs = true, -- This provides fixes for unnecessary type arguments
             },
             staticcheck = true,
             gofumpt = true,
+            codelenses = {
+              gc_details = true,
+              generate = true,
+              regenerate_cgo = true,
+              test = true,
+              tidy = true,
+              upgrade_dependency = true,
+              vendor = true,
+            },
+            hints = {
+              assignVariableTypes = true,
+              compositeLiteralFields = true,
+              compositeLiteralTypes = true,
+              constantValues = true,
+              functionTypeParameters = true,
+              parameterNames = true,
+              rangeVariableTypes = true,
+            },
+            -- Enable all code action kinds
+            semanticTokens = true,
+            -- Directive completions
+            directoryFilters = { '-.git', '-.vscode', '-.idea', '-.vscode-test', '-node_modules' },
+            -- Ensure all code actions are available
+            ['local'] = '',
+            allowImplicitNetworkAccess = true,
           },
         },
       },
@@ -262,6 +304,7 @@ return {
               checkThirdParty = false,
               library = {
                 vim.env.VIMRUNTIME,
+                '$XDG_DATA_HOME/nvim/lazy',
               },
             },
           })
