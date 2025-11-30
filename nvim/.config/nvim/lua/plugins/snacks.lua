@@ -190,7 +190,7 @@ return {
 
     -- Indent guides (optional - you have indent-blankline)
     indent = {
-      enabled = false, -- Set to true if you want to replace indent-blankline
+      enabled = true,
     },
 
     -- Scroll animation
