@@ -62,17 +62,6 @@ return {
         -- Better path display for large projects
         path_display = { 'truncate' },
 
-        -- Vertical layout: search on top, preview on bottom
-        layout_strategy = 'vertical',
-        layout_config = {
-          vertical = {
-            width = 0.9,
-            height = 0.95,
-            preview_height = 0.5,
-            mirror = true,
-          },
-        },
-
         mappings = {
           i = {
             ['<C-k>'] = require('telescope.actions').move_selection_previous,
@@ -106,6 +95,15 @@ return {
         find_files = {
           file_ignore_patterns = { 'node_modules', '.git', '.venv' },
           hidden = true,
+          layout_strategy = 'vertical',
+          layout_config = {
+            vertical = {
+              width = 0.9,
+              height = 0.95,
+              preview_height = 0.5,
+              mirror = true,
+            },
+          },
         },
         git_status = {
           git_icons = {
@@ -149,13 +147,11 @@ return {
     -- FIND namespace (<Space>f) - Files, Buffers, UI elements
     -- ═══════════════════════════════════════════════════════════════════
     vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Files' })
-    vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Buffers' })
     vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Help' })
     vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = 'Keymaps' })
     vim.keymap.set('n', '<leader>ft', builtin.builtin, { desc = 'Telescope pickers' })
 
     -- Git files
-    vim.keymap.set('n', '<leader>fg', builtin.git_files, { desc = 'Git files' })
     vim.keymap.set('n', '<leader>fm', builtin.git_status, { desc = 'Modified files' })
     vim.keymap.set('n', '<leader>fc', function()
       -- Actions: <CR> checkout, <C-r> reset soft, <C-h> reset hard
@@ -163,17 +159,17 @@ return {
     end, { desc = 'Find commits (git)' })
 
     -- Contextual finds
-    vim.keymap.set('n', '<leader>fs', function()
-      local current_buffer = vim.api.nvim_buf_get_name(0)
-      local parent_dir = vim.fn.fnamemodify(current_buffer, ':h')
-      builtin.find_files {
-        prompt_title = 'Sibling Files',
-        cwd = parent_dir,
-        hidden = true,
-        no_ignore = true,
-        file_ignore_patterns = { 'node_modules', '.git', '.venv' },
-      }
-    end, { desc = 'Sibling files' })
+    -- vim.keymap.set('n', '<leader>fs', function()
+    --   local current_buffer = vim.api.nvim_buf_get_name(0)
+    --   local parent_dir = vim.fn.fnamemodify(current_buffer, ':h')
+    --   builtin.find_files {
+    --     prompt_title = 'Sibling Files',
+    --     cwd = parent_dir,
+    --     hidden = true,
+    --     no_ignore = true,
+    --     file_ignore_patterns = { 'node_modules', '.git', '.venv' },
+    --   }
+    -- end, { desc = 'Sibling files' })
 
     -- vim.keymap.set('n', '<leader>fp', function()
     --     builtin.oldfiles {

@@ -33,6 +33,11 @@ return {
         },
       },
     },
+
+    image = {
+      enabled = true,
+    },
+
     picker = {
       formatters = {
         file = {
@@ -385,6 +390,13 @@ return {
           layout = {
             preset = 'ivy',
           },
+          finder = 'files',
+          format = 'file',
+          show_empty = true,
+          hidden = true,
+          ignored = false,
+          follow = false,
+          supports_live = true,
         }
       end,
       desc = 'Files (ivy)',
@@ -399,23 +411,40 @@ return {
     },
 
     {
+      '<leader>fs',
+      function()
+        local current_file = vim.fn.expand '%:p'
+        local current_dir = vim.fn.fnamemodify(current_file, ':h')
+        if current_dir and current_dir ~= '' then
+          Snacks.picker.files {
+            cwd = current_dir,
+            layout = {
+              preset = 'ivy',
+            },
+            hidden = true,
+            ignored = false,
+          }
+        else
+          vim.notify('No current file directory', vim.log.levels.WARN)
+        end
+      end,
+      desc = 'Sibling files',
+    },
+
+    {
+      '<leader>fg',
+      function()
+        Snacks.picker.git_files()
+      end,
+      desc = 'Git files',
+    },
+
+    {
       '<leader>fC',
       function()
         Snacks.picker.files { cwd = '~/.dotfiles/nvim/.config/nvim/lua' }
       end,
       desc = 'Config file',
-    },
-
-    {
-      '<leader>fs',
-      function()
-        Snacks.picker.grep {
-          layout = {
-            preset = 'ivy',
-          },
-        }
-      end,
-      desc = 'Grep word',
     },
 
     {
@@ -512,13 +541,6 @@ return {
         Snacks.bufdelete.other()
       end,
       desc = 'Delete other',
-    },
-
-    {
-      'folke/snacks.nvim',
-      opts = {
-        image = {},
-      },
     },
 
     -- Search
