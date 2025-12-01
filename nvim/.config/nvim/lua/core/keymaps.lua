@@ -37,13 +37,13 @@ vim.keymap.set({ 'n', 'x' }, 'x', '"_x', { desc = 'Delete char without yank' })
 vim.keymap.set({ 'n', 'x' }, 'X', '"_X', { desc = 'Delete char back without yank' })
 
 -- Copy file paths to clipboard
-vim.keymap.set('n', '<leader>yr', function()
+vim.keymap.set('n', '<leader>byp', function()
   local path = vim.fn.expand '%:.'
   vim.fn.setreg('+', path)
   vim.notify('Copied relative path: ' .. path, vim.log.levels.INFO)
 end, { desc = 'Relative' })
 
-vim.keymap.set('n', '<leader>ya', function()
+vim.keymap.set('n', '<leader>byP', function()
   local path = vim.fn.expand '%:p'
   vim.fn.setreg('+', path)
   vim.notify('Copied absolute path: ' .. path, vim.log.levels.INFO)
