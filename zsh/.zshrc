@@ -208,6 +208,7 @@ alias v="nvim"
 
 # Utilities
 alias c='clear'
+alias e='exit'
 alias sdf="$HOME/.dotfiles/sync-dotfiles.zsh"
 
 # ============================================================================
@@ -216,6 +217,27 @@ alias sdf="$HOME/.dotfiles/sync-dotfiles.zsh"
 # Launch gemini with Angular prompt
 function gem-ng() {
   gemini -p "$(cat "${HOME}/prompts/angular.md")"
+}
+
+# Grep search with preview and open in nvim
+function search() {
+  rg --color=always --line-number --no-heading --smart-case "${1:-.}" | \
+    fzf --ansi --delimiter ':' \
+      --preview 'bat --color=always {1} --highlight-line {2}' \
+      --preview-window 'up,60%,border-bottom,+{2}+3/3' \
+      --header 'Search' \
+      --bind 'enter:execute(nvim +{2} {1})'
+}
+alias s=search
+
+# Process killer with clean format
+function pk() {
+  ps aux | \
+    awk 'NR==1 {print "PID\t%CPU\t%MEM\tCOMMAND"; next} {printf "%s\t%s\t%s\t", $2, $3, $4; for(i=11;i<=NF;i++) printf "%s ", $i; print ""}' | \
+    column -t -s $'\t' | \
+    fzf --header-lines=1 --header 'Kill process' | \
+    awk '{print $1}' | \
+    xargs -r kill
 }
 
 # ============================================================================
