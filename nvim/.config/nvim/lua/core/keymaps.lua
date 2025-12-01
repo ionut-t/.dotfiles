@@ -108,8 +108,10 @@ vim.keymap.set('i', '::', '<Esc>:', { desc = 'Exit to command mode' })
 
 -- Delete without copying to clipboard (dd = delete line, d = delete motion)
 vim.keymap.set('n', 'dd', '"_dd', { desc = 'Delete line' })
-vim.keymap.set('n', 'd', '"_d', { desc = 'Delete' })
 vim.keymap.set('v', 'd', '"_d', { desc = 'Delete selection' })
+
+-- For other delete modes in normal mode, yank content
+vim.keymap.set('n', 'd', 'd', { desc = 'Delete' })
 
 -- Delete and copy (dx = cut line, x = cut motion in visual)
 vim.keymap.set('n', 'dx', 'dd', { desc = 'Cut line' })
@@ -243,8 +245,29 @@ vim.keymap.set('n', '<leader>bv', function()
   end)
 end, { desc = 'New (vsplit)' })
 
--- Replace the word cursor is on globally
-vim.keymap.set('n', '<leader>rws', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = 'Replace word cursor is on globally' })
+-- Replace the word cursor is on globally (normal mode) - empty replacement
+vim.keymap.set('n', '<leader>rc', [[:%s/\<<C-r><C-w>\>//gI<Left><Left><Left>]], { desc = 'Replace word' })
+
+-- Replace the word cursor is on globally (normal mode) - with replacement prefilled
+vim.keymap.set('n', '<leader>rC', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = 'Replace word (prefilled)' })
+
+-- Replace visual selection globally (visual mode) - empty replacement
+vim.keymap.set('v', '<leader>rc', function()
+  vim.cmd 'noau normal! "vy"'
+  local text = vim.fn.getreg 'v'
+  vim.fn.setreg('v', {})
+  text = vim.fn.escape(text, [[/\]])
+  vim.fn.feedkeys(':%s/' .. text .. '//gI' .. string.rep(vim.api.nvim_replace_termcodes('<Left>', true, false, true), 3), 'n')
+end, { desc = 'Replace selection (empty)' })
+
+-- Replace visual selection globally (visual mode) - with replacement prefilled
+vim.keymap.set('v', '<leader>rC', function()
+  vim.cmd 'noau normal! "vy"'
+  local text = vim.fn.getreg 'v'
+  vim.fn.setreg('v', {})
+  text = vim.fn.escape(text, [[/\]])
+  vim.fn.feedkeys(':%s/' .. text .. '/' .. text .. '/gI' .. string.rep(vim.api.nvim_replace_termcodes('<Left>', true, false, true), 3), 'n')
+end, { desc = 'Replace selection (prefilled)' })
 
 vim.keymap.set('v', '<M-j>', ":m '>+1<CR>gv=gv", { desc = 'moves lines down in visual selection' })
 vim.keymap.set('v', '<M-k>', ":m '<-2<CR>gv=gv", { desc = 'moves lines up in visual selection' })

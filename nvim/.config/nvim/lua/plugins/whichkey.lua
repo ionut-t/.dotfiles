@@ -4,7 +4,7 @@ return {
   event = 'VeryLazy',
   opts = {
     preset = 'helix',
-    delay = 500,
+    delay = 1000,
     icons = {
       separator = '➜',
       group = '',
@@ -22,8 +22,8 @@ return {
       { '<leader>f', group = 'Find', icon = '' },
       { '<leader>g', group = 'Git', icon = '' },
       { '<leader>h', group = 'Hunks', icon = '' },
-      { '<leader>m', group = 'Harpoon', icon = '' },
-      { '<leader>n', group = 'Notes', icon = '' },
+      { '<leader>m', group = 'Marks', icon = '' },
+      { '<leader>n', group = 'Messages', icon = '' },
       { '<leader>q', group = 'Quit', icon = '󰗼' },
       { '<leader>r', group = 'Refactor', icon = '󰑕' },
       { '<leader>s', group = 'Search', icon = '' },
