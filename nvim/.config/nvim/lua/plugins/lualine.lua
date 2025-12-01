@@ -74,8 +74,13 @@ return {
               return file .. (vim.bo.modified and ' ●' or '')
             end,
             color = function()
+              local gitsigns = vim.b.gitsigns_status_dict
+              local has_git_changes = gitsigns and ((gitsigns.added or 0) > 0 or (gitsigns.changed or 0) > 0 or (gitsigns.removed or 0) > 0)
+
               if vim.bo.modified then
                 return { fg = '#89dceb', gui = 'bold' }
+              elseif has_git_changes then
+                return { fg = '#fab387', gui = 'bold' }
               else
                 return { gui = 'bold' }
               end

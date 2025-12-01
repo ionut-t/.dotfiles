@@ -101,6 +101,7 @@ export PATH="/Applications/Docker.app/Contents/Resources/bin:$PATH"
 # Language-specific paths
 export PATH="$PATH:$(go env GOPATH)/bin"                                    # Go
 export PATH="$PATH:$HOME/zig"                                               # Zig
+export PATH="$PATH:~/zig"
 export PATH="$PATH:/usr/local/share/dotnet"                                 # .NET Core
 export PATH="/usr/local/opt/postgresql@17/bin:$PATH"                        # PostgreSQL
 export PATH="$PATH:/Users/ionut-traistaru/tools/flutter/bin"               # Flutter
