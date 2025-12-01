@@ -286,7 +286,7 @@ local opts = { noremap = true, silent = true }
 vim.keymap.set('v', '<', '<gv', opts)
 vim.keymap.set('v', '>', '>gv', opts)
 
--- Smart macro recording: q only stops recording, <leader>q starts
+-- Macro recording
 vim.keymap.set('n', 'q', function()
   if vim.fn.reg_recording() ~= '' then
     -- Currently recording, allow q to stop
@@ -295,6 +295,4 @@ vim.keymap.set('n', 'q', function()
     return ''
   end
 end, { expr = true, desc = 'Stop macro recording (or show hint)' })
-
-vim.keymap.set('n', '<leader>qm', 'q', { desc = 'Start macro recording', noremap = false })
-vim.keymap.set('n', '<leader>qp', '@', { desc = 'Play macro' })
+vim.keymap.set('n', 'Q', 'q', { desc = 'Start macro recording', noremap = false })
