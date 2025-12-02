@@ -37,13 +37,13 @@ vim.keymap.set({ 'n', 'x' }, 'x', '"_x', { desc = 'Delete char without yank' })
 vim.keymap.set({ 'n', 'x' }, 'X', '"_X', { desc = 'Delete char back without yank' })
 
 -- Copy file paths to clipboard
-vim.keymap.set('n', '<leader>yr', function()
+vim.keymap.set('n', '<leader>byp', function()
   local path = vim.fn.expand '%:.'
   vim.fn.setreg('+', path)
   vim.notify('Copied relative path: ' .. path, vim.log.levels.INFO)
 end, { desc = 'Relative' })
 
-vim.keymap.set('n', '<leader>ya', function()
+vim.keymap.set('n', '<leader>byP', function()
   local path = vim.fn.expand '%:p'
   vim.fn.setreg('+', path)
   vim.notify('Copied absolute path: ' .. path, vim.log.levels.INFO)
@@ -286,7 +286,7 @@ local opts = { noremap = true, silent = true }
 vim.keymap.set('v', '<', '<gv', opts)
 vim.keymap.set('v', '>', '>gv', opts)
 
--- Smart macro recording: q only stops recording, <leader>q starts
+-- Macro recording
 vim.keymap.set('n', 'q', function()
   if vim.fn.reg_recording() ~= '' then
     -- Currently recording, allow q to stop
@@ -295,6 +295,4 @@ vim.keymap.set('n', 'q', function()
     return ''
   end
 end, { expr = true, desc = 'Stop macro recording (or show hint)' })
-
-vim.keymap.set('n', '<leader>qm', 'q', { desc = 'Start macro recording', noremap = false })
-vim.keymap.set('n', '<leader>qp', '@', { desc = 'Play macro' })
+vim.keymap.set('n', 'Q', 'q', { desc = 'Start macro recording', noremap = false })

@@ -16,6 +16,7 @@ return {
 
     wk.add {
       { '<leader>b', group = 'Buffers', icon = '' },
+      { '<leader>by', group = 'Yank path', icon = '' },
       { '<leader>c', group = 'Code', icon = '' },
       { '<leader>d', group = 'Debug', icon = '' },
       { '<leader>e', group = 'Explore', icon = '' },
@@ -33,7 +34,6 @@ return {
       { '<leader>v', group = 'Venv', icon = '' },
       { '<leader>w', group = 'Windows', icon = '' },
       { '<leader>x', group = 'Diagnostics', icon = '' },
-      { '<leader>y', group = 'Yank path', icon = '' },
       { '<leader>-', group = 'Oil', icon = '' },
     }
   end,

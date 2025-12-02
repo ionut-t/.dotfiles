@@ -731,10 +731,6 @@ return {
 
         snacks.toggle.diagnostics():map '<leader>ud'
         snacks.toggle.line_number():map '<leader>ul'
-
-        -- Note: Conceal toggle removed - hides/shows concealed text (e.g., markdown links)
-        -- Note: Background toggle removed - not needed
-
         snacks.toggle.treesitter():map '<leader>uT'
 
         -- Toggle treesitter context
@@ -771,6 +767,28 @@ return {
             end,
           })
           :map '<leader>uf'
+
+        -- Toggle winbar with relative path
+        snacks.toggle
+          .new({
+            name = 'Winbar Path',
+            notify = false,
+            get = function()
+              return vim.g.winbar_enabled == true
+            end,
+            set = function(state)
+              vim.g.winbar_enabled = state
+              if state then
+                -- Enable winbar with smart relative path
+                -- Use %{} to evaluate expression for path modifiers
+                vim.o.winbar = '%=%#Comment#%{expand("%:~:.")}'
+              else
+                -- Disable winbar
+                vim.o.winbar = ''
+              end
+            end,
+          })
+          :map '<leader>up'
       end,
     })
   end,
