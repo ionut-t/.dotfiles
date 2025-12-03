@@ -675,6 +675,21 @@ return {
       end,
       desc = 'Quickfix list',
     },
+
+    {
+      '<leader>sr',
+      function()
+        Snacks.picker.registers {
+          layout = {
+            preset = 'ivy',
+          },
+          on_show = function()
+            vim.cmd.stopinsert()
+          end,
+        }
+      end,
+      desc = 'Registers',
+    },
   },
 
   init = function()

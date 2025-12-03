@@ -182,7 +182,7 @@ return {
     -- SEARCH namespace (<Space>s) - Content inside files
     -- ═══════════════════════════════════════════════════════════════════
     vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = 'Diagnostics' })
-    vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = 'Resume' })
+    vim.keymap.set('n', '<leader>sR', builtin.resume, { desc = 'Resume' })
 
     -- Search in specific contexts
     vim.keymap.set('n', '<leader>sb', function()
