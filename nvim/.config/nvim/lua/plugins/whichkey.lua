@@ -35,6 +35,7 @@ return {
       { '<leader>w', group = 'Windows', icon = '' },
       { '<leader>x', group = 'Diagnostics', icon = '' },
       { '<leader>-', group = 'Oil', icon = '' },
+      { '<leader>S', group = 'Select and replace', icon = '󰉋' },
     }
   end,
 }

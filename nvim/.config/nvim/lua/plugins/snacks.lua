@@ -333,7 +333,7 @@ return {
       desc = 'Scratch buffer',
     },
     {
-      '<leader>S',
+      '<leader>bs',
       function()
         Snacks.scratch.select()
       end,
