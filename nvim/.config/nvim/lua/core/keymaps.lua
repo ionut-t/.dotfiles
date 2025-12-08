@@ -104,7 +104,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- Quick command mode entry from insert mode
-vim.keymap.set('i', '::', '<Esc>:', { desc = 'Exit to command mode' })
+vim.keymap.set('i', 'kk', '<Esc>:', { desc = 'Exit to command mode' })
 
 -- Delete without copying to clipboard (dd = delete line, d = delete motion)
 vim.keymap.set('n', 'dd', '"_dd', { desc = 'Delete line' })
