@@ -224,7 +224,7 @@ return {
         },
       },
       -- pyright = {},
-      rust_analyzer = {},
+      -- rust_analyzer = {},  -- Handled by rustaceanvim plugin (see rust.lua)
       -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
       --
       -- TypeScript/JavaScript handled by typescript-tools.nvim plugin
@@ -364,7 +364,7 @@ return {
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
     require('mason-lspconfig').setup {
-      automatic_installation = { exclude = { 'pylsp' } },
+      automatic_installation = { exclude = { 'pylsp', 'rust_analyzer' } },
       handlers = {
         function(server_name)
           -- Skip formatters/linters that aren't LSP servers
