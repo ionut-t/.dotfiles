@@ -19,17 +19,21 @@ return {
             -- Optional: Add custom keybindings here
             local opts = { buffer = bufnr, noremap = true, silent = true }
             vim.keymap.set('n', '<leader>ca', function()
-              vim.cmd.RustLsp('codeAction')
+              vim.cmd.RustLsp 'codeAction'
             end, vim.tbl_extend('force', opts, { desc = 'Code action' }))
             vim.keymap.set('n', '<leader>dr', function()
-              vim.cmd.RustLsp('debuggables')
+              vim.cmd.RustLsp 'debuggables'
             end, vim.tbl_extend('force', opts, { desc = 'Rust debuggables' }))
           end,
           default_settings = {
             -- rust-analyzer language server configuration
             ['rust-analyzer'] = {
+              check = {
+                allTargets = true,
+              },
               cargo = {
                 allFeatures = true,
+                allTargets = true,
                 loadOutDirsFromCheck = true,
                 buildScripts = {
                   enable = true,
@@ -37,6 +41,7 @@ return {
               },
               checkOnSave = {
                 allFeatures = true,
+                allTargets = true,
                 command = 'clippy',
                 extraArgs = { '--no-deps' },
               },
