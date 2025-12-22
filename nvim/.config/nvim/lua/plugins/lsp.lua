@@ -242,17 +242,9 @@ return {
           },
         },
       },
-
       pyright = {
-        -- Pyright settings are configured dynamically below to ensure the correct Python
-        -- interpreter from the active virtual environment (e.g., from 'uv') is used.
-        settings = {
-          python = {
-            -- If VIRTUAL_ENV is set, use the Python from that venv.
-            -- Otherwise, fall back to the default 'python' executable.
-            pythonPath = vim.env.VIRTUAL_ENV and (vim.env.VIRTUAL_ENV .. '/bin/python') or vim.fn.exepath 'python3' or vim.fn.exepath 'python',
-          },
-        },
+        -- Pyright reads settings from pyrightconfig.json in project root
+        -- No settings needed here - let pyrightconfig.json handle it
       },
       html = { filetypes = { 'html', 'twig', 'hbs' } },
       cssls = {},

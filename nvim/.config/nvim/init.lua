@@ -59,6 +59,7 @@ require('lazy').setup {
   require 'plugins.autotag',
   require 'plugins.neotest',
   require 'plugins.hardtime',
+  require 'plugins.codewise', -- Local development version of codewise.nvim
 }
 
 vim.cmd.colorscheme 'catppuccin'
