@@ -62,6 +62,14 @@ return {
         -- Better path display for large projects
         path_display = { 'truncate' },
 
+        -- Layout configuration for equal width search and preview
+        layout_strategy = 'horizontal',
+        layout_config = {
+          horizontal = {
+            preview_width = 0.5,
+          },
+        },
+
         mappings = {
           i = {
             ['<C-k>'] = require('telescope.actions').move_selection_previous,
@@ -101,7 +109,7 @@ return {
               width = 0.9,
               height = 0.95,
               preview_height = 0.5,
-              mirror = true,
+              mirror = false,
             },
           },
         },

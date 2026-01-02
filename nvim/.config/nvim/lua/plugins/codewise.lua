@@ -11,6 +11,9 @@ return {
     require('codewise').setup {
       search_mode = 'hybrid',
       daemon_idle_timeout = 60,
+      exclude_tests = true,
+      reranker = 'fast',
+
       telescope_opts = {
         layout_strategy = 'vertical',
         layout_config = {
