@@ -20,5 +20,10 @@ link-url = true
 mouse-hide-while-typing = true
 theme = Catppuccin Mocha
 background-opacity = 1
+# background-image = ./Gemini_Generated_Image_uxy4c7uxy4c7uxy4.png
+background-image = ./Gemini_Generated_Image_9sl1c69sl1c69sl1.png
+background-image-opacity = 0.1
+background-image-fit = cover
+background-opacity-cells = false
 
 keybind = shift+enter=text:\x1b\r
