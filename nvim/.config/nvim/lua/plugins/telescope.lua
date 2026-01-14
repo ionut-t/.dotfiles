@@ -101,7 +101,7 @@ return {
       },
       pickers = {
         find_files = {
-          file_ignore_patterns = { 'node_modules', '.git', '.venv' },
+          file_ignore_patterns = { 'node_modules', '.git/', '.venv' },
           hidden = true,
           layout_strategy = 'vertical',
           layout_config = {
@@ -125,7 +125,7 @@ return {
           },
         },
         live_grep = {
-          file_ignore_patterns = { 'node_modules', '.git', '.venv' },
+          file_ignore_patterns = { 'node_modules', '.git/', '.venv' },
           additional_args = function(_)
             return { '--hidden' }
           end,
