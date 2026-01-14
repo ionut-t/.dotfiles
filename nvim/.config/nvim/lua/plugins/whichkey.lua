@@ -16,7 +16,7 @@ return {
 
     wk.add {
       { '<leader>b', group = 'Buffers', icon = '' },
-      { '<leader>by', group = 'Yank path', icon = '' },
+      { '<leader>y', group = 'Yank path', icon = '' },
       { '<leader>c', group = 'Code', icon = '' },
       { '<leader>d', group = 'Debug', icon = '' },
       { '<leader>e', group = 'Explore', icon = '' },
