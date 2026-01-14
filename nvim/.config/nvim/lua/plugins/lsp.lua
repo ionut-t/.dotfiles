@@ -40,6 +40,12 @@ return {
         -- LSP symbols accessible via Telescope's diagnostics and workspace symbol search
 
         local client = vim.lsp.get_client_by_id(event.data.client_id)
+
+        -- Enable inlay hints
+        if client and client.supports_method 'textDocument/inlayHint' then
+          vim.lsp.inlay_hint.enable(event.bufnr, {})
+        end
+
         if client and client.supports_method 'textDocument/codeAction' then
           map('<leader>ca', vim.lsp.buf.code_action, 'Code action', { 'n', 'v' })
           map('<leader>cR', function()

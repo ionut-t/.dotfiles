@@ -293,6 +293,9 @@ local opts = { noremap = true, silent = true }
 vim.keymap.set('v', '<', '<gv', opts)
 vim.keymap.set('v', '>', '>gv', opts)
 
+-- Quick buffer switching
+vim.keymap.set('n', '<leader>bb', '<cmd>b#<cr>', { desc = 'Switch to previous buffer' })
+
 -- Macro recording
 vim.keymap.set('n', 'q', function()
   if vim.fn.reg_recording() ~= '' then
