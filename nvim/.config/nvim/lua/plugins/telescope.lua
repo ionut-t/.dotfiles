@@ -101,7 +101,7 @@ return {
       },
       pickers = {
         find_files = {
-          file_ignore_patterns = { 'node_modules', '.git', '.venv' },
+          file_ignore_patterns = { 'node_modules', '.git/', '.venv' },
           hidden = true,
           layout_strategy = 'vertical',
           layout_config = {
@@ -125,7 +125,7 @@ return {
           },
         },
         live_grep = {
-          file_ignore_patterns = { 'node_modules', '.git', '.venv' },
+          file_ignore_patterns = { 'node_modules', '.git/', '.venv' },
           additional_args = function(_)
             return { '--hidden' }
           end,
@@ -189,7 +189,7 @@ return {
     -- ═══════════════════════════════════════════════════════════════════
     -- SEARCH namespace (<Space>s) - Content inside files
     -- ═══════════════════════════════════════════════════════════════════
-    vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = 'Diagnostics' })
+    vim.keymap.set('n', '<leader>sD', builtin.diagnostics, { desc = 'Diagnostics' })
     vim.keymap.set('n', '<leader>sR', builtin.resume, { desc = 'Resume' })
 
     -- Search in specific contexts
@@ -209,7 +209,17 @@ return {
 
     -- Enhanced search with telescope-live-grep-args
     vim.keymap.set('n', '<leader>sg', function()
-      require('telescope').extensions.live_grep_args.live_grep_args()
+      require('telescope').extensions.live_grep_args.live_grep_args {
+        layout_strategy = 'vertical',
+        layout_config = {
+          vertical = {
+            width = 0.9,
+            height = 0.95,
+            preview_height = 0.5,
+            mirror = false,
+          },
+        },
+      }
     end, { desc = 'Grep with args' })
 
     -- Search for TODO/FIXME/NOTE comments
@@ -242,5 +252,48 @@ return {
         end,
       }
     end, { desc = 'Everywhere (no ignore)' })
+
+    -- Search in specific directory
+    vim.keymap.set('n', '<leader>sd', function()
+      vim.ui.input({ prompt = 'Search in directory: ', default = vim.fn.expand '%:p:h' }, function(dir)
+        if dir and dir ~= '' then
+          builtin.live_grep {
+            prompt_title = 'Search in: ' .. vim.fn.fnamemodify(dir, ':~:.'),
+            cwd = dir,
+            layout_strategy = 'vertical',
+            layout_config = {
+              vertical = {
+                width = 0.9,
+                height = 0.95,
+                preview_height = 0.5,
+                mirror = false,
+              },
+            },
+          }
+        end
+      end)
+    end, { desc = 'In directory' })
+
+    -- Find files in specific directory
+    vim.keymap.set('n', '<leader>fd', function()
+      vim.ui.input({ prompt = 'Find files in directory: ', default = vim.fn.expand '%:p:h' }, function(dir)
+        if dir and dir ~= '' then
+          builtin.find_files {
+            prompt_title = 'Files in: ' .. vim.fn.fnamemodify(dir, ':~:.'),
+            cwd = dir,
+            hidden = true,
+            layout_strategy = 'vertical',
+            layout_config = {
+              vertical = {
+                width = 0.9,
+                height = 0.95,
+                preview_height = 0.5,
+                mirror = false,
+              },
+            },
+          }
+        end
+      end)
+    end, { desc = 'Files in directory' })
   end,
 }

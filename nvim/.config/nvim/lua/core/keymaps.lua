@@ -37,17 +37,24 @@ vim.keymap.set({ 'n', 'x' }, 'x', '"_x', { desc = 'Delete char without yank' })
 vim.keymap.set({ 'n', 'x' }, 'X', '"_X', { desc = 'Delete char back without yank' })
 
 -- Copy file paths to clipboard
-vim.keymap.set('n', '<leader>byp', function()
+vim.keymap.set('n', '<leader>yp', function()
   local path = vim.fn.expand '%:.'
   vim.fn.setreg('+', path)
   vim.notify('Copied relative path: ' .. path, vim.log.levels.INFO)
-end, { desc = 'Relative' })
+end, { desc = 'Relative path' })
 
-vim.keymap.set('n', '<leader>byP', function()
+vim.keymap.set('n', '<leader>yP', function()
   local path = vim.fn.expand '%:p'
   vim.fn.setreg('+', path)
   vim.notify('Copied absolute path: ' .. path, vim.log.levels.INFO)
-end, { desc = 'Absolute' })
+end, { desc = 'Absolute path' })
+
+-- Copy file name to clipboard
+vim.keymap.set('n', '<leader>yn', function()
+  local name = vim.fn.expand '%:t'
+  vim.fn.setreg('+', name)
+  vim.notify('Copied file name: ' .. name, vim.log.levels.INFO)
+end, { desc = 'File name' })
 
 -- Exit insert mode with jj
 vim.keymap.set('i', 'jj', '<Esc>', { desc = 'Exit insert mode' })
@@ -285,6 +292,9 @@ vim.keymap.set('n', 'N', 'Nzzzv')
 local opts = { noremap = true, silent = true }
 vim.keymap.set('v', '<', '<gv', opts)
 vim.keymap.set('v', '>', '>gv', opts)
+
+-- Quick buffer switching
+vim.keymap.set('n', '<leader>bb', '<cmd>b#<cr>', { desc = 'Switch to previous buffer' })
 
 -- Macro recording
 vim.keymap.set('n', 'q', function()
