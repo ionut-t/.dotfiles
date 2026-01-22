@@ -50,7 +50,7 @@ require('lazy').setup {
   require 'plugins.session',
   require 'plugins.refactoring',
   require 'plugins.git-enhanced',
-  -- require 'plugins.dap-multi',
+  require 'plugins.dap-multi',
   -- require 'plugins.testing',
   require 'plugins.terminal',
   require 'plugins.search',

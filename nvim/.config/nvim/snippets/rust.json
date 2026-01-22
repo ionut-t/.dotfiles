@@ -1,0 +1,171 @@
+{
+  "Result Match": {
+    "prefix": "result",
+    "body": [
+      "match ${1:expr} {",
+      "    Ok(${2:value}) => ${3:$2},",
+      "    Err(${4:e}) => ${5:return Err($4.into())},",
+      "}"
+    ],
+    "description": "Result match pattern"
+  },
+  "Option Match": {
+    "prefix": "option",
+    "body": [
+      "match ${1:expr} {",
+      "    Some(${2:value}) => ${3:$2},",
+      "    None => ${4:todo!()},",
+      "}"
+    ],
+    "description": "Option match pattern"
+  },
+  "Impl Block": {
+    "prefix": "impl",
+    "body": [
+      "impl ${1:Type} {",
+      "    $0",
+      "}"
+    ],
+    "description": "impl block"
+  },
+  "Impl Trait": {
+    "prefix": "impltrait",
+    "body": [
+      "impl ${1:Trait} for ${2:Type} {",
+      "    $0",
+      "}"
+    ],
+    "description": "impl trait for type"
+  },
+  "Test Function": {
+    "prefix": "test",
+    "body": [
+      "#[test]",
+      "fn ${1:test_name}() {",
+      "    $0",
+      "}"
+    ],
+    "description": "#[test] function"
+  },
+  "Test Function with Result": {
+    "prefix": "testresult",
+    "body": [
+      "#[test]",
+      "fn ${1:test_name}() -> Result<(), ${2:Box<dyn std::error::Error>}> {",
+      "    $0",
+      "    Ok(())",
+      "}"
+    ],
+    "description": "#[test] function with Result return"
+  },
+  "Common Derives": {
+    "prefix": "derive",
+    "body": [
+      "#[derive(Debug, Clone${1:, PartialEq, Eq})]"
+    ],
+    "description": "Common derive macros"
+  },
+  "Serde Derives": {
+    "prefix": "deriveserde",
+    "body": [
+      "#[derive(Debug, Clone, Serialize, Deserialize)]"
+    ],
+    "description": "Serde derive macros"
+  },
+  "Error Type": {
+    "prefix": "err",
+    "body": [
+      "#[derive(Debug, thiserror::Error)]",
+      "pub enum ${1:Error} {",
+      "    #[error(\"${2:error message}\")]",
+      "    ${3:Variant},",
+      "    $0",
+      "}"
+    ],
+    "description": "Error type boilerplate"
+  },
+  "Struct": {
+    "prefix": "struct",
+    "body": [
+      "#[derive(Debug, Clone)]",
+      "pub struct ${1:Name} {",
+      "    ${2:field}: ${3:String},",
+      "}"
+    ],
+    "description": "Struct with common derives"
+  },
+  "Enum": {
+    "prefix": "enum",
+    "body": [
+      "#[derive(Debug, Clone, PartialEq, Eq)]",
+      "pub enum ${1:Name} {",
+      "    ${2:Variant},",
+      "}"
+    ],
+    "description": "Enum with common derives"
+  },
+  "New Function": {
+    "prefix": "new",
+    "body": [
+      "pub fn new(${1:params}) -> Self {",
+      "    Self {",
+      "        ${2:field}: ${3:value},",
+      "    }",
+      "}"
+    ],
+    "description": "new constructor function"
+  },
+  "Async Function": {
+    "prefix": "asyncfn",
+    "body": [
+      "async fn ${1:function_name}(${2:params}) -> ${3:Result<(), Error>} {",
+      "    $0",
+      "}"
+    ],
+    "description": "async function"
+  },
+  "Main Function": {
+    "prefix": "main",
+    "body": [
+      "fn main() {",
+      "    $0",
+      "}"
+    ],
+    "description": "main function"
+  },
+  "Main with Result": {
+    "prefix": "mainresult",
+    "body": [
+      "fn main() -> Result<(), Box<dyn std::error::Error>> {",
+      "    $0",
+      "    Ok(())",
+      "}"
+    ],
+    "description": "main function with Result"
+  },
+  "Tokio Main": {
+    "prefix": "tokiomain",
+    "body": [
+      "#[tokio::main]",
+      "async fn main() -> Result<(), Box<dyn std::error::Error>> {",
+      "    $0",
+      "    Ok(())",
+      "}"
+    ],
+    "description": "tokio main function"
+  },
+  "Println Debug": {
+    "prefix": "pdbg",
+    "body": [
+      "println!(\"{:?}\", ${1:expr});"
+    ],
+    "description": "println with debug format"
+  },
+  "Dbg Macro": {
+    "prefix": "dbg",
+    "body": [
+      "dbg!(&${1:expr});"
+    ],
+    "description": "dbg! macro"
+  }
+}
