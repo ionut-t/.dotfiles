@@ -54,7 +54,7 @@ require('lazy').setup {
   require 'plugins.dap-multi',
   -- require 'plugins.testing',
   require 'plugins.terminal',
-  require 'plugins.search',
+  -- require 'plugins.search',
   require 'plugins.tiny-diagnostic',
   require 'plugins.snipe',
   require 'plugins.autotag',
