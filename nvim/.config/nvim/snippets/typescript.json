@@ -1,0 +1,100 @@
+{
+  "Angular Component": {
+    "prefix": "comp",
+    "body": [
+      "import { Component } from '@angular/core';",
+      "",
+      "@Component({",
+      "  selector: '${1:app-component}',",
+      "  templateUrl: './${2:component}.component.html',",
+      "  styleUrls: ['./${2:component}.component.scss']",
+      "})",
+      "export class ${3:Component}Component {",
+      "  $0",
+      "}"
+    ],
+    "description": "Angular component boilerplate"
+  },
+  "Angular Service": {
+    "prefix": "serv",
+    "body": [
+      "import { Injectable } from '@angular/core';",
+      "",
+      "@Injectable({",
+      "  providedIn: 'root'",
+      "})",
+      "export class ${1:Name}Service {",
+      "  constructor() {}",
+      "",
+      "  $0",
+      "}"
+    ],
+    "description": "Angular service boilerplate"
+  },
+  "RxJS Subject with Unsubscribe": {
+    "prefix": "rxsub",
+    "body": [
+      "private readonly destroy$ = new Subject<void>();",
+      "",
+      "ngOnDestroy(): void {",
+      "  this.destroy$.next();",
+      "  this.destroy$.complete();",
+      "}"
+    ],
+    "description": "RxJS Subject with unsubscribe pattern"
+  },
+  "RxJS Pipe with Operators": {
+    "prefix": "rxpipe",
+    "body": [
+      ".pipe(",
+      "  ${1:map}(${2:value} => ${3:value}),",
+      "  takeUntil(this.destroy$)",
+      ")"
+    ],
+    "description": "RxJS pipe with common operators"
+  },
+  "ngOnInit": {
+    "prefix": "ngoninit",
+    "body": [
+      "ngOnInit(): void {",
+      "  $0",
+      "}"
+    ],
+    "description": "ngOnInit lifecycle hook"
+  },
+  "ngOnDestroy": {
+    "prefix": "ngdestroy",
+    "body": [
+      "ngOnDestroy(): void {",
+      "  $0",
+      "}"
+    ],
+    "description": "ngOnDestroy lifecycle hook"
+  },
+  "Console Log": {
+    "prefix": "clog",
+    "body": ["console.log('${1:label}:', $0);"],
+    "description": "Console log with label"
+  },
+  "Arrow Function": {
+    "prefix": "afn",
+    "body": ["const ${1:name} = (${2:params}) => {", "  $0", "};"],
+    "description": "Arrow function"
+  },
+  "Async Arrow Function": {
+    "prefix": "aafn",
+    "body": ["const ${1:name} = async (${2:params}) => {", "  $0", "};"],
+    "description": "Async arrow function"
+  },
+  "Try Catch": {
+    "prefix": "trycatch",
+    "body": [
+      "try {",
+      "  $0",
+      "} catch (${1:error}) {",
+      "  console.error(${1:error});",
+      "}"
+    ],
+    "description": "Try catch block"
+  }
+}

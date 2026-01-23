@@ -230,15 +230,18 @@ return {
       }
     end, { desc = 'TODOs' })
 
-    -- Visual mode search: search for selected text
-    vim.keymap.set('v', '<leader>s', function()
-      -- Get visual selection
-      vim.cmd 'noau normal! "vy"'
-      local text = vim.fn.getreg 'v'
-      vim.fn.setreg('v', {})
+    -- Search word under cursor
+    vim.keymap.set('n', '<leader>sw', function()
+      builtin.grep_string { word_match = '-w' }
+    end, { desc = 'Word under cursor' })
 
-      -- Escape special characters
-      text = string.gsub(text, '([^%w])', '%%%1')
+    -- Visual mode search: search for selected text
+    vim.keymap.set('v', '<leader>sw', function()
+      local old_reg = vim.fn.getreg '"'
+      local old_regtype = vim.fn.getregtype '"'
+      vim.cmd 'normal! y'
+      local text = vim.fn.getreg '"'
+      vim.fn.setreg('"', old_reg, old_regtype)
 
       builtin.grep_string { search = text }
     end, { desc = 'Search selection' })

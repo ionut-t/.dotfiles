@@ -86,11 +86,11 @@ return {
       pattern = 'spectre_panel',
       callback = function()
         vim.notify(
-          'Spectre Commands:\n' ..
-          '• Press ? for help\n' ..
-          '• <leader>R to replace all\n' ..
-          '• <leader>rc to replace current\n' ..
-          '• dd to toggle line',
+          'Spectre Commands:\n'
+            .. '• Press ? for help\n'
+            .. '• <leader>R to replace all\n'
+            .. '• <leader>rc to replace current\n'
+            .. '• dd to toggle line',
           vim.log.levels.INFO
         )
       end,

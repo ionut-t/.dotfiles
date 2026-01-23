@@ -1,0 +1,140 @@
+{
+  "If Error": {
+    "prefix": "iferr",
+    "body": [
+      "if err != nil {",
+      "\treturn ${1:nil, }err",
+      "}"
+    ],
+    "description": "if err != nil return pattern"
+  },
+  "Error Wrap": {
+    "prefix": "errw",
+    "body": [
+      "if err != nil {",
+      "\treturn ${1:nil, }fmt.Errorf(\"${2:failed to do something}: %w\", err)",
+      "}"
+    ],
+    "description": "errors.Wrap pattern"
+  },
+  "HTTP Handler": {
+    "prefix": "httph",
+    "body": [
+      "func ${1:handler}(w http.ResponseWriter, r *http.Request) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "HTTP handler function"
+  },
+  "Test Function": {
+    "prefix": "test",
+    "body": [
+      "func Test${1:Name}(t *testing.T) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Test function boilerplate"
+  },
+  "Benchmark Function": {
+    "prefix": "bench",
+    "body": [
+      "func Benchmark${1:Name}(b *testing.B) {",
+      "\tfor i := 0; i < b.N; i++ {",
+      "\t\t$0",
+      "\t}",
+      "}"
+    ],
+    "description": "Benchmark function"
+  },
+  "Table Driven Test": {
+    "prefix": "tbl",
+    "body": [
+      "func Test${1:Name}(t *testing.T) {",
+      "\ttests := []struct {",
+      "\t\tname string",
+      "\t\t${2:input}  ${3:string}",
+      "\t\t${4:want}   ${5:string}",
+      "\t}{",
+      "\t\t{",
+      "\t\t\tname: \"${6:test case}\",",
+      "\t\t\t${2:input}: ${7:\"\"},",
+      "\t\t\t${4:want}: ${8:\"\"},",
+      "\t\t},",
+      "\t}",
+      "",
+      "\tfor _, tt := range tests {",
+      "\t\tt.Run(tt.name, func(t *testing.T) {",
+      "\t\t\t${9:got} := ${10:FunctionUnderTest}(tt.${2:input})",
+      "\t\t\tif ${9:got} != tt.${4:want} {",
+      "\t\t\t\tt.Errorf(\"got %v, want %v\", ${9:got}, tt.${4:want})",
+      "\t\t\t}",
+      "\t\t})",
+      "\t}",
+      "}"
+    ],
+    "description": "Table-driven test"
+  },
+  "Main Function": {
+    "prefix": "main",
+    "body": [
+      "func main() {",
+      "\t$0",
+      "}"
+    ],
+    "description": "main function"
+  },
+  "Struct": {
+    "prefix": "struct",
+    "body": [
+      "type ${1:Name} struct {",
+      "\t${2:Field} ${3:string}",
+      "}"
+    ],
+    "description": "Struct definition"
+  },
+  "Interface": {
+    "prefix": "interface",
+    "body": [
+      "type ${1:Name} interface {",
+      "\t${2:Method}(${3:params}) ${4:error}",
+      "}"
+    ],
+    "description": "Interface definition"
+  },
+  "Goroutine": {
+    "prefix": "go",
+    "body": [
+      "go func() {",
+      "\t$0",
+      "}()"
+    ],
+    "description": "Goroutine"
+  },
+  "Defer": {
+    "prefix": "defer",
+    "body": [
+      "defer func() {",
+      "\t$0",
+      "}()"
+    ],
+    "description": "Defer with anonymous function"
+  },
+  "Context With Cancel": {
+    "prefix": "ctxcancel",
+    "body": [
+      "ctx, cancel := context.WithCancel(${1:context.Background()})",
+      "defer cancel()",
+      "$0"
+    ],
+    "description": "Context with cancel"
+  },
+  "Context With Timeout": {
+    "prefix": "ctxtimeout",
+    "body": [
+      "ctx, cancel := context.WithTimeout(${1:context.Background()}, ${2:5*time.Second})",
+      "defer cancel()",
+      "$0"
+    ],
+    "description": "Context with timeout"
+  }
+}

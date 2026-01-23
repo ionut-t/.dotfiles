@@ -19,6 +19,14 @@ return {
       ['<C-h>'] = { 'snippet_backward', 'fallback' },
     },
 
+    -- Snippets configuration with custom snippets path
+    snippets = {
+      preset = 'default',
+      search_paths = {
+        vim.fn.stdpath 'config' .. '/snippets',
+      },
+    },
+
     completion = {
       -- Documentation window
       documentation = {
