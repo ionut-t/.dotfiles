@@ -1,0 +1,54 @@
+node_modules/
+.git/
+/Applications/
+Library/
+.npm/
+.nvm/
+.yarn/
+anaconda3/
+*.min.js
+*.map
+.DS_Store
+
+# Caches
+*cache*
+*Cache*
+
+# IDEs
+.idea/
+.vscode/
+.vscode-insiders/
+.vs/
+*.xcworkspace/
+*.xcodeproj/
+.fleet/
+.eclipse/
+*.iml
+
+# Build outputs
+dist/
+build/
+target/
+out/
+.next/
+.nuxt/
+.output/
+
+# Language-specific
+__pycache__/
+.venv/
+venv/
+*.egg-info/
+.cargo/
+.rustup/
+.go/
+.pub-cache/
+
+# macOS
+.Trash/
+
+# Other tools
+.docker/
+.kube/
+logs/
+*.log
