@@ -37,6 +37,7 @@ require('lazy').setup {
   require 'plugins.formatter',
   require 'plugins.linter',
   require 'plugins.gitsigns',
+  require 'plugins.git-blame',
   require 'plugins.indent-blankline',
   require 'plugins.noice',
   require 'plugins.angular',
