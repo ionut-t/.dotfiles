@@ -188,17 +188,25 @@ export BAT_THEME=catppuccin_mocha
 # ============================================================================
 # Navigation & file management
 alias cd="z"
-alias ls="eza --color=always --long --git --icons=always --no-user --no-time --no-permissions --no-filesize"
+alias zz="cd \$(zoxide query --list | fzf --preview 'eza --tree --level=1 --color=always {}')"
+alias ls="eza --color=always --long --git --icons=always --no-user --no-time --no-permissions --no-filesize --group-directories-first"
+alias ll="eza --color=always --long --git --icons=always --no-user --group-directories-first --time-style='+%d/%m/%y'"
+alias la="eza --color=always --long --git --icons=always --no-user --group-directories-first --all --time-style='+%d/%m/%y'"
+alias lt="eza --color=always --icons=always --tree --level=2 --group-directories-first"
+alias lt3="eza --color=always --icons=always --tree --level=3 --group-directories-first"
+alias lr="eza --color=always --long --git --icons=always --no-user --sort=modified --reverse --time-style='+%d/%m/%y'"
 
 # Fuzzy finder
-alias f="fzf"
-alias fp="fzf --preview 'bat --color=always --line-range :500 {}'"
+alias preview="fzf --preview 'bat --color=always {}' --preview-window '~4'"
 
 # Tmux
 alias t="tmux"
 alias ta="tmux a"
-alias tls="tmux ls"
-alias tks="tmux kill-session"
+
+# Git + fzf
+alias gs="git branch | fzf --preview 'git log --oneline --graph --color=always {1}' | xargs git checkout"
+alias gsa="git branch --all | fzf --preview 'git log --oneline --graph --color=always {1}' | xargs git checkout"
+alias gll="git log --oneline --graph --color=always | fzf --ansi --preview 'git show --color=always {1}' --bind 'enter:execute(git show {1})'"
 
 # Editors & IDEs
 alias vim="/Applications/MacVim.app/Contents/bin/Vim"
@@ -210,6 +218,8 @@ alias v="nvim"
 alias c='clear'
 alias e='exit'
 alias sdf="$HOME/.dotfiles/sync-dotfiles.zsh"
+alias myip="curl -s ifconfig.me && echo"
+alias localip="ipconfig getifaddr en0"
 
 # ============================================================================
 # CUSTOM FUNCTIONS
@@ -225,10 +235,17 @@ function search() {
     fzf --ansi --delimiter ':' \
       --preview 'bat --color=always {1} --highlight-line {2}' \
       --preview-window 'up,60%,border-bottom,+{2}+3/3' \
-      --header 'Search' \
-      --bind 'enter:execute(nvim +{2} {1})'
+      --header 'Enter: nvim | Ctrl-Y: copy path' \
+      --bind 'enter:execute(nvim +{2} {1})' \
+      --bind 'ctrl-y:execute-silent(echo {1} | pbcopy)+abort' \
 }
 alias s=search
+
+# Kill process on a port
+function killport() { lsof -ti:$1 | xargs kill -9 }
+
+# Cheat sheets
+function cheat() { curl -s "cheat.sh/$1" }
 
 # Process killer with clean format
 function pk() {
