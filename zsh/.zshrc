@@ -213,6 +213,8 @@ alias vim="/Applications/MacVim.app/Contents/bin/Vim"
 alias code="code-insiders"
 alias ws="webstorm"
 alias v="nvim"
+export EDITOR="nvim"
+export VISUAL="nvim"
 
 # Utilities
 alias c='clear'
