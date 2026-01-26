@@ -213,6 +213,7 @@ alias vim="/Applications/MacVim.app/Contents/bin/Vim"
 alias code="code-insiders"
 alias ws="webstorm"
 alias v="nvim"
+alias nvl="nvim -c \"lua require('persistence').load()\""
 export EDITOR="nvim"
 export VISUAL="nvim"
 
