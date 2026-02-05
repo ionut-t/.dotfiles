@@ -98,6 +98,9 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 export PATH="${HOME}/.local/bin:$PATH"
 export PATH="/Applications/Docker.app/Contents/Resources/bin:$PATH"
 
+# Added by Antigravity
+export PATH="/Users/ionut-traistaru/.antigravity/antigravity/bin:$PATH"
+
 # Language-specific paths
 export PATH="$PATH:$(go env GOPATH)/bin"                                    # Go
 export PATH="$PATH:$HOME/zig"                                               # Zig
@@ -216,6 +219,7 @@ alias v="nvim"
 alias nvl="nvim -c \"lua require('persistence').load()\""
 export EDITOR="nvim"
 export VISUAL="nvim"
+alias lazyvim="NVIM_APPNAME=lazyvim nvim"
 
 # Utilities
 alias c='clear'
@@ -264,5 +268,3 @@ function pk() {
 # ENVIRONMENT VARIABLES
 # ============================================================================
 source ~/.envs/envs.sh
-
-alias lazyvim="NVIM_APPNAME=lazyvim nvim"
