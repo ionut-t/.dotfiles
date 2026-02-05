@@ -19,35 +19,27 @@ return {
       }
     end,
   },
-  -- {
-  --   -- Icon provider for Neovim plugins
-  --   'echasnovski/mini.icons',
-  --   version = '*',
-  --   lazy = false,
-  --   priority = 1000,
-  --   config = function()
-  --     local icons = require('mini.icons')
-  --     icons.setup()
-  --     -- Mock nvim-web-devicons for plugins that depend on it (like Neo-tree)
-  --     icons.mock_nvim_web_devicons()
-  --   end,
-  -- },
+
   {
     -- Tmux & split window navigation
     'christoomey/vim-tmux-navigator',
   },
+
   {
     -- Detect tabstop and shiftwidth automatically
     'tpope/vim-sleuth',
   },
+
   {
     -- Powerful Git integration for Vim
     'tpope/vim-fugitive',
   },
+
   {
     -- GitHub integration for vim-fugitive
     'tpope/vim-rhubarb',
   },
+
   {
     -- Enhanced notifications
     'rcarriga/nvim-notify',
@@ -80,6 +72,7 @@ return {
       vim.notify = require 'notify'
     end,
   },
+
   {
     -- Autoclose parentheses, brackets, quotes, etc.
     'windwp/nvim-autopairs',
@@ -87,6 +80,7 @@ return {
     config = true,
     opts = {},
   },
+
   {
     -- Highlight todo, notes, etc in comments
     'folke/todo-comments.nvim',
@@ -94,6 +88,7 @@ return {
     dependencies = { 'nvim-lua/plenary.nvim' },
     opts = { signs = false },
   },
+
   {
     -- High-performance color highlighter
     'norcalli/nvim-colorizer.lua',
@@ -101,6 +96,7 @@ return {
       require('colorizer').setup()
     end,
   },
+
   {
     -- Enhanced search with match count (e.g., "3/18")
     'kevinhwang91/nvim-hlslens',

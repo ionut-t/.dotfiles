@@ -166,26 +166,6 @@ return {
       builtin.git_commits()
     end, { desc = 'Find commits (git)' })
 
-    -- Contextual finds
-    -- vim.keymap.set('n', '<leader>fs', function()
-    --   local current_buffer = vim.api.nvim_buf_get_name(0)
-    --   local parent_dir = vim.fn.fnamemodify(current_buffer, ':h')
-    --   builtin.find_files {
-    --     prompt_title = 'Sibling Files',
-    --     cwd = parent_dir,
-    --     hidden = true,
-    --     no_ignore = true,
-    --     file_ignore_patterns = { 'node_modules', '.git', '.venv' },
-    --   }
-    -- end, { desc = 'Sibling files' })
-
-    -- vim.keymap.set('n', '<leader>fp', function()
-    --     builtin.oldfiles {
-    --         prompt_title = 'Recent Files (Project Only)',
-    --         cwd_only = true,
-    --     }
-    -- end, { desc = 'Find recent in [P]roject' })
-
     -- ═══════════════════════════════════════════════════════════════════
     -- SEARCH namespace (<Space>s) - Content inside files
     -- ═══════════════════════════════════════════════════════════════════
