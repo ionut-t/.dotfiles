@@ -5,7 +5,10 @@
 # Right Option key remains for special characters (é, ñ, etc.)
 macos-option-as-alt = left
 
-font-family = FiraCode Nerd Font Mono
+# font-family = FiraCode Nerd Font Mono
+# font-family = Courier New Italic
+font-family = JetBrains Mono
+font-thicken = true
 
 # font-family = MesloLGSDZ Nerd Font Mono Italic
 
@@ -19,11 +22,18 @@ adjust-underline-position = 3
 link-url = true
 mouse-hide-while-typing = true
 theme = Catppuccin Mocha
-background-opacity = 1
+
+background-opacity = 0.9
+background-blur = true
+
 # background-image = ./Gemini_Generated_Image_uxy4c7uxy4c7uxy4.png
-background-image = ./Gemini_Generated_Image_9sl1c69sl1c69sl1.png
-background-image-opacity = 0.1
-background-image-fit = cover
+# background-image = ./Gemini_Generated_Image_9sl1c69sl1c69sl1.png
+# background-image-opacity = 0.1
+# background-image-fit = cover
 background-opacity-cells = false
 
 keybind = shift+enter=text:\x1b\r
+
+macos-titlebar-style = hidden
+
+keybind = global:cmd+backquote=toggle_quick_terminal
