@@ -118,6 +118,9 @@ on-mode-changed = []
     cmd-ctrl-alt-shift-a = 'exec-and-forget open -a "Safari.app"'
     cmd-ctrl-alt-shift-b = 'exec-and-forget open -a "Firefox.app"'
     cmd-ctrl-alt-shift-c = 'exec-and-forget open -a "Google Chrome.app"'
+    cmd-ctrl-alt-shift-m = 'exec-and-forget open -a "Microsoft Outlook.app"'
+    cmd-ctrl-alt-shift-o = 'exec-and-forget open -a "OrbStack.app"'
+    cmd-ctrl-alt-shift-s = 'exec-and-forget open -a "Slack.app"'
     cmd-ctrl-alt-shift-w = 'exec-and-forget open -a "WebStorm.app"'
     cmd-ctrl-alt-shift-v = 'exec-and-forget open -a "Visual Studio Code - Insiders.app"'
 
