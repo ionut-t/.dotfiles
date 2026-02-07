@@ -40,8 +40,8 @@ select_files() {
     git checkout -q $branch
 
     # Create a temporary directory with the files
-    print_colored info "Opening yazi for $branch branch..."
-    print_colored info "Press 'Space' to select files, 'q' to confirm selection"
+    print_colored info "Opening yazi for $branch branch..." >&2
+    print_colored info "Press 'Space' to select files, 'q' to confirm selection" >&2
 
     # Use yazi for file selection
     # The --chooser-file option will save selected files to our temp file
@@ -63,6 +63,7 @@ select_files() {
 }
 
 # Function to sync one file or directory between branches
+# Assumes we are already on the target branch
 sync_file() {
     local source_branch=$1
     local target_branch=$2
@@ -70,52 +71,13 @@ sync_file() {
 
     print_colored info "Syncing $file from $source_branch to $target_branch..."
 
-    # Checkout source branch and copy file/directory
-    git checkout -q $source_branch
-    if [[ ! -e $file ]]; then
+    # Pull the file/directory from source branch into the current working tree and index
+    if ! git checkout $source_branch -- $file 2>/dev/null; then
         print_colored error "File or directory $file not found in $source_branch"
         return 1
     fi
 
-    # Create temp directory with mktemp
-    local temp_dir=$(mktemp -d)
-    local temp_item="$temp_dir/${file:t}"
-
-    # Copy file or directory to temporary location
-    if [[ -d $file ]]; then
-        # It's a directory - copy recursively
-        cp -r $file $temp_item
-    else
-        # It's a file
-        cp $file $temp_item
-    fi
-
-    # Switch to target branch
-    git checkout -q $target_branch
-
-    # Copy file/directory from temporary location
-    if [[ -e $temp_item ]]; then
-        # Create parent directory structure if it doesn't exist
-        mkdir -p ${file:h}
-
-        # Remove existing file/directory in target branch
-        if [[ -e $file ]]; then
-            rm -rf $file
-        fi
-
-        # Copy from temporary location
-        if [[ -d $temp_item ]]; then
-            cp -r $temp_item $file
-        else
-            cp $temp_item $file
-        fi
-
-        git add $file
-        print_colored success "Synced: $file"
-    fi
-
-    # Clean up temporary directory
-    rm -rf $temp_dir
+    print_colored success "Synced: $file"
 }
 
 # Function to pull latest changes for a branch
@@ -185,12 +147,12 @@ main() {
     print
 
     if [[ $response == "y" ]]; then
+        # Switch to target branch once before syncing all files
+        git checkout -q $target_branch
+
         for file in $selected_files; do
             sync_file $source_branch $target_branch $file
         done
-
-        # Commit changes in target branch
-        git checkout -q $target_branch
         if ! git diff --cached --quiet; then
             git commit -m "Sync dotfiles from $source_branch"
             print_colored success "Committed changes in $target_branch"
