@@ -7,7 +7,8 @@ config-version = 2
 
 # You can use it to add commands that run after AeroSpace startup.
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
-after-startup-command = ['exec-and-forget sketchybar', 'exec-and-forget borders']
+after-startup-command = ['exec-and-forget borders']
+# after-startup-command = ['exec-and-forget sketchybar', 'exec-and-forget borders']
 
 # Start AeroSpace at login
 start-at-login = true
@@ -35,12 +36,12 @@ default-root-container-orientation = 'auto'
 # See https://nikitabobko.github.io/AeroSpace/commands#move-mouse
 # Fallback value (if you omit the key): on-focused-monitor-changed = []
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
-on-focus-changed = []
+# on-focus-changed = ['exec-and-forget sketchybar --trigger aerospace_workspace_change']
 
 # Notify SketchyBar about workspace and mode changes
-exec-on-workspace-change = ['/bin/bash', '-c',
-    'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
-]
+# exec-on-workspace-change = ['/bin/bash', '-c',
+#     'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
+# ]
 
 # You can effectively turn off macOS "Hide application" (cmd-h) feature by toggling this flag
 # Useful if you don't use this macOS feature, but accidentally hit cmd-h or cmd-alt-h key
@@ -100,7 +101,8 @@ on-mode-changed = []
     inner.vertical =   24
     outer.left =       24
     outer.bottom =     24
-    outer.top =        [{ monitor.main = 24 }, 44]
+    # outer.top =        [{ monitor.main = 24 }, 44]
+    outer.top =        0
     outer.right =      24
 
 # 'main' binding mode declaration
@@ -185,37 +187,37 @@ on-mode-changed = []
     alt-equal = 'resize smart +50'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-    alt-1 = 'workspace 1'
-    alt-2 = 'workspace 2'
-    alt-3 = 'workspace 3'
-    alt-4 = 'workspace 4'
-    alt-5 = 'workspace 5'
-    alt-6 = 'workspace 6'
-    alt-7 = 'workspace 7'
-    alt-8 = 'workspace 8'
-    alt-9 = 'workspace 9'
-    alt-a = 'workspace A' # In your config, you can drop workspace bindings that you don't need
-    alt-b = 'workspace B'
-    alt-c = 'workspace C'
-    alt-d = 'workspace D'
-    alt-e = 'workspace E'
-    alt-f = 'workspace F'
-    alt-g = 'workspace G'
-    alt-i = 'workspace I'
-    alt-m = 'workspace M'
-    alt-n = 'workspace N'
-    alt-o = 'workspace O'
-    alt-p = 'workspace P'
-    alt-q = 'workspace Q'
-    alt-r = 'workspace R'
-    alt-s = 'workspace S'
-    alt-t = 'workspace T'
-    alt-u = 'workspace U'
-    alt-v = 'workspace V'
-    alt-w = 'workspace W'
-    alt-x = 'workspace X'
-    alt-y = 'workspace Y'
-    alt-z = 'workspace Z'
+    ctrl-alt-1 = 'workspace 1'
+    ctrl-alt-2 = 'workspace 2'
+    ctrl-alt-3 = 'workspace 3'
+    ctrl-alt-4 = 'workspace 4'
+    ctrl-alt-5 = 'workspace 5'
+    ctrl-alt-6 = 'workspace 6'
+    ctrl-alt-7 = 'workspace 7'
+    ctrl-alt-8 = 'workspace 8'
+    ctrl-alt-9 = 'workspace 9'
+    ctrl-alt-a = 'workspace A'
+    ctrl-alt-b = 'workspace B'
+    ctrl-alt-c = 'workspace C'
+    ctrl-alt-d = 'workspace D'
+    ctrl-alt-e = 'workspace E'
+    ctrl-alt-f = 'workspace F'
+    ctrl-alt-g = 'workspace G'
+    ctrl-alt-i = 'workspace I'
+    ctrl-alt-m = 'workspace M'
+    ctrl-alt-n = 'workspace N'
+    ctrl-alt-o = 'workspace O'
+    ctrl-alt-p = 'workspace P'
+    ctrl-alt-q = 'workspace Q'
+    ctrl-alt-r = 'workspace R'
+    ctrl-alt-s = 'workspace S'
+    ctrl-alt-t = 'workspace T'
+    ctrl-alt-u = 'workspace U'
+    ctrl-alt-v = 'workspace V'
+    ctrl-alt-w = 'workspace W'
+    ctrl-alt-x = 'workspace X'
+    ctrl-alt-y = 'workspace Y'
+    ctrl-alt-z = 'workspace Z'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
     alt-shift-1 = 'move-node-to-workspace 1'

@@ -21,16 +21,24 @@ while IFS= read -r ws; do
 done <<< "$OCCUPIED_WORKSPACES"
 
 if [ "$SID" = "$FOCUSED_WORKSPACE" ]; then
+  APP_NAME=$(aerospace list-windows --focused --format '%{app-name}' 2>/dev/null)
+  LABEL="$SID"
+  [ -n "$APP_NAME" ] && LABEL="$SID  $APP_NAME"
   sketchybar --set "$NAME" \
     drawing=on \
     background.drawing=on \
     background.color=$BLUE \
+    label="$LABEL" \
     label.color=0xff1e1e2e
 elif [ "$HAS_WINDOWS" = true ]; then
+  APP_NAME=$(aerospace list-windows --workspace "$SID" --format '%{app-name}' 2>/dev/null | head -1)
+  LABEL="$SID"
+  [ -n "$APP_NAME" ] && LABEL="$SID  $APP_NAME"
   sketchybar --set "$NAME" \
     drawing=on \
     background.drawing=on \
     background.color=$SURFACE0 \
+    label="$LABEL" \
     label.color=$TEXT
 else
   sketchybar --set "$NAME" drawing=off
