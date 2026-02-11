@@ -41,3 +41,11 @@ Thumbs.db
 .nx/cache
 .angular
 .firebase
+
+/.claude
+
+# Secrets
+.env
+*.pem
+*.key
+credentials*
