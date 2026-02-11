@@ -61,6 +61,22 @@ zinit cdreplay -q
 # ============================================================================
 # SHELL CONFIGURATION
 # ============================================================================
+# Vi mode cursor shape
+function zle-keymap-select {
+  if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
+    echo -ne '\e[2 q'  # Block cursor for normal mode
+  elif [[ ${KEYMAP} == main ]] || [[ ${KEYMAP} == viins ]] || [[ ${KEYMAP} = '' ]] || [[ $1 = 'beam' ]]; then
+    echo -ne '\e[6 q'  # Beam cursor for insert mode
+  fi
+}
+zle -N zle-keymap-select
+
+# Start each new prompt with beam cursor (insert mode)
+function zle-line-init {
+  echo -ne '\e[6 q'
+}
+zle -N zle-line-init
+
 # Keybindings
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
