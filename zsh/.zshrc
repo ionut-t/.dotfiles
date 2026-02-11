@@ -18,25 +18,22 @@ fi
 # ============================================================================
 # ZINIT PLUGIN MANAGER
 # ============================================================================
-# Set the directory we want to store zinit and plugins
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
-# Download Zinit, if it's not there yet
 if [ ! -d "$ZINIT_HOME" ]; then
    mkdir -p "$(dirname $ZINIT_HOME)"
    git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
 
-# Source/Load zinit
 source "${ZINIT_HOME}/zinit.zsh"
 
 # ============================================================================
 # ZSH PLUGINS
 # ============================================================================
-# Powerlevel10k theme
+# Theme
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 
-# Zsh plugins
+# Plugins
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
@@ -54,7 +51,7 @@ zinit snippet OMZP::command-not-found
 
 zinit load atuinsh/atuin
 
-# Load completions
+# Completions
 autoload -Uz compinit && compinit
 zinit cdreplay -q
 
@@ -69,19 +66,18 @@ bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 bindkey '^[w' kill-region
 
-# History configuration
+# History
 HISTSIZE=10000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
-setopt share_history             # Share history between all sessions (imports new commands from other shells)
+setopt share_history
 setopt hist_ignore_space
 setopt hist_ignore_all_dups
 setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
 
-# Disable auto-correct
 unsetopt CORRECT_ALL
 
 # Completion styling
@@ -92,76 +88,71 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # ============================================================================
+# ENVIRONMENT VARIABLES
+# ============================================================================
+export EDITOR="nvim"
+export VISUAL="nvim"
+export BAT_THEME=catppuccin_mocha
+
+# ============================================================================
 # PATH CONFIGURATION
 # ============================================================================
-# Development tools
 export PATH="${HOME}/.local/bin:$PATH"
 export PATH="/Applications/Docker.app/Contents/Resources/bin:$PATH"
-
-# Added by Antigravity
-export PATH="/Users/ionut-traistaru/.antigravity/antigravity/bin:$PATH"
-
-# Language-specific paths
-export PATH="$PATH:$(go env GOPATH)/bin"                                    # Go
-export PATH="$PATH:$HOME/zig"                                               # Zig
-export PATH="$PATH:~/zig"
-export PATH="$PATH:/usr/local/share/dotnet"                                 # .NET Core
-export PATH="/usr/local/opt/postgresql@17/bin:$PATH"                        # PostgreSQL
-export PATH="$PATH:/Users/ionut-traistaru/tools/flutter/bin"               # Flutter
-export PATH="/Users/ionut-traistaru/tools/bin:$PATH"                       # Custom tools
+export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
+export PATH="$PATH:$(go env GOPATH)/bin"                                       # Go
+export PATH="$PATH:$HOME/zig"                                                  # Zig
+export PATH="$PATH:/usr/local/share/dotnet"                                    # .NET
+export PATH="/usr/local/opt/postgresql@17/bin:$PATH"                           # PostgreSQL
+export PATH="$PATH:$HOME/tools/flutter/bin"                                    # Flutter
+export PATH="$HOME/tools/bin:$PATH"                                            # Custom tools
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"  # Yarn
 
 # ============================================================================
 # LANGUAGE & FRAMEWORK SETUP
 # ============================================================================
-# NVM (Node Version Manager)
+# NVM
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-
-# Fix npm prefix conflict after nvm loads
 unset PREFIX
 nvm use default --silent 2>/dev/null
 
-# Conda (Python)
-__conda_setup="$('/Users/ionut-traistaru/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+# Conda
+__conda_setup="$("$HOME/anaconda3/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/Users/ionut-traistaru/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/ionut-traistaru/anaconda3/etc/profile.d/conda.sh"
+    if [ -f "$HOME/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "$HOME/anaconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/Users/ionut-traistaru/anaconda3/bin:$PATH"
+        export PATH="$HOME/anaconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
 
-# Dart completion
-[[ -f /Users/ionut-traistaru/.dart-cli-completion/zsh-config.zsh ]] && \
-  source /Users/ionut-traistaru/.dart-cli-completion/zsh-config.zsh
+# Dart
+[[ -f "$HOME/.dart-cli-completion/zsh-config.zsh" ]] && \
+  source "$HOME/.dart-cli-completion/zsh-config.zsh"
 
 # Google Cloud SDK
-if [ -f '/Users/ionut-traistaru/Downloads/google-cloud-sdk/path.zsh.inc' ]; then
-  source '/Users/ionut-traistaru/Downloads/google-cloud-sdk/path.zsh.inc'
-fi
-if [ -f '/Users/ionut-traistaru/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then
-  source '/Users/ionut-traistaru/Downloads/google-cloud-sdk/completion.zsh.inc'
-fi
+[ -f "$HOME/Downloads/google-cloud-sdk/path.zsh.inc" ] && \
+  source "$HOME/Downloads/google-cloud-sdk/path.zsh.inc"
+[ -f "$HOME/Downloads/google-cloud-sdk/completion.zsh.inc" ] && \
+  source "$HOME/Downloads/google-cloud-sdk/completion.zsh.inc"
 
 # ============================================================================
 # FZF CONFIGURATION
 # ============================================================================
-# FZF commands
 export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
 
-# FZF preview settings
 show_file_or_dir_preview="if [ -d {} ]; then eza --tree --color=always {} | head -200; else bat -n --color=always --line-range :500 {}; fi"
 export FZF_CTRL_T_OPTS="--preview '$show_file_or_dir_preview'"
 export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
 
-# FZF theme - Catppuccin Mocha
+# Catppuccin Mocha theme
 export FZF_DEFAULT_OPTS=" \
 --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
 --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
@@ -169,28 +160,21 @@ export FZF_DEFAULT_OPTS=" \
 --color=selected-bg:#45475a \
 --multi"
 
-# FZF Git integration
 source ~/fzf-git.sh/fzf-git.sh
 
 # ============================================================================
 # TOOL INTEGRATIONS
 # ============================================================================
-# Initialize shell integrations
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 eval "$(thefuck --alias)"
 eval "$(thefuck --alias fk)"
-eval "$(zoxide init zsh)"
 eval "$(atuin init zsh)"
-
-# Tool themes
-export BAT_THEME=catppuccin_mocha
 
 # ============================================================================
 # ALIASES
 # ============================================================================
 # Navigation & file management
-alias cd="z"
 alias zz="cd \$(zoxide query --list | fzf --preview 'eza --tree --level=1 --color=always {}')"
 alias ls="eza --color=always --long --git --icons=always --no-user --no-time --no-permissions --no-filesize --group-directories-first"
 alias ll="eza --color=always --long --git --icons=always --no-user --group-directories-first --time-style='+%d/%m/%y'"
@@ -217,8 +201,6 @@ alias code="code-insiders"
 alias ws="webstorm"
 alias v="nvim"
 alias nvl="nvim -c \"lua require('persistence').load()\""
-export EDITOR="nvim"
-export VISUAL="nvim"
 alias lazyvim="NVIM_APPNAME=lazyvim nvim"
 
 # Utilities
@@ -265,7 +247,7 @@ function pk() {
 }
 
 # ============================================================================
-# ENVIRONMENT VARIABLES
+# EXTERNAL SOURCES
 # ============================================================================
 source ~/.envs/.env
 source ~/ask/ask.zsh
