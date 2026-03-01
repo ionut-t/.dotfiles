@@ -48,35 +48,13 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 # Also see: https://nikitabobko.github.io/AeroSpace/goodies#disable-hide-app
 automatically-unhide-macos-hidden-apps = false
 
-# Persistent workspaces
-# Main (laptop):     A (Safari), B (Firefox), S (Slack), M (Outlook), O (OrbStack)
-# Secondary (ext):   1-9 (general), C (Chrome), G (Ghostty), V (VS Code), W (WebStorm)
 persistent-workspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9",
-                         "A", "B", "C", "G", "M", "O", "S", "V", "W"]
+                         "A", "B", "C", "D", "E", "G", "I", "M",
+                         "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 
-# Assign workspaces to monitors
-# See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [workspace-to-monitor-force-assignment]
-    # Main monitor (laptop) — comms + browsers + background
-    A = 'main'
-    B = 'main'
-    M = 'main'
-    O = 'main'
-    S = 'main'
-    # Secondary monitor (external) — everything else
-    1 = 'secondary'
-    2 = 'secondary'
-    3 = 'secondary'
-    4 = 'secondary'
-    5 = 'secondary'
-    6 = 'secondary'
-    7 = 'secondary'
-    8 = 'secondary'
-    9 = 'secondary'
     C = 'secondary'
     G = 'secondary'
-    V = 'secondary'
-    W = 'secondary'
 
 # A callback that runs every time binding mode changes
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -101,8 +79,7 @@ on-mode-changed = []
     inner.vertical =   24
     outer.left =       24
     outer.bottom =     24
-    # outer.top =        [{ monitor.main = 24 }, 44]
-    outer.top =        0
+    outer.top =        [{ monitor.main = 0 }, 24]
     outer.right =      24
 
 # 'main' binding mode declaration
@@ -116,21 +93,7 @@ on-mode-changed = []
     # ==========================================================
 
     # --- App Launchers ---
-    cmd-ctrl-alt-shift-rightSquareBracket = 'exec-and-forget open -a "Ghostty.app"' # ]
-    cmd-ctrl-alt-shift-a = 'exec-and-forget open -a "Safari.app"'
-    cmd-ctrl-alt-shift-b = 'exec-and-forget open -a "Firefox.app"'
-    cmd-ctrl-alt-shift-c = 'exec-and-forget open -a "Google Chrome.app"'
-    cmd-ctrl-alt-shift-m = 'exec-and-forget open -a "Microsoft Outlook.app"'
-    cmd-ctrl-alt-shift-o = 'exec-and-forget open -a "OrbStack.app"'
-    cmd-ctrl-alt-shift-s = 'exec-and-forget open -a "Slack.app"'
-    cmd-ctrl-alt-shift-w = 'exec-and-forget open -a "WebStorm.app"'
-    cmd-ctrl-alt-shift-v = 'exec-and-forget open -a "Visual Studio Code - Insiders.app"'
-
-    # --- Workspace Switching (Replaces Mission Control shortcuts) ---
-    cmd-ctrl-alt-shift-1 = 'workspace 1'
-    cmd-ctrl-alt-shift-2 = 'workspace 2'
-    cmd-ctrl-alt-shift-3 = 'workspace 3'
-    cmd-ctrl-alt-shift-4 = 'workspace 4'
+    cmd-ctrl-alt-shift-rightSquareBracket = ['workspace G', 'exec-and-forget open -a "Ghostty.app"'] # ]
 
     # --- Window Navigation (Vim Style) ---
     cmd-ctrl-alt-shift-h = 'focus left'
@@ -186,38 +149,37 @@ on-mode-changed = []
     alt-minus = 'resize smart -50'
     alt-equal = 'resize smart +50'
 
-    # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-    ctrl-alt-1 = 'workspace 1'
-    ctrl-alt-2 = 'workspace 2'
-    ctrl-alt-3 = 'workspace 3'
-    ctrl-alt-4 = 'workspace 4'
-    ctrl-alt-5 = 'workspace 5'
-    ctrl-alt-6 = 'workspace 6'
-    ctrl-alt-7 = 'workspace 7'
-    ctrl-alt-8 = 'workspace 8'
-    ctrl-alt-9 = 'workspace 9'
-    ctrl-alt-a = 'workspace A'
-    ctrl-alt-b = 'workspace B'
-    ctrl-alt-c = 'workspace C'
-    ctrl-alt-d = 'workspace D'
-    ctrl-alt-e = 'workspace E'
-    ctrl-alt-f = 'workspace F'
-    ctrl-alt-g = 'workspace G'
-    ctrl-alt-i = 'workspace I'
-    ctrl-alt-m = 'workspace M'
-    ctrl-alt-n = 'workspace N'
-    ctrl-alt-o = 'workspace O'
-    ctrl-alt-p = 'workspace P'
-    ctrl-alt-q = 'workspace Q'
-    ctrl-alt-r = 'workspace R'
-    ctrl-alt-s = 'workspace S'
-    ctrl-alt-t = 'workspace T'
-    ctrl-alt-u = 'workspace U'
-    ctrl-alt-v = 'workspace V'
-    ctrl-alt-w = 'workspace W'
-    ctrl-alt-x = 'workspace X'
-    ctrl-alt-y = 'workspace Y'
-    ctrl-alt-z = 'workspace Z'
+    # --- Workspace Switching ---
+    cmd-ctrl-alt-shift-1 = 'workspace 1'
+    cmd-ctrl-alt-shift-2 = 'workspace 2'
+    cmd-ctrl-alt-shift-3 = 'workspace 3'
+    cmd-ctrl-alt-shift-4 = 'workspace 4'
+    cmd-ctrl-alt-shift-5 = 'workspace 5'
+    cmd-ctrl-alt-shift-6 = 'workspace 6'
+    cmd-ctrl-alt-shift-7 = 'workspace 7'
+    cmd-ctrl-alt-shift-8 = 'workspace 8'
+    cmd-ctrl-alt-shift-9 = 'workspace 9'
+    cmd-ctrl-alt-shift-a = 'workspace A'
+    cmd-ctrl-alt-shift-b = 'workspace B'
+    cmd-ctrl-alt-shift-c = ['workspace C', 'exec-and-forget open -a "Google Chrome.app"']
+    cmd-ctrl-alt-shift-d = 'workspace D'
+    cmd-ctrl-alt-shift-e = 'workspace E'
+    cmd-ctrl-alt-shift-g = 'workspace G'
+    cmd-ctrl-alt-shift-i = 'workspace I'
+    cmd-ctrl-alt-shift-m = 'workspace M'
+    cmd-ctrl-alt-shift-n = 'workspace N'
+    cmd-ctrl-alt-shift-o = 'workspace O'
+    cmd-ctrl-alt-shift-p = 'workspace P'
+    cmd-ctrl-alt-shift-q = 'workspace Q'
+    cmd-ctrl-alt-shift-r = 'workspace R'
+    cmd-ctrl-alt-shift-s = 'workspace S'
+    cmd-ctrl-alt-shift-t = 'workspace T'
+    cmd-ctrl-alt-shift-u = 'workspace U'
+    cmd-ctrl-alt-shift-v = 'workspace V'
+    cmd-ctrl-alt-shift-w = 'workspace W'
+    cmd-ctrl-alt-shift-x = 'workspace X'
+    cmd-ctrl-alt-shift-y = 'workspace Y'
+    cmd-ctrl-alt-shift-z = 'workspace Z'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
     alt-shift-1 = 'move-node-to-workspace 1'
@@ -234,7 +196,6 @@ on-mode-changed = []
     alt-shift-c = 'move-node-to-workspace C'
     alt-shift-d = 'move-node-to-workspace D'
     alt-shift-e = 'move-node-to-workspace E'
-    alt-shift-f = 'move-node-to-workspace F'
     alt-shift-g = 'move-node-to-workspace G'
     alt-shift-i = 'move-node-to-workspace I'
     alt-shift-m = 'move-node-to-workspace M'
@@ -276,7 +237,6 @@ on-mode-changed = []
     alt-shift-k = ['join-with up', 'exec-and-forget sketchybar --remove service_mode', 'mode main']
     alt-shift-l = ['join-with right', 'exec-and-forget sketchybar --remove service_mode', 'mode main']
 
-# Assign apps to dedicated workspaces
 [[on-window-detected]]
 if.app-id = 'com.mitchellh.ghostty'
 run = 'move-node-to-workspace G'
@@ -284,31 +244,3 @@ run = 'move-node-to-workspace G'
 [[on-window-detected]]
 if.app-id = 'com.google.Chrome'
 run = 'move-node-to-workspace C'
-
-[[on-window-detected]]
-if.app-id = 'com.jetbrains.WebStorm'
-run = 'move-node-to-workspace W'
-
-[[on-window-detected]]
-if.app-id = 'com.microsoft.VSCodeInsiders'
-run = 'move-node-to-workspace V'
-
-[[on-window-detected]]
-if.app-id = 'com.tinyspeck.slackmacgap'
-run = 'move-node-to-workspace S'
-
-[[on-window-detected]]
-if.app-id = 'com.microsoft.Outlook'
-run = 'move-node-to-workspace M'
-
-[[on-window-detected]]
-if.app-id = 'dev.kdrag0n.MacVirt'
-run = 'move-node-to-workspace O'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.Safari'
-run = 'move-node-to-workspace A'
-
-[[on-window-detected]]
-if.app-id = 'org.mozilla.firefox'
-run = 'move-node-to-workspace B'
