@@ -1,0 +1,119 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Global Settings
+palette = "catppuccin_mocha"
+add_newline = true
+
+# =========================
+# Custom Prompt Modules
+# =========================
+
+[character]
+success_symbol = "[ ❯](bold green)"
+error_symbol = "[ ❯](bold red)"
+vimcmd_symbol = "[ ❮](bold subtext1)"
+
+[directory]
+truncation_length = 4
+style = "bold lavender"
+read_only = " 󰌾"
+format = "[$path]($style)[$read_only]($read_only_style) "
+
+[git_branch]
+style = "bold mauve"
+symbol = " "
+format = "[$symbol$branch]($style) "
+
+[git_status]
+style = "maroon"
+format = '([$all_status$ahead_behind]($style) )'
+modified = " "
+untracked = "? " 
+staged = " "
+deleted = " "
+renamed = " "
+stashed = "󰏗 "
+conflicted = "󱡽 "
+
+[cmd_duration]
+min_time = 2_000
+style = "yellow"
+format = "[󱦟 $duration]($style) "
+
+# =========================
+# Languages & Tools
+# =========================
+
+[nodejs]
+format = "[$symbol($version )]($style)"
+style = "bold green"
+symbol = " "
+
+[python]
+format = "[$symbol($version )]($style)"
+style = "bold yellow"
+
+[rust]
+format = "[$symbol($version )]($style)"
+style = "bold red"
+
+[golang]
+format = "[$symbol($version )]($style)"
+style = "bold teal"
+symbol = " "
+
+[zig]
+format = "[$symbol($version )]($style)"
+style = "bold peach"
+symbol = " "
+
+[docker_context]
+format = "[$symbol$context]($style) "
+style = "bold blue"
+symbol = " "
+
+# =========================
+# Disabled Modules
+# =========================
+[username]
+disabled = true
+
+[hostname]
+disabled = true
+
+[package]
+disabled = true
+
+[gcloud]
+disabled = true
+
+# =========================
+# Color Palettes
+# =========================
+[palettes.catppuccin_mocha]
+rosewater = "#f5e0dc"
+flamingo = "#f2cdcd"
+pink = "#f5c2e7"
+mauve = "#cba6f7"
+red = "#f38ba8"
+maroon = "#eba0ac"
+peach = "#fab387"
+yellow = "#f9e2af"
+green = "#a6e3a1"
+teal = "#94e2d5"
+sky = "#89dceb"
+sapphire = "#74c7ec"
+blue = "#89b4fa"
+lavender = "#b4befe"
+text = "#cdd6f4"
+subtext1 = "#bac2de"
+subtext0 = "#a6adc8"
+overlay2 = "#9399b2"
+overlay1 = "#7f849c"
+overlay0 = "#6c7086"
+surface2 = "#585b70"
+surface1 = "#45475a"
+surface0 = "#313244"
+base = "#1e1e2e"
+mantle = "#181825"
+crust = "#11111b"

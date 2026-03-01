@@ -1,4 +1,14 @@
 # ============================================================================
+# INSTANT PROMPT
+# ============================================================================
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# ============================================================================
 # HOMEBREW
 # ============================================================================
 if [[ -f "/opt/homebrew/bin/brew" ]] then
@@ -19,45 +29,34 @@ source "${ZINIT_HOME}/zinit.zsh"
 
 # ============================================================================
 # ZSH PLUGINS
-zinit ice lucid wait'0'
+# ============================================================================
+# Theme
+zinit ice depth=1; zinit light romkatv/powerlevel10k
+
+# Plugins
 zinit light zsh-users/zsh-syntax-highlighting
-zinit ice lucid wait'0'
 zinit light zsh-users/zsh-completions
-zinit ice lucid wait'0'
 zinit light zsh-users/zsh-autosuggestions
-zinit ice lucid wait'0'
 zinit light Aloxaf/fzf-tab
 
 # Oh My Zsh snippets
-zinit ice lucid wait'0'
 zinit snippet OMZL::git.zsh
-zinit ice lucid wait'0'
 zinit snippet OMZP::git
-zinit ice lucid wait'0'
 zinit snippet OMZP::gcloud
-zinit ice lucid wait'0'
 zinit snippet OMZP::python
-zinit ice lucid wait'0'
 zinit snippet OMZP::sudo
-zinit ice lucid wait'0'
 zinit snippet OMZP::kubectl
-zinit ice lucid wait'0'
 zinit snippet OMZP::kubectx
-zinit ice lucid wait'0'
 zinit snippet OMZP::command-not-found
 
-zinit ice as'program' pick'atuin'
 zinit load atuinsh/atuin
 
 # Completions
-# these are needed by theme
-autoload -Uz compinit
-if [ -n "$HOME/.zcompdump" ] && [ "$(find "$HOME/.zcompdump" -mtime +10h)" ]; then
-  compinit
-else
-  compinit -C
-fi
+autoload -Uz compinit && compinit
 zinit cdreplay -q
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # ============================================================================
 # SHELL CONFIGURATION
@@ -130,64 +129,33 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH" 
 # ============================================================================
 # NVM
 export NVM_DIR="$HOME/.nvm"
-nvm() {
-  unset -f nvm node npm
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use
-  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-  command nvm "$@"
-}
-node() {
-  unset -f nvm node npm
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use
-  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-  command node "$@"
-}
-npm() {
-  unset -f nvm node npm
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use
-  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-  command npm "$@"
-}
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+unset PREFIX
+nvm use default --silent 2>/dev/null
 
 # Conda
-conda() {
-  unset -f conda
-  __conda_setup="$("$HOME/anaconda3/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
-  if [ $? -eq 0 ]; then
-      eval "$__conda_setup"
-  else
-      if [ -f "$HOME/anaconda3/etc/profile.d/conda.sh" ]; then
-          . "$HOME/anaconda3/etc/profile.d/conda.sh"
-      else
-          export PATH="$HOME/anaconda3/bin:$PATH"
-      fi
-  fi
-  unset __conda_setup
-  command conda "$@"
-}
+__conda_setup="$("$HOME/anaconda3/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "$HOME/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "$HOME/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="$HOME/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
 
 # Dart
 [[ -f "$HOME/.dart-cli-completion/zsh-config.zsh" ]] && \
   source "$HOME/.dart-cli-completion/zsh-config.zsh"
 
 # Google Cloud SDK
-gcloud() {
-    unset -f gcloud kubectl
-    [ -f "$HOME/Downloads/google-cloud-sdk/path.zsh.inc" ] && \
-        source "$HOME/Downloads/google-cloud-sdk/path.zsh.inc"
-    [ -f "$HOME/Downloads/google-cloud-sdk/completion.zsh.inc" ] && \
-        source "$HOME/Downloads/google-cloud-sdk/completion.zsh.inc"
-    command gcloud "$@"
-}
-
-kubectl() {
-    unset -f gcloud kubectl
-    [ -f "$HOME/Downloads/google-cloud-sdk/path.zsh.inc" ] && \
-        source "$HOME/Downloads/google-cloud-sdk/path.zsh.inc"
-    [ -f "$HOME/Downloads/google-cloud-sdk/completion.zsh.inc" ] && \
-        source "$HOME/Downloads/google-cloud-sdk/completion.zsh.inc"
-    command kubectl "$@"
-}
+[ -f "$HOME/Downloads/google-cloud-sdk/path.zsh.inc" ] && \
+  source "$HOME/Downloads/google-cloud-sdk/path.zsh.inc"
+[ -f "$HOME/Downloads/google-cloud-sdk/completion.zsh.inc" ] && \
+  source "$HOME/Downloads/google-cloud-sdk/completion.zsh.inc"
 
 # ============================================================================
 # FZF CONFIGURATION
@@ -216,41 +184,8 @@ source ~/fzf-git.sh/fzf-git.sh
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 eval "$(thefuck --alias)"
+eval "$(thefuck --alias fk)"
 eval "$(atuin init zsh)"
-
-# Enable transient prompt for Starship
-function set_win_title(){
-    echo -ne "\033]0; $(basename "$PWD") \007"
-}
-
-function preexec() {
-    set_win_title
-}
-
-function starship_transient_prompt_func() {
-    # Minimal prompt for previous commands
-    echo -n "❯ "
-}
-
-function starship_transient_rprompt_func() {
-    # Empty right prompt for previous commands
-    echo -n ""
-}
-
-# Initialize Starship with transient prompt
-eval "$(starship init zsh)"
-
-# Enable transient prompt
-function zle-line-init() {
-    emulate -L zsh
-
-    # Only apply if previous command exists
-    if [[ -n $STARSHIP_START_TIME ]]; then
-        # Save cursor, move up, clear line, restore cursor
-        print -n "\e[1A\e[2K\r❯ "
-    fi
-}
-zle -N zle-line-init
 
 # ============================================================================
 # ALIASES

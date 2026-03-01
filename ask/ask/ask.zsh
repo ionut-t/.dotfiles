@@ -105,3 +105,17 @@ function _tailwind() {
 }
 
 alias '?tw'='_tailwind'
+
+function _cotd() {
+  local context="$(cat "$ASK_DIR/cotd.md")"
+  printf '%s\n' "$context" | ask -m "gemini-2.5-flash-lite" | glow
+}
+
+alias cotd='_cotd'
+
+function _nvim_cotd() {
+  local context="$(cat "$ASK_DIR/nvim-cotd.md")"
+  printf '%s\n' "$context" | ask -m "gemini-2.5-flash-lite" | glow
+}
+
+alias ncotd='_nvim_cotd'
