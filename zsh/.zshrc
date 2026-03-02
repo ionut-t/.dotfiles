@@ -19,6 +19,7 @@ source "${ZINIT_HOME}/zinit.zsh"
 
 # ============================================================================
 # ZSH PLUGINS
+# ============================================================================
 zinit ice lucid wait'0'
 zinit light zsh-users/zsh-syntax-highlighting
 zinit ice lucid wait'0'
