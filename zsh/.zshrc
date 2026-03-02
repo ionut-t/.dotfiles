@@ -23,7 +23,6 @@ zinit ice lucid wait'0'
 zinit light zsh-users/zsh-syntax-highlighting
 zinit ice lucid wait'0'
 zinit light zsh-users/zsh-completions
-zinit ice lucid wait'0'
 zinit light zsh-users/zsh-autosuggestions
 zinit ice lucid wait'0'
 zinit light Aloxaf/fzf-tab
