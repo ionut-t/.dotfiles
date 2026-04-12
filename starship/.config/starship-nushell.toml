@@ -1,0 +1,107 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Global Settings
+palette = "tokyo_night"
+add_newline = true
+
+# =========================
+# Custom Prompt Modules
+# =========================
+
+[character]
+success_symbol = "[ ❯](bold green)"
+error_symbol = "[ ❯](bold red)"
+vimcmd_symbol = "[ ❮](bold purple)"
+
+[directory]
+truncation_length = 4
+style = "bold blue"
+read_only = " 󰌾"
+format = "[$path]($style)[$read_only]($read_only_style) "
+
+[git_branch]
+style = "bold magenta"
+symbol = " "
+format = "[$symbol$branch]($style) "
+
+[git_status]
+style = "orange"
+format = '([$all_status$ahead_behind]($style) )'
+modified = " "
+untracked = "? "
+staged = " "
+deleted = " "
+renamed = " "
+stashed = "󰏗 "
+conflicted = "󱡽 "
+
+[cmd_duration]
+min_time = 2_000
+style = "yellow"
+format = "[󱦟 $duration]($style) "
+
+# =========================
+# Languages & Tools
+# =========================
+
+[nodejs]
+format = "[$symbol($version )]($style)"
+style = "bold green"
+symbol = " "
+
+[python]
+format = "[$symbol($version )]($style)"
+style = "bold yellow"
+
+[rust]
+format = "[$symbol($version )]($style)"
+style = "bold orange"
+symbol = " "
+
+[golang]
+format = "[$symbol($version )]($style)"
+style = "bold cyan"
+symbol = " "
+
+[zig]
+format = "[$symbol($version )]($style)"
+style = "bold orange"
+symbol = " "
+
+[docker_context]
+format = "[$symbol$context]($style) "
+style = "bold blue"
+symbol = " "
+
+# =========================
+# Disabled Modules
+# =========================
+[username]
+disabled = true
+
+[hostname]
+disabled = true
+
+[package]
+disabled = true
+
+[gcloud]
+disabled = true
+
+# =========================
+# Tokyo Night palette
+# =========================
+[palettes.tokyo_night]
+fg          = "#c0caf5"
+bg          = "#1a1b26"
+black       = "#15161e"
+red         = "#f7768e"
+orange      = "#ff9e64"
+yellow      = "#e0af68"
+green       = "#9ece6a"
+cyan        = "#7dcfff"
+blue        = "#7aa2f7"
+magenta     = "#bb9af7"
+purple      = "#9d7cd8"
+white       = "#a9b1d6"
+comment     = "#565f89"

@@ -44,6 +44,11 @@ Thumbs.db
 
 /.claude
 
+# Nushell history (written alongside config, path is not configurable)
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+
 # Secrets
 .env
 *.pem
