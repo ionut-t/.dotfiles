@@ -21,7 +21,8 @@ adjust-underline-position = 3
 # bold-is-bright = true
 link-url = true
 mouse-hide-while-typing = true
-theme = Catppuccin Mocha
+# theme = Catppuccin Mocha
+theme = Tomorrow Night Bright 
 
 background-opacity = 0.9
 background-blur = true

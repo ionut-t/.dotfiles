@@ -124,6 +124,7 @@ export PATH="/usr/local/opt/postgresql@17/bin:$PATH"                           #
 export PATH="$PATH:$HOME/tools/flutter/bin"                                    # Flutter
 export PATH="$HOME/tools/bin:$PATH"                                            # Custom tools
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"  # Yarn
+export PATH="$HOME/bin:$PATH"
 
 # ============================================================================
 # LANGUAGE & FRAMEWORK SETUP
@@ -217,6 +218,7 @@ eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 eval "$(thefuck --alias)"
 eval "$(atuin init zsh)"
+eval "$(atuin init zsh --disable-ai)"
 
 # Enable transient prompt for Starship
 function set_win_title(){
@@ -301,15 +303,32 @@ function gem-ng() {
 
 # Grep search with preview and open in nvim
 function search() {
-  rg --color=always --line-number --no-heading --smart-case "${1:-.}" | \
-    fzf --ansi --delimiter ':' \
-      --preview 'bat --color=always {1} --highlight-line {2}' \
-      --preview-window 'up,60%,border-bottom,+{2}+3/3' \
-      --header 'Enter: nvim | Ctrl-Y: copy path' \
-      --bind 'enter:execute(nvim +{2} {1})' \
-      --bind 'ctrl-y:execute-silent(echo {1} | pbcopy)+abort' \
+  # Mode toggles:
+  # Ctrl-W: Exact Word match (-w)
+  # Ctrl-F: Fixed String literal (-F)
+  # Ctrl-R: Regex mode (default)
+  local rg_flag="" prompt="Search ➤ "
+  [[ "$1" == "-w" ]] && { rg_flag="-w"; prompt="Word ➤ "; shift; }
+  [[ "$1" == "-F" ]] && { rg_flag="-F"; prompt="Fixed ➤ "; shift; }
+
+  local rg_prefix="rg --column --line-number --no-heading --color=always --smart-case --glob '!.git/' --glob '!node_modules/'"
+
+  fzf --ansi --disabled --query "$*" \
+    --bind "start:reload($rg_prefix $rg_flag {q} || true)" \
+    --bind "change:reload:sleep 0.1; $rg_prefix $rg_flag {q} || true" \
+    --bind "ctrl-w:reload($rg_prefix -w {q} || true)+change-prompt(Word ➤ )" \
+    --bind "ctrl-f:reload($rg_prefix -F {q} || true)+change-prompt(Fixed ➤ )" \
+    --bind "ctrl-r:reload($rg_prefix {q} || true)+change-prompt(Search ➤ )" \
+    --delimiter ':' \
+    --preview 'bat --color=always {1} --highlight-line {2}' \
+    --preview-window 'up,60%,border-bottom,+{2}+3/3' \
+    --header 'C-w: Word Match | C-f: Fixed String | C-r: Regex | Enter: nvim' \
+    --bind 'enter:execute(nvim +{2} {1})' \
+    --bind 'ctrl-y:execute-silent(echo {1} | pbcopy)+abort' \
+    --prompt "$prompt"
 }
 alias s=search
+alias se="search -w"
 
 # Kill process on a port
 function killport() { lsof -ti:$1 | xargs kill -9 }
@@ -332,3 +351,18 @@ function pk() {
 # ============================================================================
 source ~/.envs/.env
 source ~/ask/ask.zsh
+
+function vex() {
+  local cmd
+  cmd=$(command vex "$@")
+  [[ -n "$cmd" ]] && print -z "$cmd"
+}
+
+_vex_edit_line() {
+  local cmd
+  cmd=$(command vex "$BUFFER")
+  [[ -n "$cmd" ]] && BUFFER="$cmd" && CURSOR=$#BUFFER
+}
+zle -N _vex_edit_line
+bindkey '^e' _vex_edit_line
+bindkey -M vicmd '^e' _vex_edit_line
