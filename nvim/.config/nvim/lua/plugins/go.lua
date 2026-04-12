@@ -21,6 +21,7 @@ return {
       require('go').setup {
         -- Gopls configuration
         lsp_cfg = false, -- we configure gopls via lspconfig
+        textobjects = false, -- disabled: go.nvim's textobjects use nvim-treesitter.configs (removed in v1.x)
 
         -- Format on save
         gofmt = 'gofumpt', -- use gofumpt for enhanced formatting
@@ -56,16 +57,4 @@ return {
     build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
   },
 
-  -- Optional but recommended plugins
-  {
-    'nvim-treesitter/nvim-treesitter',
-    build = ':TSUpdate',
-    config = function()
-      require('nvim-treesitter.configs').setup {
-        ensure_installed = { 'go', 'gomod', 'gowork', 'gosum' },
-        highlight = { enable = true },
-        indent = { enable = true },
-      }
-    end,
-  },
 }
