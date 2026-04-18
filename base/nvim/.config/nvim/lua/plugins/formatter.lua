@@ -49,6 +49,7 @@ return {
         shell = { 'shfmt' },
         sql = { 'sql-formatter' },
         terraform = { 'terraform_fmt' },
+        toml = { 'taplo' },
       },
       format_on_save = function()
         if vim.g.format_on_save_enabled then

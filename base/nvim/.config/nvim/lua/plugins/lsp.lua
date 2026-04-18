@@ -366,6 +366,7 @@ return {
       'golangci-lint', -- Go linter
       'sqlfluff', -- SQL linter
       'shellcheck', -- Shell script linter
+      'taplo', -- TOML formatter/LSP
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 

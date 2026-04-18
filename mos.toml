@@ -1,0 +1,230 @@
+[settings]
+dotfiles_dir = "~/.dotfiles"
+backup_dir = "~/.mos-backups"
+backup_format = "{name}.{datetime}.bak"
+commit_cmd = "bark commit"
+
+[hosts."Ionuts-MacBook-Pro-Max.local"]
+os = "macos"
+default_profile = "home"
+
+[profiles.home]
+description = "Personal configuration"
+tracked = true
+modules = [
+  "aerospace",
+  "ask",
+  "atuin",
+  "bark",
+  "borders",
+  "ghostty",
+  "git",
+  "helix",
+  "lens",
+  "nushell",
+  "nvim",
+  "perp",
+  "search",
+  "sketchybar",
+  "starship",
+  "tmux",
+  "vex",
+  "vim",
+  "yazi",
+  "zsh",
+]
+
+[profiles.work]
+description = "Work configuration"
+tracked = true
+modules = [
+  "aerospace",
+  "ask",
+  "atuin",
+  "borders",
+  "ghostty",
+  "helix",
+  "lens",
+  "nushell",
+  "nvim",
+  "perp",
+  "search",
+  "starship",
+  "tmux",
+  "vex",
+  "vim",
+  "yazi",
+  "zsh",
+]
+
+[modules.aerospace]
+source = "aerospace/.config/aerospace"
+target = "~/.config/aerospace"
+tracked = true
+
+[modules.aerospace.deps]
+brew = ["aerospace"]
+
+[modules.alacritty]
+source = "alacritty/.config/alacritty"
+target = "~/.config/alacritty"
+tracked = true
+
+[modules.alacritty.deps]
+brew = ["alacritty"]
+
+[modules.ask]
+source = "ask/ask"
+target = "~/ask"
+tracked = true
+
+[modules.atuin]
+source = "atuin/.config/atuin"
+target = "~/.config/atuin"
+tracked = true
+
+[modules.atuin.deps]
+brew = ["atuin"]
+
+[modules.borders]
+source = "borders/.config/borders"
+target = "~/.config/borders"
+tracked = true
+
+[modules.borders.deps]
+brew = ["borders"]
+
+[modules.ghostty]
+source = "ghostty/.config/ghostty"
+target = "~/.config/ghostty"
+tracked = true
+
+[modules.git]
+source = "git/.gitconfig"
+target = "~/.gitconfig"
+tracked = true
+
+[modules.git.deps]
+brew = ["git", "gh"]
+
+[modules.helix]
+source = "helix/.config/helix"
+target = "~/.config/helix"
+tracked = true
+
+[modules.helix.deps]
+brew = ["helix"]
+
+[modules.kitty]
+source = "kitty/.config/kitty"
+target = "~/.config/kitty"
+tracked = true
+
+[modules.kitty.deps]
+brew = ["kitty"]
+
+[modules.nushell]
+source = "nushell/.config/nushell"
+target = "~/.config/nushell"
+tracked = true
+
+[modules.nushell.deps]
+brew = ["nushell"]
+
+[modules.nvim]
+source = "nvim/.config/nvim"
+target = "~/.config/nvim"
+tracked = true
+
+[modules.nvim.deps]
+brew = ["neovim", "ripgrep", "fd", "node"]
+cargo = ["stylua"]
+go = ["github.com/jesseduffield/lazygit@latest"]
+
+[modules.search]
+source = "search/.ignore"
+target = "~/.ignore"
+tracked = true
+
+[modules.sketchybar]
+source = "sketchybar/.config/sketchybar"
+target = "~/.config/sketchybar"
+tracked = true
+
+[modules.sketchybar.deps]
+brew = ["sketchybar"]
+
+[modules.starship]
+source = "starship/.config"
+target = "~/.config"
+tracked = true
+
+[modules.starship.deps]
+script = [
+  { name = "starship", cmd = "curl -sS https://starship.rs/install.sh | sh" },
+]
+
+[modules.tmux]
+source = "tmux/.tmux.conf"
+target = "~/.tmux.conf"
+tracked = true
+
+[modules.tmux.deps]
+brew = ["tmux"]
+
+[modules.vim]
+source = "vim/.vimrc"
+target = "~/.vimrc"
+tracked = true
+
+[modules.vim.deps]
+
+[modules.yazi]
+source = "yazi/.config/yazi"
+target = "~/.config/yazi"
+tracked = true
+
+[modules.yazi.deps]
+brew = [
+  "yazi",
+  "ffmpeg",
+  "sevenzip",
+  "jq",
+  "poppler",
+  "fd",
+  "ripgrep",
+  "fzf",
+  "zoxide",
+  "resvg",
+  "imagemagick",
+]
+
+[modules.bark]
+
+[modules.bark.deps]
+go = ["github.com/ionut-t/bark/v2@latest"]
+
+[modules.vex]
+
+[modules.vex.deps]
+go = ["github.com/ionut-t/vex@latest"]
+
+[modules.perp]
+
+[modules.perp.deps]
+go = ["github.com/ionut-t/perp@latest"]
+
+[modules.lens]
+
+[modules.lens.deps]
+script = [
+  { name = "lens", cmd = "cargo install --git https://github.com/ionut-t/lens" },
+]
+
+[modules.zsh]
+source = "zsh/.zshrc"
+target = "~/.zshrc"
+tracked = true
+
+[modules.zsh.deps]
+brew = ["fzf", "eza", "bat", "zoxide", "jq", "thefuck"]
