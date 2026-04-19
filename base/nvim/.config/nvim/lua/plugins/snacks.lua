@@ -21,7 +21,7 @@ return {
       sections = {
         {
           section = 'terminal',
-          cmd = 'chafa ~/.dotfiles/nvim/.config/nvim/nvim_dashboard.png --format symbols --symbols vhalf --size 60x17 --stretch; sleep .1',
+          cmd = 'chafa ~/.dotfiles/base/nvim/.config/nvim/nvim_dashboard.png --format symbols --symbols vhalf --size 60x17 --stretch; sleep .1',
           height = 17,
           padding = 1,
         },
