@@ -2,7 +2,7 @@
 [user]
 # Please adapt and uncomment the following lines:
 	name = Ionut Traistaru
-	email = ionut.m.traistaru@gmail.com
+	email = 46448048+ionut-t@users.noreply.github.com
 
 [alias]
 parent = "!git show-branch | grep '*' | grep -v \"$(git rev-parse --abbrev-ref HEAD)\" | head -n1 | sed 's/.*\\[\\(.*\\)\\].*/\\1/' | sed 's/[\\^~].*//' #"
@@ -17,4 +17,4 @@ parent = "!git show-branch | grep '*' | grep -v \"$(git rev-parse --abbrev-ref H
 	defaultBranch = main
 [core]
 	autocrlf = input
-	editor = hx
+	editor = vim
