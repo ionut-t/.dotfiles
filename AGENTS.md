@@ -4,109 +4,117 @@ This document provides essential information for AI agents working within this d
 
 ## Repository Overview
 
-This repository manages personal dotfiles for various development tools and terminal environments across macOS systems. It employs a multi-branch workflow (`main`/`work`) to maintain distinct configurations for different contexts.
-
-## Key Management Script
-
-### `sync-dotfiles.zsh` (alias: `sdf`)
-
-- **Location**: `./sync-dotfiles.zsh`
-- **Purpose**: Interactively synchronize configuration files between `main` and `work` branches using `yazi` file picker.
-- **Workflow**:
-  1.  Automatically pulls latest changes from the target branch.
-  2.  Prompts for source/target branch selection.
-  3.  Opens `yazi` for interactive file selection (Space to select, `q` to confirm).
-  4.  Syncs selected files and commits changes automatically.
-  5.  Returns to the original branch, restoring any stashed changes.
-- **Requirements**: `yazi` must be installed.
-- **Note**: Uses zsh-specific features.
+This repository is managed by **mos** — a dotfiles manager with multi-machine, multi-profile overlay support. Configurations are symlinked into their target locations rather than copied. Files are organized in a three-layer overlay: `base` → `profiles/<name>` → `hosts/<hostname>`. Higher-priority layers override lower ones for the same relative path.
 
 ## Directory Structure
 
-The repository is organized by tool, with each tool's configuration stored in its standard location:
+```
+~/.dotfiles/
+  base/          # shared config, active on all machines and profiles
+  profiles/      # profile-specific overrides (e.g. home, work)
+  hosts/         # machine-specific overrides (keyed by hostname)
+  mos.toml       # single source of truth: modules, profiles, hosts, deps
+```
 
-- `nvim/`: Neovim configuration (Lua-based with lazy.nvim)
-- `helix/`: Helix editor configuration
-- `zsh/`: Zsh shell configuration (Oh My Zsh, powerlevel10k)
-- `tmux/`: Terminal multiplexer configuration
-- `git/`: Git aliases and settings
-- `alacritty/`: Alacritty terminal emulator config (TOML)
-- `ghostty/`: Ghostty terminal config
-- `kitty/`: Kitty terminal config
-- `yazi/`: Yazi file manager config (TOML)
-- `zellij/`: Zellij terminal workspace config
-- `vim/`: Vim configuration
-- `atuin/`: Atuin shell history config
+Each module's files live under `base/<source-path>/`, and optionally under `profiles/<profile>/<source-path>/` or `hosts/<hostname>/<source-path>/`.
 
-## Neovim Architecture
+## mos.toml
 
-Neovim uses a modular Lua configuration structure located at `nvim/.config/nvim/`.
+The config file at the root of this repo. It defines:
 
-- **Entry Point**: `init.lua`
-  - Loads core modules and bootstraps `lazy.nvim` plugin manager.
-  - Loads all plugin configurations from `lua/plugins/`.
-- **Core Modules** (`lua/core/`):
-  - `options.lua`: Editor options (line numbers, clipboard, indentation).
-  - `keymaps.lua`: Custom key bindings (leader key: Space).
-  - `snippets.lua`: Custom code snippets.
-- **Plugin System** (`lua/plugins/`):
-  - Each plugin has its own configuration file (e.g., `lsp.lua`, `telescope.lua`).
-  - LSP configuration uses `mason.nvim`.
-  - Example categories: Language-specific, UI, File navigation, Git integration, Code quality, Diagnostics.
-- **Adding New Plugins**:
-  1.  Create a new file in `lua/plugins/` (e.g., `lua/plugins/newplugin.lua`).
-  2.  Return a `lazy.nvim` plugin spec table.
-  3.  Add `require 'plugins.newplugin'` to the `require('lazy').setup` call in `init.lua`.
-- **Diagnostic System**:
-  - Status bar display (`lualine.lua`), diagnostic navigation (`core/keymaps.lua`), `trouble.nvim` panel (`plugins/trouble.lua`).
-  - Keybindings for diagnostics are detailed in `core/keymaps.lua` and `plugins/trouble.lua`.
+- `[settings]` — dotfiles dir, backup dir, optional `commit_cmd`
+- `[hosts.<hostname>]` — OS and default profile per machine
+- `[profiles.<name>]` — list of modules active in that profile
+- `[modules.<name>]` — source path, target path, and dependencies
 
-## Zsh Configuration
+Modules with no `source`/`target` are deps-only (tools to install but not configure).
 
-- **File**: `zsh/.zshrc`
-- **Key Features**:
-  - **Theme**: `powerlevel10k` with `starship`.
-  - **Plugins**: `git`, `sudo`, `gcloud`, `python`, `zsh-autosuggestions`, `zsh-syntax-highlighting`.
-  - **Package Managers**: NVM, Conda, Yarn.
-  - **CLI Tools**: `fzf` (fuzzy finder), `eza` (ls replacement), `zoxide` (smart cd), `bat` (cat with syntax highlighting), `thefuck` (command correction).
-  - **Editor**: Default editor set to `helix` (`hx`).
-  - **Custom Functions**: `gem-ng()` (launches gemini with Angular prompt).
-- **Common Aliases**: `sdf`, `cd` (zoxide), `ls` (eza), `t/ta/tls/tks` (tmux), `code`, `vim`, `ws`, `lvim`, `f`, `fp`.
+## Common mos Commands
 
-## Git Configuration
+```sh
+mos link                      # link all modules in the active profile
+mos link <module>             # link a single module
+mos unlink <module>           # remove symlinks for a module
+mos status                    # show linked modules and drift
 
-- **File**: `git/.gitconfig`
-- **Custom Aliases**: `git ac`, `git acp`, `git co`, `git cob`, `git bd`, `git puo`, `git parent`.
-- **Default Branch**: `main`.
-- **Default Editor**: `hx` (helix).
+mos profile list              # list profiles (* = active)
+mos profile switch <name>     # switch active profile (unlinks old, links new)
+mos profile create <name>     # create a new profile interactively
+mos profile override <module> # copy base files into active profile for editing
 
-## Development Paths
+mos host list                 # list registered hosts
+mos host register             # register this machine interactively
+mos host info                 # show this host's config
 
-The environment includes paths for: Go, Zig, PostgreSQL 17, Flutter, Conda, Docker, and local binaries.
+mos deps check                # show which dependencies are installed/missing
+mos deps install              # install missing dependencies
+
+mos sync pull                 # git pull + re-link active profile
+mos sync push                 # git add -A + commit (via commit_cmd or prompt) + push
+```
+
+## Workflow
+
+### On a new machine
+
+```sh
+mos init          # creates directory structure and saves global config
+mos host register # register this hostname
+mos link          # links all modules in the default profile
+mos deps install  # installs missing tools
+```
+
+### Day-to-day
+
+Edit files directly under `base/` (or the appropriate profile/host layer), then:
+
+```sh
+mos sync push     # commit and push changes
+```
+
+On another machine:
+
+```sh
+mos sync pull     # pull latest + re-link
+```
+
+### Profile-specific overrides
+
+```sh
+mos profile override <module>  # copies base files into profiles/<active>/
+# edit the copied files
+mos link <module>              # re-link to pick up the override
+```
+
+## Modules
+
+Current modules are defined in `mos.toml`. Each has a `source` (relative path inside the dotfiles repo) and a `target` (absolute path where symlinks are created). Deps-only modules (bark, vex, perp, lens) have no source/target — they just declare installation dependencies.
+
+## Dependency Backends
+
+| Backend  | Example                                          |
+| -------- | ------------------------------------------------ | ------- |
+| `brew`   | `["git"]` or `[{ pkg = "ripgrep", bin = "rg" }]` |
+| `cargo`  | `["stylua"]`                                     |
+| `go`     | `["github.com/user/tool@latest"]`                |
+| `script` | `[{ name = "x", cmd = "curl ...                  | sh" }]` |
 
 ## Modifying Configurations
 
-- **General Workflow**:
-  1.  Make changes in the current branch (`main` or `work`).
-  2.  Test the changes in your environment.
-  3.  Commit changes with descriptive messages.
-- **Syncing Changes (Cross-Branch)**:
-  - To sync changes to the other branch (e.g., from `main` to `work`), run `sdf` (or `./sync-dotfiles.zsh`).
-  - The script handles `git stash`, branch switching, file selection via `yazi`, syncing, and automatic committing.
-  - Always verify modified files with `git status` before running `sdf`.
-- **Important Notes**:
-  - Backup files (`*.bak`, `ghostty` config backups, `yazi *.toml-*`) are typically temporary and should not be committed.
-  - When adding new Neovim plugin files, remember to add the `require` statement to `nvim/.config/nvim/init.lua`.
-- **Branch Strategy**:
-  - `main`: Personal/home configuration.
-  - `work`: Work-specific configuration.
-  - Use `sync-dotfiles.zsh` to maintain consistency while allowing environment-specific customizations.
+- Edit files under `base/` for changes that apply everywhere.
+- Edit files under `profiles/<name>/` for profile-specific changes.
+- Edit files under `hosts/<hostname>/` for machine-specific changes.
+- After editing, run `mos sync push` to commit and push.
+- Never edit symlink targets directly — edit the source files in this repo.
+
+## Neovim Architecture
+
+Config lives at `base/nvim/.config/nvim/`. Entry point: `init.lua`. Plugins managed by `lazy.nvim` under `lua/plugins/`. Core settings in `lua/core/` (options, keymaps, snippets). To add a plugin: create `lua/plugins/<name>.lua` and add it to the `lazy.nvim` setup in `init.lua`.
+
+## Git Configuration
+
+File: `base/git/.gitconfig`. Custom aliases: `ac`, `acp`, `co`, `cob`, `bd`, `puo`, `parent`. Default editor: vim.
 
 ## Commit Conventions
 
-- Commit messages should be descriptive, following the pattern: `feat(tool): description` or `Update tool configuration`.
-
-## Testing Approach
-
-- Formal testing frameworks are generally not used for dotfiles.
-- All configuration changes should be manually tested and verified in the respective environment after modification.
+Commit messages should be descriptive. If `commit_cmd = "bark commit"` is set in `mos.toml`, bark generates the message automatically on `mos sync push`.
