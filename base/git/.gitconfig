@@ -1,8 +1,8 @@
 #This is Git's per-user configuration file.
 [user]
-# Please adapt and uncomment the following lines:
 	name = Ionut Traistaru
 	email = 46448048+ionut-t@users.noreply.github.com
+	signingkey = ~/.ssh/id_ed25519.pub
 
 [alias]
 parent = "!git show-branch | grep '*' | grep -v \"$(git rev-parse --abbrev-ref HEAD)\" | head -n1 | sed 's/.*\\[\\(.*\\)\\].*/\\1/' | sed 's/[\\^~].*//' #"
@@ -18,3 +18,9 @@ parent = "!git show-branch | grep '*' | grep -v \"$(git rev-parse --abbrev-ref H
 [core]
 	autocrlf = input
 	editor = vim
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	allowedSignersFile = ~/.ssh/allowed_signers
+[commit]
+	gpgsign = true
