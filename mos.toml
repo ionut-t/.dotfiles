@@ -34,28 +34,6 @@ modules = [
   "zsh",
 ]
 
-[profiles.work]
-description = "Work configuration"
-tracked = true
-modules = [
-  "aerospace",
-  "ask",
-  "borders",
-  "ghostty",
-  "helix",
-  "lens",
-  "nushell",
-  "nvim",
-  "perp",
-  "search",
-  "starship",
-  "tmux",
-  "vex",
-  "vim",
-  "yazi",
-  "zsh",
-]
-
 [modules.aerospace]
 source = "aerospace/.config/aerospace"
 target = "~/.config/aerospace"
