@@ -54,3 +54,4 @@ Thumbs.db
 *.pem
 *.key
 credentials*
+profiles/thegrind/

@@ -34,6 +34,28 @@ modules = [
   "zsh",
 ]
 
+[profiles.thegrind]
+description = "Where dreams come to sprint and die in backlog"
+tracked = false
+modules = [
+  "aerospace",
+  "ask",
+  "bark",
+  "borders",
+  "ghostty",
+  "lens",
+  "nushell",
+  "nvim",
+  "perp",
+  "search",
+  "starship",
+  "tmux",
+  "vex",
+  "vim",
+  "yazi",
+  "zsh",
+]
+
 [modules.aerospace]
 source = "aerospace/.config/aerospace"
 target = "~/.config/aerospace"
