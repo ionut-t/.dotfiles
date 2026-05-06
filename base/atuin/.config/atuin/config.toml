@@ -9,7 +9,7 @@ dialect = "us"
 timezone = "local"
 
 # Search
-search_mode = "fuzzy"
+search_mode = "daemon-fuzzy"
 filter_mode = "global"
 workspaces = true
 
@@ -78,3 +78,7 @@ records = true
 # Theme - Catppuccin Mocha
 [theme]
 name = "catppuccin-mocha"
+
+[daemon]
+enabled = true
+autostart = true

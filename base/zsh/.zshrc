@@ -217,7 +217,6 @@ source ~/fzf-git.sh/fzf-git.sh
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 eval "$(thefuck --alias)"
-eval "$(atuin init zsh)"
 eval "$(atuin init zsh --disable-ai)"
 
 # Enable transient prompt for Starship

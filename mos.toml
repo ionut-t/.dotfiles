@@ -40,7 +40,6 @@ tracked = true
 modules = [
   "aerospace",
   "ask",
-  "atuin",
   "borders",
   "ghostty",
   "helix",
