@@ -1,6 +1,6 @@
 require 'core.options' -- Load general options
 require 'core.keymaps' -- Load general keymaps
-require 'core.snippets' -- Custom code snippets
+require 'core.autocmds'
 
 -- Set up the Lazy plugin manager
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -52,16 +52,12 @@ require('lazy').setup {
   require 'plugins.refactoring',
   require 'plugins.git-enhanced',
   require 'plugins.dap-multi',
-  -- require 'plugins.testing',
   require 'plugins.terminal',
-  -- require 'plugins.search',
   require 'plugins.tiny-diagnostic',
   require 'plugins.snipe',
   require 'plugins.autotag',
   require 'plugins.neotest',
-  -- require 'plugins.hardtime',
   require 'plugins.codewise', -- Local development version of codewise.nvim
-  require 'plugins.beam',
 }
 
 vim.cmd.colorscheme 'catppuccin'

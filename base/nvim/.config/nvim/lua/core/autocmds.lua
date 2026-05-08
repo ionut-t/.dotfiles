@@ -1,0 +1,13 @@
+-- Prevent LSP from overwriting treesitter color settings
+-- https://github.com/NvChad/NvChad/issues/1907
+vim.hl.priorities.semantic_tokens = 95
+
+-- Highlight on yank
+local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
+vim.api.nvim_create_autocmd('TextYankPost', {
+  callback = function()
+    vim.hl.on_yank()
+  end,
+  group = highlight_group,
+  pattern = '*',
+})

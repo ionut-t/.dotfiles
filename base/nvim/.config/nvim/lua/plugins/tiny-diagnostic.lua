@@ -11,12 +11,15 @@ return {
       hide = function() end,
     }
 
-    -- Force config
     vim.diagnostic.config {
       virtual_text = false,
       underline = false,
       update_in_insert = false,
       severity_sort = true,
+      float = {
+        border = 'rounded',
+        source = 'always',
+      },
     }
   end,
 }
