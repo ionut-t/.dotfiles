@@ -8,6 +8,10 @@ commit_cmd = "bark commit"
 os = "macos"
 default_profile = "home"
 
+[hosts."MacBook Pro M3"]
+os = "macos"
+default_profile = "thegrind"
+
 [profiles.home]
 description = "Personal configuration"
 tracked = true

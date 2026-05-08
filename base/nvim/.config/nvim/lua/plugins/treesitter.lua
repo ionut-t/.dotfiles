@@ -34,9 +34,13 @@ return { -- Highlight, edit, and navigate code
       'tsx',
       'css',
       'html',
+      'angular',
       'rust',
       'zig',
     }
+
+    -- Register Angular for htmlangular filetype
+    vim.treesitter.language.register('angular', 'htmlangular')
 
     -- Install missing parsers
     require('nvim-treesitter.install').install(langs)
