@@ -56,6 +56,20 @@ vim.keymap.set('n', '<leader>yn', function()
   vim.notify('Copied file name: ' .. name, vim.log.levels.INFO)
 end, { desc = 'File name' })
 
+-- Copy relative path as dot-separated module path (strips extension, replaces / with .)
+vim.keymap.set('n', '<leader>yD', function()
+  local path = vim.fn.expand('%:.'):gsub('%.%w+$', ''):gsub('/', '.')
+  vim.fn.setreg('+', path)
+  vim.notify('Copied dot path: ' .. path, vim.log.levels.INFO)
+end, { desc = 'Dot path' })
+
+-- Copy relative directory path of current file
+vim.keymap.set('n', '<leader>yd', function()
+  local dir = vim.fn.expand '%:.:h'
+  vim.fn.setreg('+', dir)
+  vim.notify('Copied directory: ' .. dir, vim.log.levels.INFO)
+end, { desc = 'Directory path' })
+
 -- Exit insert mode with jj
 vim.keymap.set('i', 'jj', '<Esc>', { desc = 'Exit insert mode' })
 
@@ -95,20 +109,6 @@ vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Window left' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Window right' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Window down' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Window up' })
-
--- [[ Basic Autocommands ]]
---  See `:help lua-guide-autocommands`
-
--- Highlight when yanking (copying) text
---  Try it with `yap` in normal mode
---  See `:help vim.highlight.on_yank()`
-vim.api.nvim_create_autocmd('TextYankPost', {
-  desc = 'Highlight when yanking (copying) text',
-  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
-  callback = function()
-    vim.hl.on_yank()
-  end,
-})
 
 -- Quick command mode entry from insert mode
 vim.keymap.set('i', 'kk', '<Esc>:', { desc = 'Exit to command mode' })
@@ -182,7 +182,7 @@ vim.keymap.set('n', '<leader>rl', function()
   -- Reload core modules
   require 'core.options'
   require 'core.keymaps'
-  require 'core.snippets'
+  require 'core.autocmds'
 
   vim.notify('Core configuration files reloaded!', vim.log.levels.INFO)
 end, { desc = 'Reload core config files' })

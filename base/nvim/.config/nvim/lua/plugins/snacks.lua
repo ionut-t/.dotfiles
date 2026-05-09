@@ -442,25 +442,9 @@ return {
     {
       '<leader>fC',
       function()
-        Snacks.picker.files { cwd = '~/.dotfiles/nvim/.config/nvim/lua' }
+        Snacks.picker.files { cwd = '~/.dotfiles/base/nvim/.config/nvim/lua' }
       end,
       desc = 'Config file',
-    },
-
-    {
-      '<leader>fw',
-      function()
-        Snacks.picker.grep_word {
-          on_show = function()
-            vim.cmd.stopinsert()
-          end,
-          layout = {
-            preset = 'ivy',
-          },
-        }
-      end,
-      desc = 'Selected bytes',
-      mode = { 'n', 'v' },
     },
 
     {
@@ -470,6 +454,7 @@ return {
       end,
       desc = 'Command history',
     },
+
     {
       '<leader>sC',
       function()
