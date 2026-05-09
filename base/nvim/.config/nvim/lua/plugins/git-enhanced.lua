@@ -8,7 +8,7 @@ return {
       { '<leader>gd', '<cmd>DiffviewOpen<cr>', desc = 'Git diff view' },
       { '<leader>gh', '<cmd>DiffviewFileHistory %<cr>', desc = 'Git file history' },
       { '<leader>gH', '<cmd>DiffviewFileHistory<cr>', desc = 'Git project history' },
-      { '<leader>gc', '<cmd>DiffviewClose<cr>', desc = 'Git diff close' },
+      { '<leader>gq', '<cmd>DiffviewClose<cr>', desc = 'Git diff close' },
     },
     opts = {
       enhanced_diff_hl = true,

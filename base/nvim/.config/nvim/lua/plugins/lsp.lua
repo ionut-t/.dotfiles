@@ -43,7 +43,7 @@ return {
 
         -- Enable inlay hints
         if client and client.supports_method 'textDocument/inlayHint' then
-          vim.lsp.inlay_hint.enable(event.bufnr, {})
+          vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
         end
 
         if client and client.supports_method 'textDocument/codeAction' then
