@@ -37,11 +37,11 @@ return {
           go_out_plus = 'h',
         },
       }
-      vim.keymap.set('n', '<leader>er', '<cmd>lua MiniFiles.open()<CR>', { desc = 'Root directory' }) -- toggle file explorer
-      vim.keymap.set('n', '<leader>ee', function()
+      vim.keymap.set('n', '<leader>eR', '<cmd>lua MiniFiles.open()<CR>', { desc = 'Root directory (mini)' }) -- toggle file explorer
+      vim.keymap.set('n', '<leader>em', function()
         MiniFiles.open(vim.api.nvim_buf_get_name(0), false)
         MiniFiles.reveal_cwd()
-      end, { desc = 'Current directory' })
+      end, { desc = 'Current directory (mini)' })
     end,
   },
   -- Surround

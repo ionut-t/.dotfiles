@@ -24,6 +24,7 @@ require('lazy').setup {
   require 'plugins.flash', -- Fast navigation with labeled jumps
   require 'plugins.multi-cursor',
   require 'plugins.oil',
+  require 'plugins.yazi',
   require 'plugins.mini', -- Mini.nvim modules
   require 'plugins.theme',
   require 'plugins.lualine',
