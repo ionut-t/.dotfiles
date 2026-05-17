@@ -23,7 +23,7 @@ Each module's files live under `base/<source-path>/`, and optionally under `prof
 The config file at the root of this repo. It defines:
 
 - `[settings]` — dotfiles dir, backup dir, optional `commit_cmd`
-- `[hosts.<hostname>]` — OS and default profile per machine
+- `[hosts.<hostname>]` — OS, package manager, and default profile per machine
 - `[profiles.<name>]` — list of modules active in that profile
 - `[modules.<name>]` — source path, target path, and dependencies
 
@@ -92,12 +92,16 @@ Current modules are defined in `mos.toml`. Each has a `source` (relative path in
 
 ## Dependency Backends
 
-| Backend  | Example                                          |
-| -------- | ------------------------------------------------ | ------- |
-| `brew`   | `["git"]` or `[{ pkg = "ripgrep", bin = "rg" }]` |
-| `cargo`  | `["stylua"]`                                     |
-| `go`     | `["github.com/user/tool@latest"]`                |
-| `script` | `[{ name = "x", cmd = "curl ...                  | sh" }]` |
+| Backend    | Example                                              |
+| ---------- | ---------------------------------------------------- | ------- |
+| `packages` | `["git"]` or `[{ brew = "sevenzip", apt = "7zip" }]` |
+| `brew`     | `["git"]` or `[{ pkg = "ripgrep", bin = "rg" }]`     |
+| `apt`      | `["git"]` or `[{ pkg = "fd-find", bin = "fdfind" }]` |
+| `cargo`    | `["stylua"]`                                         |
+| `go`       | `["github.com/user/tool@latest"]`                    |
+| `script`   | `[{ name = "x", cmd = "curl ...                      | sh" }]` |
+
+`packages` is the cross-platform field. Plain strings use the same package name on every manager; inline maps (`{ brew = "x", apt = "y" }`) handle name differences — omit a key to skip that platform entirely. Use `brew` or `apt` directly for packages that only make sense on one platform.
 
 ## Modifying Configurations
 

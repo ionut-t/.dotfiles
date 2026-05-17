@@ -6,16 +6,19 @@ commit_cmd = "bark commit"
 
 [hosts."Ionuts-MacBook-Pro-Max.local"]
 os = "macos"
+package_manager = "brew"
 default_profile = "home"
 
 [hosts."MacBook Pro M3"]
 os = "macos"
+package_manager = "brew"
 default_profile = "thegrind"
 
 [profiles.home]
 description = "Personal configuration"
 tracked = true
 modules = [
+  "toolchains",
   "aerospace",
   "ask",
   "atuin",
@@ -36,12 +39,14 @@ modules = [
   "vim",
   "yazi",
   "zsh",
+  "bash",
 ]
 
 [profiles.thegrind]
 description = "Where dreams come to sprint and die in backlog"
 tracked = false
 modules = [
+  "toolchains",
   "aerospace",
   "ask",
   "bark",
@@ -74,7 +79,7 @@ target = "~/.config/alacritty"
 tracked = true
 
 [modules.alacritty.deps]
-brew = ["alacritty"]
+packages = ["alacritty"]
 
 [modules.ask]
 source = "ask/ask"
@@ -87,7 +92,7 @@ target = "~/.config/atuin"
 tracked = true
 
 [modules.atuin.deps]
-brew = ["atuin"]
+packages = ["atuin"]
 
 [modules.borders]
 source = "borders/.config/borders"
@@ -108,7 +113,7 @@ target = "~/.gitconfig"
 tracked = true
 
 [modules.git.deps]
-brew = ["git", "gh"]
+packages = ["git", "gh"]
 
 [modules.helix]
 source = "helix/.config/helix"
@@ -116,7 +121,7 @@ target = "~/.config/helix"
 tracked = true
 
 [modules.helix.deps]
-brew = ["helix"]
+packages = ["helix"]
 
 [modules.kitty]
 source = "kitty/.config/kitty"
@@ -124,7 +129,7 @@ target = "~/.config/kitty"
 tracked = true
 
 [modules.kitty.deps]
-brew = ["kitty"]
+packages = ["kitty"]
 
 [modules.nushell]
 source = "nushell/.config/nushell"
@@ -132,7 +137,7 @@ target = "~/.config/nushell"
 tracked = true
 
 [modules.nushell.deps]
-brew = ["nushell"]
+packages = ["nushell"]
 
 [modules.nvim]
 source = "nvim/.config/nvim"
@@ -140,7 +145,12 @@ target = "~/.config/nvim"
 tracked = true
 
 [modules.nvim.deps]
-brew = ["neovim", "ripgrep", "fd", "node"]
+packages = [
+  "neovim",
+  "ripgrep",
+  { brew = "fd", apt = "fd-find" },
+  { brew = "node", apt = "nodejs" },
+]
 cargo = ["stylua"]
 go = ["github.com/jesseduffield/lazygit@latest"]
 
@@ -173,7 +183,7 @@ target = "~/.tmux.conf"
 tracked = true
 
 [modules.tmux.deps]
-brew = ["tmux"]
+packages = ["tmux"]
 
 [modules.vim]
 source = "vim/.vimrc"
@@ -188,18 +198,26 @@ target = "~/.config/yazi"
 tracked = true
 
 [modules.yazi.deps]
-brew = [
+packages = [
   "yazi",
   "ffmpeg",
-  "sevenzip",
+  { brew = "sevenzip", apt = "7zip" },
   "jq",
-  "poppler",
-  "fd",
+  { brew = "poppler", apt = "poppler-utils" },
+  { brew = "fd", apt = "fd-find" },
   "ripgrep",
   "fzf",
   "zoxide",
-  "resvg",
+  { brew = "resvg" },
   "imagemagick",
+]
+
+[modules.toolchains]
+
+[modules.toolchains.deps]
+packages = [{ brew = "go", apt = "golang-go" }]
+script = [
+  { name = "cargo", cmd = "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y" },
 ]
 
 [modules.bark]
@@ -224,10 +242,18 @@ script = [
   { name = "lens", cmd = "cargo install --git https://github.com/ionut-t/lens" },
 ]
 
+[modules.bash]
+source = "bash/.bashrc"
+target = "~/.bashrc"
+tracked = true
+
+[modules.bash.deps]
+packages = ["fzf", "eza", "bat", "zoxide", "jq", "ripgrep", "neovim"]
+
 [modules.zsh]
 source = "zsh/.zshrc"
 target = "~/.zshrc"
 tracked = true
 
 [modules.zsh.deps]
-brew = ["fzf", "eza", "bat", "zoxide", "jq", "thefuck"]
+packages = ["fzf", "eza", "bat", "zoxide", "jq", "thefuck"]
