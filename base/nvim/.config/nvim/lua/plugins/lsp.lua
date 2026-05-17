@@ -255,7 +255,6 @@ return {
       html = { filetypes = { 'html', 'twig', 'hbs' } },
       cssls = {},
       tailwindcss = {},
-      sqlls = {},
       jsonls = {
         settings = {
           json = {

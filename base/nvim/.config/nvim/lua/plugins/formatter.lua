@@ -47,9 +47,15 @@ return {
         go = { 'gofumpt', 'goimports' },
         python = { 'ruff_format' },
         shell = { 'shfmt' },
-        sql = { 'sql-formatter' },
+        sql = { 'sql_formatter' },
         terraform = { 'terraform_fmt' },
         toml = { 'taplo' },
+      },
+      formatters = {
+        sql_formatter = {
+          command = '/opt/homebrew/bin/sql-formatter',
+          args = { '--language', 'postgresql' },
+        },
       },
       format_on_save = function()
         if vim.g.format_on_save_enabled then

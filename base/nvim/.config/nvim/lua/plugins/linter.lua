@@ -21,6 +21,10 @@ return {
       bash = { 'shellcheck' },
     }
 
+    lint.linters.sqlfluff = vim.tbl_deep_extend('force', lint.linters.sqlfluff, {
+      args = { 'lint', '--format=json', '--dialect=postgres', '-' },
+    })
+
     lint.linters.golangcilint.ignore_exitcode = true
 
     local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })
