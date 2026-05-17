@@ -76,7 +76,6 @@ export FZF_DEFAULT_OPTS=" \
 --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
 --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
 --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
---color=selected-bg:#45475a \
 --multi"
 
 # ============================================================================
@@ -109,7 +108,7 @@ alias lt3='eza --color=always --icons=always --tree --level=3 --group-directorie
 alias lr='eza --color=always --long --git --icons=always --no-user --sort=modified --reverse --time-style="+%d/%m/%y"'
 
 # Fuzzy finder
-alias preview="fzf --preview 'bat --color=always {}' --preview-window '~4'"
+alias preview="fzf --preview '$_bat_cmd --color=always {}' --preview-window '~4'"
 
 # Tmux
 alias t="tmux"
@@ -147,7 +146,7 @@ function search() {
     --bind "ctrl-f:reload($rg_prefix -F {q} || true)+change-prompt(Fixed ➤ )" \
     --bind "ctrl-r:reload($rg_prefix {q} || true)+change-prompt(Search ➤ )" \
     --delimiter ':' \
-    --preview "bat --color=always {1} --highlight-line {2}" \
+    --preview "$_bat_cmd --color=always {1} --highlight-line {2}" \
     --preview-window 'up,60%,border-bottom,+{2}+3/3' \
     --header 'C-w: Word Match | C-f: Fixed String | C-r: Regex | Enter: nvim' \
     --bind 'enter:execute(nvim +{2} {1})' \
