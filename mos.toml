@@ -199,7 +199,7 @@ tracked = true
 
 [modules.yazi.deps]
 packages = [
-  "yazi",
+  { brew = "yazi" },
   "ffmpeg",
   { brew = "sevenzip", apt = "7zip" },
   "jq",
@@ -211,6 +211,7 @@ packages = [
   { brew = "resvg" },
   "imagemagick",
 ]
+script = [{ name = "yazi", cmd = "cargo install --locked yazi-fm yazi-cli" }]
 
 [modules.toolchains]
 
