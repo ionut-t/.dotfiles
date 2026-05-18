@@ -65,6 +65,26 @@ modules = [
   "zsh",
 ]
 
+[profiles.server]
+tracked = true
+modules = [
+  "ask",
+  "bark",
+  "bash",
+  "ghostty",
+  "git",
+  "nvim-server",
+  "perp",
+  "search",
+  "starship",
+  "tmux",
+  "toolchains",
+  "vex",
+  "vim",
+  "yazi",
+  "zsh",
+]
+
 [modules.aerospace]
 source = "aerospace/.config/aerospace"
 target = "~/.config/aerospace"
@@ -145,6 +165,21 @@ target = "~/.config/nvim"
 tracked = true
 
 [modules.nvim.deps]
+packages = [
+  "neovim",
+  "ripgrep",
+  { brew = "fd", apt = "fd-find" },
+  { brew = "node", apt = "nodejs" },
+]
+cargo = ["stylua"]
+go = ["github.com/jesseduffield/lazygit@latest"]
+
+[modules.nvim-server]
+source = "nvim-server/.config/nvim"
+target = "~/.config/nvim"
+tracked = true
+
+[modules.nvim-server.deps]
 packages = [
   "neovim",
   "ripgrep",
