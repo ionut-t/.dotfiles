@@ -31,6 +31,8 @@ return {
       'rust',
     }
 
+    -- Use C compiler instead of tree-sitter CLI (not available on most servers)
+    require('nvim-treesitter.install').compilers = { 'gcc', 'cc', 'clang' }
     require('nvim-treesitter.install').install(langs)
 
     vim.api.nvim_create_autocmd('FileType', {
