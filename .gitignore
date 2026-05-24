@@ -43,6 +43,7 @@ Thumbs.db
 .firebase
 
 /.claude
+.antigravitycli/
 
 # Nushell history (written alongside config, path is not configurable)
 *.sqlite3

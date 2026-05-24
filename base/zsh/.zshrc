@@ -365,3 +365,7 @@ _vex_edit_line() {
 zle -N _vex_edit_line
 bindkey '^e' _vex_edit_line
 bindkey -M vicmd '^e' _vex_edit_line
+
+
+# Added by Antigravity CLI installer
+export PATH="/Users/ionut-traistaru/.local/bin:$PATH"
