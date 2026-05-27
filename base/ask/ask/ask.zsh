@@ -51,7 +51,7 @@ function dothelp() {
     return 1
   fi
 
-  local dotfiles="$HOME/.dotfiles"
+  local dotfiles="$HOME/.dotfiles/base"
   local context="$(cat "$ASK_DIR/dothelp.md")"$'\n\n'
   local tool=""
   local query="$*"

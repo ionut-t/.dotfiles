@@ -12,7 +12,7 @@ def "?" [...question: string] {
 
 # Ask a question about your dotfiles configs
 def "??" [...args: string] {
-    let dotfiles = $"($env.HOME)/.dotfiles"
+    let dotfiles = $"($env.HOME)/.dotfiles/base"
     let ask_dir = ($ASK_DIR | path expand)
 
     if ($args | is-empty) {
