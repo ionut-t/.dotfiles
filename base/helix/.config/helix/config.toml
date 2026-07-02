@@ -30,7 +30,14 @@ skip-levels = 1
 [editor.statusline]
 left = ["mode", "spinner"]
 center = ["file-name"]
-right = ["diagnostics", "selections", "position", "file-encoding", "file-line-ending", "file-type"]
+right = [
+  "diagnostics",
+  "selections",
+  "position",
+  "file-encoding",
+  "file-line-ending",
+  "file-type",
+]
 separator = "│"
 mode.normal = "NORMAL"
 mode.insert = "INSERT"
@@ -55,7 +62,12 @@ G = "goto_file_end"
 "$" = "goto_line_end"
 "^" = "goto_first_nonwhitespace"
 "A-j" = ["extend_to_line_bounds", "delete_selection", "paste_after"]
-"A-k" = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"]
+"A-k" = [
+  "extend_to_line_bounds",
+  "delete_selection",
+  "move_line_up",
+  "paste_before",
+]
 
 [keys.insert]
 "C-c" = ["collapse_selection", "normal_mode"]

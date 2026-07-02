@@ -1,0 +1,43 @@
+# languages.toml — Angular + Nx support
+# Language servers: npm i -g @angular/language-server typescript typescript-language-server nxls vscode-langservers-extracted
+# Queries live in runtime/queries/angular/ (helix does not ship an angular language).
+
+# Probe project-local node_modules first, fall back to the global npm root
+# so ngserver still starts for files outside a project.
+[language-server.angular]
+command = "sh"
+args = [
+  "-c",
+  "ngserver --stdio --tsProbeLocations \".,$(npm root -g)\" --ngProbeLocations \".,$(npm root -g)/@angular/language-server/node_modules\"",
+]
+
+[language-server.nxls]
+command = "nxls"
+args = ["--stdio"]
+
+# Angular templates (external .html templates)
+[[language]]
+name = "angular"
+scope = "text.html.angular"
+injection-regex = "angular"
+file-types = [{ glob = "*.html" }]
+block-comment-tokens = { start = "<!--", end = "-->" }
+language-servers = ["angular"]
+auto-format = true
+indent = { tab-width = 2, unit = "  " }
+formatter = { command = "npx", args = ["prettier", "--parser", "angular"] }
+
+[[grammar]]
+name = "angular"
+source = { git = "https://github.com/dlvandenberg/tree-sitter-angular", rev = "38a8014ed5452cd6b7cf1399c00177a1f5374256" }
+
+# Angular LSP alongside the TS server for components (inline templates, decorators)
+[[language]]
+name = "typescript"
+language-servers = ["typescript-language-server", "angular"]
+
+# nxls for nx.json / project.json / package.json targets in Nx workspaces;
+# inert outside Nx workspaces
+[[language]]
+name = "json"
+language-servers = ["vscode-json-language-server", "nxls"]

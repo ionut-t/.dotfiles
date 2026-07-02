@@ -142,6 +142,12 @@ tracked = true
 
 [modules.helix.deps]
 packages = ["helix"]
+script = [
+  { name = "typescript-language-server", cmd = "npm i -g typescript typescript-language-server" },
+  { name = "ngserver", cmd = "npm i -g @angular/language-server" },
+  { name = "nxls", cmd = "npm i -g nxls" },
+  { name = "vscode-json-language-server", cmd = "npm i -g vscode-langservers-extracted" },
+]
 
 [modules.kitty]
 source = "kitty/.config/kitty"
