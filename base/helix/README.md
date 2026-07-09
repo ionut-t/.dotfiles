@@ -57,6 +57,14 @@ The `catppuccin_mocha` theme ships built-in with Helix — no theme step needed.
   queries: Helix capture names, pattern order reversed (Helix = first match
   wins, Neovim = last).
 
+## Navigation extras
+
+- `C-y` opens yazi inside Helix as a file tree/picker (pick a file → opens in
+  Helix). Requires yazi on PATH — install via the `yazi` module.
+- `{` / `}` jump between paragraphs (vim muscle memory).
+- Built-in, no config needed: `gw` flash-style jump labels, `Space e` file
+  explorer, `Space f` fuzzy files, `Space /` live grep, `ga` alternate file.
+
 ## Gotchas
 
 - After bumping the grammar `rev` in `languages.toml`, re-run

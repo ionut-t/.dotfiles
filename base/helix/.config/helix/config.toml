@@ -61,6 +61,18 @@ G = "goto_file_end"
 0 = "goto_line_start"
 "$" = "goto_line_end"
 "^" = "goto_first_nonwhitespace"
+"{" = "goto_prev_paragraph"
+"}" = "goto_next_paragraph"
+# Yazi as file tree/picker (https://yazi-rs.github.io/docs/tips#helix)
+"C-y" = [
+  ':sh rm -f /tmp/yazi-hx-picker',
+  ':insert-output yazi "%{buffer_name}" --chooser-file=/tmp/yazi-hx-picker',
+  ':sh printf "\x1b[?1049h\x1b[?2004h" > /dev/tty',
+  ':open %sh{cat /tmp/yazi-hx-picker}',
+  ':redraw',
+  ':set mouse false',
+  ':set mouse true',
+]
 "A-j" = ["extend_to_line_bounds", "delete_selection", "paste_after"]
 "A-k" = [
   "extend_to_line_bounds",
