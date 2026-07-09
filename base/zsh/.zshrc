@@ -369,3 +369,20 @@ bindkey -M vicmd '^e' _vex_edit_line
 
 # Added by Antigravity CLI installer
 export PATH="/Users/ionut-traistaru/.local/bin:$PATH"
+
+case "$TSM_WORKSPACE" in
+  tsm)
+    alias install='cargo install --path .'
+    alias clippy='cargo clippy'
+    alias review='bark review --as linus -c -i rust'
+    ;;
+  perp|bark)
+    alias install='go install .'
+    alias run='go run .'
+    alias build='go build -o bin/perp'
+    alias test='go test ./...'
+    alias review='bark review --as linus -c'
+    alias lint='golangci-lint run'
+    alias fmt='gofmt -w .'
+    ;;
+esac
