@@ -345,6 +345,15 @@ function pk() {
     xargs -r kill
 }
 
+#Create a git branch and push it to the remote repository
+function gpub() {
+  if [ -z "$1" ]; then
+    echo "Usage: gpub <branch-name>"
+    return 1
+  fi
+  git switch -c "$1" && git push -u origin "$1"
+}
+
 # ============================================================================
 # EXTERNAL SOURCES
 # ============================================================================
@@ -374,14 +383,14 @@ case "$TSM_WORKSPACE" in
   tsm)
     alias install='cargo install --path .'
     alias clippy='cargo clippy'
-    alias review='bark review --as linus -c -i rust'
+    alias review='bark review --as linus'
     ;;
   perp|bark)
     alias install='go install .'
     alias run='go run .'
     alias build='go build -o bin/perp'
     alias test='go test ./...'
-    alias review='bark review --as linus -c'
+    alias review='bark review --as linus'
     alias lint='golangci-lint run'
     alias fmt='gofmt -w .'
     ;;
