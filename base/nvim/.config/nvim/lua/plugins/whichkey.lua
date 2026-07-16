@@ -37,6 +37,7 @@ return {
       { '<leader>-', group = 'Oil', icon = '' },
       { '<leader>S', group = 'Select and replace', icon = '󰉋' },
       { '<leader>C', group = 'Codewise', icon = '󰚩' },
+      { '<leader>l', group = 'Lens', icon = '' },
     }
   end,
 }

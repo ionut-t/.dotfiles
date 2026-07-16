@@ -13,6 +13,76 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+local function lens_open(args)
+  local cmd = 'lens'
+  for _, a in ipairs(args or {}) do
+    cmd = cmd .. ' ' .. vim.fn.shellescape(a)
+  end
+
+  if not vim.env.TMUX then
+    vim.cmd 'vsplit | enew'
+    vim.fn.jobstart(cmd, { term = true })
+    vim.cmd 'startinsert'
+    return
+  end
+
+  -- Reuse an existing lens pane in this window, if any.
+  local panes = vim.fn.systemlist "tmux list-panes -F '#{pane_id} #{pane_current_command}'"
+  for _, line in ipairs(panes) do
+    local pane = line:match '^(%%%d+) lens$'
+    if pane then
+      vim.fn.system { 'tmux', 'respawn-pane', '-k', '-t', pane, cmd }
+      return
+    end
+  end
+  -- No lens pane yet — open one on the right, keeping focus in nvim.
+  vim.fn.system { 'tmux', 'split-window', '-dh', '-l', '40%', cmd }
+end
+
+-- Name of the it/test/describe block enclosing the cursor (via treesitter).
+local function nearest_test()
+  local ok, node = pcall(vim.treesitter.get_node)
+  if not ok then
+    return nil
+  end
+  while node do
+    if node:type() == 'call_expression' then
+      local fn = node:field('function')[1]
+      local callee = fn and vim.treesitter.get_node_text(fn, 0) or ''
+      local base = callee:match '^([%a_][%w_]*)' -- it.only -> it
+      if base == 'it' or base == 'test' or base == 'describe' then
+        local args = node:field('arguments')[1]
+        local first = args and args:named_child(0)
+        if first then
+          local text = vim.treesitter.get_node_text(first, 0)
+          return (text:gsub('^["\'`]', ''):gsub('["\'`]$', ''))
+        end
+      end
+    end
+    node = node:parent()
+  end
+end
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
+  callback = function(ev)
+    local args = { '--file', vim.api.nvim_buf_get_name(0), '--watch', '--hide-failed', '--layout', 'vertical' }
+    local function map(lhs, rhs, desc)
+      vim.keymap.set('n', lhs, rhs, { buffer = ev.buf, desc = desc })
+    end
+    map('<leader>lf', function()
+      lens_open(args)
+    end, 'lens: run current file')
+    map('<leader>ll', function()
+      local name = nearest_test()
+      if name then
+        vim.list_extend(args, { '--test', name })
+      end
+      lens_open(args)
+    end, 'lens: run nearest test/suite')
+  end,
+})
+
 -- Set up plugins
 require('lazy').setup {
   require 'plugins.whichkey',
