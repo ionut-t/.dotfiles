@@ -66,14 +66,19 @@ end
 vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
   callback = function(ev)
-    local args = { '--file', vim.api.nvim_buf_get_name(0), '--watch', '--hide-failed', '--layout', 'vertical' }
+    -- Build args fresh on every invocation: a shared table mutated with
+    -- list_extend accumulates duplicate --test flags across runs.
+    local function base_args()
+      return { '--file', vim.api.nvim_buf_get_name(0), '--watch', '--hide-failed', '--layout', 'vertical' }
+    end
     local function map(lhs, rhs, desc)
       vim.keymap.set('n', lhs, rhs, { buffer = ev.buf, desc = desc })
     end
     map('<leader>lf', function()
-      lens_open(args)
+      lens_open(base_args())
     end, 'lens: run current file')
     map('<leader>ll', function()
+      local args = base_args()
       local name = nearest_test()
       if name then
         vim.list_extend(args, { '--test', name })
