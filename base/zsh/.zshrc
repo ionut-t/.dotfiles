@@ -382,8 +382,10 @@ export PATH="/Users/ionut-traistaru/.local/bin:$PATH"
 case "$TSM_WORKSPACE" in
   tsm|lens)
     alias install='cargo install --path .'
-    alias clippy='cargo clippy'
     alias review='bark review --as linus'
+    alias test='cargo test'
+    alias fmt='cargo fmt'
+    alias lint='cargo clippy --all-targets --all-features -- -D warnings'
     ;;
   perp|bark)
     alias install='go install .'
