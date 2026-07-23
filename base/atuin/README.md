@@ -1,179 +1,82 @@
-# Atuin - Zen Shell History
+# Atuin
 
-A minimal, calm, and focused shell history configuration for atuin.
+Shell history config: local-only, secret-filtered, workspace-aware search.
 
-## Overview
+## Files
 
-This configuration provides a zen-like experience for your shell history:
-- **Minimal UI**: Clean, distraction-free interface
-- **Catppuccin Mocha**: Matching your terminal's aesthetic
-- **Flow State**: Smooth interactions and reduced motion
-- **Privacy First**: Automatic secret filtering
+| File                                         | Purpose      |
+| -------------------------------------------- | ------------ |
+| `.config/atuin/config.toml`                  | Main config  |
+| `.config/atuin/themes/catppuccin-mocha.toml` | Custom theme |
 
-## Features
+`mos` symlinks these into `~/.config/atuin/` (module `atuin` in `mos.toml`).
 
-### 🎨 Zen Design
-- Compact, minimal interface without clutter
-- No moving numbers or excessive UI elements
-- Search bar at top for natural flow
-- Preview without overwhelming context
+## Setup
 
-### 🔍 Smart Search
-- Fuzzy search for forgiving queries
-- Git workspace-aware filtering
-- Global history by default
-- Smart command statistics
+```sh
+mos link atuin      # symlink config
+mos deps install     # installs the atuin package
+eval "$(atuin init zsh)"   # already wired into base/zsh
+```
 
-### 🛡️ Privacy & Security
-- Automatic secret detection
-- Filter sensitive commands (keys, tokens, passwords)
-- Local-only mode (no sync)
+## What's configured
 
-### ⌨️ Smooth Interactions
-- Immediate command execution on Enter
-- Intentional navigation (no accidental exits)
-- Reduced motion for calm experience
-- Adaptive cursor styles
-
-## Installation
-
-1. **Symlink the configuration:**
-   ```bash
-   ln -sf ~/.dotfiles/atuin/.config/atuin ~/.config/atuin
-   ```
-
-2. **Initialize atuin in your shell:**
-
-   The configuration is already set up in `~/.zshrc`. If you need to add it manually:
-   ```bash
-   echo 'eval "$(atuin init zsh)"' >> ~/.zshrc
-   ```
-
-3. **Reload your shell:**
-   ```bash
-   source ~/.zshrc
-   ```
+- **Search**: `daemon-fuzzy` mode (fuzzy matching offloaded to the background
+  daemon, `[daemon] enabled = true`), `filter_mode = "global"` by default,
+  workspace filtering when invoked via the shell's Up-arrow
+  (`filter_mode_shell_up_key_binding = "workspace"`).
+- **Behavior**: `enter_accept = true` runs the selected command immediately;
+  `exit_mode = "return-original"` restores your original input line on Esc.
+- **Privacy**: `secrets_filter = true` plus `history_filter` regexes drop
+  `KEY`/`TOKEN`/`SECRET`/`PASSWORD` exports and `--password`/`--token` flags
+  from being recorded at all.
+- **Sync**: `auto_sync = false` and no server configured — history never
+  leaves this machine unless you explicitly log in and enable it.
+- **Stats**: `common_subcommands` groups `git status`/`git commit`/etc. under
+  `git` in `atuin stats`; `ignored_commands` excludes noise like `ls`/`cd`.
+- **Theme**: `catppuccin-mocha`.
 
 ## Usage
 
-### Basic Commands
-- **Ctrl+R**: Search history (fuzzy search)
-- **↑**: Navigate up through history
-- **Tab**: Copy command to edit
-- **Enter**: Execute immediately
+- `Ctrl-R` — open interactive search
+- `↑` — prefix search from the current line (workspace-filtered)
+- `Enter` — run the selected command
+- `Esc` — cancel, restoring what you'd typed
 
-### Filter Modes
-Press `Ctrl+R` and then use these shortcuts:
-- `Ctrl+/`: Toggle filter mode (global, directory, session, workspace)
-- `Ctrl+S`: Search mode toggle (fuzzy, prefix, fulltext)
+## Customizing
 
-### Advanced Navigation
-- **Ctrl+N / Ctrl+P**: Next/Previous item
-- **Alt+Up / Alt+Down**: Scroll context
-- **Esc**: Exit search (return original)
+**Ignore more commands in stats:**
 
-## Configuration Files
-
-```
-atuin/
-├── .config/
-│   └── atuin/
-│       ├── config.toml              # Main zen configuration
-│       └── themes/
-│           └── catppuccin-mocha.toml  # Custom theme
-└── README.md                        # This file
-```
-
-## Customization
-
-### Adjust UI Height
-Edit `config.toml`:
-```toml
-inline_height = 12  # Change to your preference (0 for fullscreen)
-```
-
-### Enable Sync
-If you want to sync across machines:
-```toml
-auto_sync = true
-sync_frequency = "10m"
-```
-
-### Change Theme
-Built-in themes: `default`, `autumn`, `marine`, `catppuccin-mocha`
-```toml
-[theme]
-name = "autumn"  # or your preferred theme
-```
-
-### Add More Ignored Commands
 ```toml
 [stats]
-ignored_commands = [
-  "ls", "cd", "pwd", "clear", "exit",
-  "your_command_here",
-]
+ignored_commands = ["ls", "cd", "pwd", "clear", "exit", "z", "f", "fp", "your_command"]
 ```
 
-## Philosophy
+**Switch theme:** built-in options are `default`, `autumn`, `marine`; drop a
+custom `.toml` in `.config/atuin/themes/` for others.
 
-This configuration follows a zen approach:
-- **Less is more**: Minimal UI, maximum focus
-- **Flow state**: Smooth interactions without interruptions
-- **Intentional**: No accidental actions or surprises
-- **Calm**: Reduced motion, soft colors, gentle feedback
+```toml
+[theme]
+name = "autumn"
+```
 
-## Tips
+**Enable sync across machines** (opt-in, off by default here):
 
-1. **Use fuzzy search**: Don't remember exact commands? Just type keywords
-2. **Workspace filtering**: In git repos, press `Ctrl+/` to filter by project
-3. **Preview mode**: Long commands? The preview shows full context
-4. **Secret safety**: Atuin automatically filters secrets from history
+```sh
+atuin register   # or `atuin login` if you already have an account
+```
+
+then set `auto_sync = true` in `config.toml`.
 
 ## Troubleshooting
 
-### Theme not applying
-```bash
-# Check if theme file exists
-ls ~/.config/atuin/themes/catppuccin-mocha.toml
-
-# Test the configuration
-atuin search --help
-```
-
-### Config not loading
-```bash
-# Verify symlink
-ls -la ~/.config/atuin
-
-# Check if atuin is initialized
-which atuin
-```
-
-### Reset to defaults
-```bash
-# Backup current config
-cp ~/.config/atuin/config.toml ~/.config/atuin/config.toml.backup
-
-# Use default config
-atuin gen-config > ~/.config/atuin/config.toml
-```
-
-## Sync with Work Branch
-
-To sync this configuration to your work branch:
-```bash
-sdf  # or ./sync-dotfiles.zsh
-# Select files: atuin/.config/atuin/config.toml
-#               atuin/.config/atuin/themes/catppuccin-mocha.toml
+```sh
+ls -la ~/.config/atuin           # confirm the symlink is in place
+atuin status                     # sync state (errors if not logged in — expected)
+mos link atuin                   # re-link if the symlink is missing/stale
 ```
 
 ## Resources
 
-- [Atuin Documentation](https://atuin.sh)
+- [Atuin docs](https://atuin.sh)
 - [Atuin GitHub](https://github.com/atuinsh/atuin)
-- [Catppuccin Theme](https://github.com/catppuccin/catppuccin)
-
----
-
-*Breathe. Focus. Flow.*
