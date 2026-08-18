@@ -285,6 +285,52 @@ alias v="nvim"
 alias nvl="nvim -c \"lua require('persistence').load()\""
 alias lazyvim="NVIM_APPNAME=lazyvim nvim"
 
+function nvnuke() {
+    local appname="${NVIM_APPNAME:-nvim}"
+    local data_dir="${XDG_DATA_HOME:-$HOME/.local/share}/$appname/lazy"
+    if [[ ! -d "$data_dir" ]]; then
+        echo "Nothing to nuke: $data_dir does not exist"
+        return 0
+    fi
+    rm -rf "$data_dir"
+    echo "Nuked $data_dir"
+}
+
+function nvfix() {
+    local appname="${NVIM_APPNAME:-nvim}"
+    local lazy_dir="${XDG_DATA_HOME:-$HOME/.local/share}/$appname/lazy"
+    if [[ ! -d "$lazy_dir" ]]; then
+        echo "Nothing to fix: $lazy_dir does not exist"
+        return 0
+    fi
+
+    # Clear stale clone locks left by interrupted/timed-out installs.
+    # lazy.nvim's timeout only kills its direct child; the underlying
+    # git-remote-https/index-pack grandchildren can survive as orphans
+    # and keep the plugin's .git directory locked, hanging every retry.
+    local marker plugin pids
+    for marker in "$lazy_dir"/*.cloning(N); do
+        plugin="${marker%.cloning}"
+        pids=$(lsof +D "$plugin" 2>/dev/null | awk 'NR>1{print $2}' | sort -u)
+        if [[ -n "$pids" ]]; then
+            echo "Killing orphaned processes for $(basename "$plugin"): $pids"
+            echo "$pids" | xargs kill -9 2>/dev/null
+        fi
+        echo "Clearing stuck clone: $(basename "$plugin")"
+        rm -rf "$marker" "$plugin"
+    done
+
+    # vscode-js-debug needs a git dependency that npm 12 blocks by default (EALLOWGIT);
+    # scope the exception to just this plugin instead of loosening npm globally
+    local vjsd="$lazy_dir/vscode-js-debug"
+    if [[ -d "$vjsd" && ! -f "$vjsd/.npmrc" ]]; then
+        echo "allow-git=true" > "$vjsd/.npmrc"
+        echo "Scoped allow-git=true for vscode-js-debug"
+    fi
+
+    echo "Now run :Lazy sync inside nvim to retry"
+}
+
 # Utilities
 alias c='clear'
 alias e='exit'
