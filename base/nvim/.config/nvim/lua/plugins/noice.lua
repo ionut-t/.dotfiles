@@ -5,6 +5,11 @@ return {
     'MunifTanjim/nui.nvim',
   },
   opts = {
+    -- Snacks.notifier owns vim.notify; don't let Noice compete for it
+    notify = {
+      enabled = false,
+    },
+
     lsp = {
       -- Override markdown rendering so that **cmp** and other plugins use **Treesitter**
       override = {

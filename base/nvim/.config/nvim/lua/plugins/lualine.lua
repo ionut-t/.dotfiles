@@ -125,15 +125,6 @@ return {
             color = fg 'Constant',
           },
           {
-            function()
-              return '  ' .. require('dap').status()
-            end,
-            cond = function()
-              return package.loaded['dap'] and require('dap').status() ~= ''
-            end,
-            color = fg 'Debug',
-          },
-          {
             require('lazy.status').updates,
             cond = require('lazy.status').has_updates,
             color = fg 'Special',

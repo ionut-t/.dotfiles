@@ -29,13 +29,6 @@ return {
         -- Test configuration
         test_runner = 'go', -- use go test
         run_in_floaterm = true,
-
-        -- Additional features
-        dap_debug = true,
-        dap_debug_gui = true,
-
-        -- Customize icons (optional)
-        icons = { breakpoint = '🔴', currentpos = '👉' },
       }
 
       -- Key mappings

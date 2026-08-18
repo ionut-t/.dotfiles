@@ -320,14 +320,6 @@ function nvfix() {
         rm -rf "$marker" "$plugin"
     done
 
-    # vscode-js-debug needs a git dependency that npm 12 blocks by default (EALLOWGIT);
-    # scope the exception to just this plugin instead of loosening npm globally
-    local vjsd="$lazy_dir/vscode-js-debug"
-    if [[ -d "$vjsd" && ! -f "$vjsd/.npmrc" ]]; then
-        echo "allow-git=true" > "$vjsd/.npmrc"
-        echo "Scoped allow-git=true for vscode-js-debug"
-    fi
-
     echo "Now run :Lazy sync inside nvim to retry"
 }
 
