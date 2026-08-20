@@ -27,6 +27,7 @@ modules = [
   "ghostty",
   "git",
   "helix",
+  "karabiner",
   "lens",
   "nushell",
   "nvim",
@@ -52,6 +53,7 @@ modules = [
   "bark",
   "borders",
   "ghostty",
+  "karabiner",
   "lens",
   "nushell",
   "nvim",
@@ -126,6 +128,19 @@ brew = ["borders"]
 source = "ghostty/.config/ghostty"
 target = "~/.config/ghostty"
 tracked = true
+
+# Karabiner-Elements replaces karabiner.json on save instead of writing
+# through it, which breaks the symlink after the first UI edit. Before
+# running `mos link` or `mos sync pull` again, manually copy the live
+# ~/.config/karabiner/karabiner.json back over the source below and commit,
+# or the next link will silently revert it to the last tracked version.
+[modules.karabiner]
+source = "karabiner/.config/karabiner/karabiner.json"
+target = "~/.config/karabiner/karabiner.json"
+tracked = true
+
+[modules.karabiner.deps]
+brew = ["karabiner-elements"]
 
 [modules.git]
 source = "git/.gitconfig"
