@@ -24,4 +24,5 @@ mos init
 mos host register
 mos link
 mos deps install
+~/.tmux/plugins/tpm/bin/install_plugins
 ```

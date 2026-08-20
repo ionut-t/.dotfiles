@@ -209,7 +209,7 @@ export FZF_DEFAULT_OPTS=" \
 --color=selected-bg:#45475a \
 --multi"
 
-source ~/fzf-git.sh/fzf-git.sh
+[ -f ~/fzf-git.sh/fzf-git.sh ] && source ~/fzf-git.sh/fzf-git.sh
 
 # ============================================================================
 # TOOL INTEGRATIONS
@@ -395,7 +395,7 @@ function gpub() {
 # ============================================================================
 # EXTERNAL SOURCES
 # ============================================================================
-source ~/.envs/.env
+[ -f ~/.envs/.env ] && source ~/.envs/.env
 source ~/ask/ask.zsh
 
 function vex() {

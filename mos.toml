@@ -225,6 +225,11 @@ tracked = true
 
 [modules.tmux.deps]
 packages = ["tmux"]
+script = [
+  { name = "tsm", cmd = "cargo install --git https://github.com/ionut-t/tsm" },
+  { name = "tpm", cmd = "[ -d ~/.tmux/plugins/tpm ] || git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm" },
+  { name = "catppuccin-tmux", cmd = "[ -d ~/.config/tmux/plugins/catppuccin/tmux ] || git clone https://github.com/catppuccin/tmux.git ~/.config/tmux/plugins/catppuccin/tmux" },
+]
 
 [modules.vim]
 source = "vim/.vimrc"
@@ -299,3 +304,6 @@ tracked = true
 
 [modules.zsh.deps]
 packages = ["fzf", "eza", "bat", "zoxide", "jq", "thefuck"]
+script = [
+  { name = "fzf-git.sh", cmd = "[ -d ~/fzf-git.sh ] || git clone https://github.com/junegunn/fzf-git.sh.git ~/fzf-git.sh" },
+]
