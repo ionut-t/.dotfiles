@@ -418,7 +418,7 @@ bindkey -M vicmd '^e' _vex_edit_line
 export PATH="/Users/ionut-traistaru/.local/bin:$PATH"
 
 case "$TSM_WORKSPACE" in
-  tsm|lens)
+  tsm|lens|mos)
     alias install='cargo install --path .'
     alias review='bark review --as linus'
     alias test='cargo test'
