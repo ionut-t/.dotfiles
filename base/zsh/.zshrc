@@ -211,6 +211,11 @@ export FZF_DEFAULT_OPTS=" \
 
 [ -f ~/fzf-git.sh/fzf-git.sh ] && source ~/fzf-git.sh/fzf-git.sh
 
+# Drop the bare ^G binding (list-expand / send-break) so zsh doesn't wait out
+# KEYTIMEOUT before matching the ^G<key> fzf-git widgets.
+for _m in emacs viins vicmd; do bindkey -M $_m -r '^G'; done
+unset _m
+
 # ============================================================================
 # TOOL INTEGRATIONS
 # ============================================================================
