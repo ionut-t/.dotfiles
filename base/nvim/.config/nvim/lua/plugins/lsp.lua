@@ -14,6 +14,23 @@ return {
     'b0o/schemastore.nvim',
   },
   config = function()
+    -- Language servers that require `file://` URIs (gopls, ts_ls, pyright, ...)
+    -- answer any other scheme with a -32700 parse error. Octo runs `filetype
+    -- detect` on its `octo://` review buffers so diffs get syntax highlighting,
+    -- and on Nvim 0.11+ a filetype is all `vim.lsp.enable` checks before
+    -- auto-attaching. Nothing upstream filters on scheme, so gate the start.
+    local lsp_start = vim.lsp.start
+    ---@diagnostic disable-next-line: duplicate-set-field
+    vim.lsp.start = function(config, opts)
+      opts = opts or {}
+      local bufnr = opts.bufnr or vim.api.nvim_get_current_buf()
+      local scheme = vim.api.nvim_buf_get_name(bufnr):match '^([%w+.%-]+)://'
+      if scheme and scheme ~= 'file' then
+        return
+      end
+      return lsp_start(config, opts)
+    end
+
     vim.api.nvim_create_autocmd('LspAttach', {
       group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
       callback = function(event)

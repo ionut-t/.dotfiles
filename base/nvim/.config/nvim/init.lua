@@ -127,6 +127,7 @@ require('lazy').setup {
   require 'plugins.session',
   require 'plugins.refactoring',
   require 'plugins.git-enhanced',
+  require 'plugins.octo', -- GitHub PR review
   require 'plugins.terminal',
   require 'plugins.tiny-diagnostic',
   require 'plugins.snipe',

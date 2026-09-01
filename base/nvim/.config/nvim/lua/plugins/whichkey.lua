@@ -38,6 +38,7 @@ return {
       { '<leader>S', group = 'Select and replace', icon = '󰉋' },
       { '<leader>C', group = 'Codewise', icon = '󰚩' },
       { '<leader>l', group = 'Lens', icon = '' },
+      { '<leader>o', group = 'Octo', icon = '' },
     }
   end,
 }
