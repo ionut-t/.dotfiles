@@ -220,7 +220,7 @@ unset _m
 # TOOL INTEGRATIONS
 # ============================================================================
 eval "$(fzf --zsh)"
-eval "$(zoxide init --cmd cd zsh)"
+eval "$(zoxide init zsh)"
 eval "$(thefuck --alias)"
 eval "$(atuin init zsh --disable-ai)"
 
