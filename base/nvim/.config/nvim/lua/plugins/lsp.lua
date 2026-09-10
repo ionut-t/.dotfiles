@@ -378,7 +378,6 @@ return {
       'ruff', -- Python linter and formatter
       'gofumpt', -- Go formatter (stricter version of gofmt)
       'goimports', -- Go imports formatter
-      'sql-formatter', -- SQL formatter
       'golangci-lint', -- Go linter
       'sqlfluff', -- SQL linter
       'shellcheck', -- Shell script linter
@@ -388,6 +387,10 @@ return {
 
     require('mason-lspconfig').setup {
       automatic_installation = { exclude = { 'pylsp', 'rust_analyzer' } },
+      -- mason-lspconfig v2 auto-enables every installed server. sqlls' PEG grammar
+      -- only knows CREATE TABLE/INDEX/TYPE, so it flags CREATE FUNCTION/TRIGGER and
+      -- goose annotations in Postgres migrations. Linting is sqlfluff's job here.
+      automatic_enable = { exclude = { 'sqlls', 'pylsp', 'rust_analyzer' } },
       handlers = {
         function(server_name)
           -- Skip formatters/linters that aren't LSP servers

@@ -39,10 +39,25 @@ return {
         go = { 'gofumpt', 'goimports' },
         python = { 'ruff_format' },
         shell = { 'shfmt' },
-        sql = { 'sql_formatter' },
+        sql = { 'sqlfluff' },
         toml = { 'taplo' },
       },
-      -- sql-formatter found via PATH (mason bin or system install)
+      formatters = {
+        -- Matches the sqlfluff dialect used for linting, so formatted files are
+        -- lint-clean. `format` only touches layout, leaving keyword casing, goose
+        -- annotations and `$$` bodies alone. require_cwd is off so it still runs
+        -- in repos without a `.sqlfluff`.
+        sqlfluff = {
+          args = { 'format', '--dialect=postgres', '-' },
+          require_cwd = false,
+          -- `format` exits 1 on any violation it cannot auto-fix (a long line in a
+          -- $$ body, say) even though stdout holds correctly formatted SQL, which
+          -- conform would otherwise report as "Formatter failed". Leftover findings
+          -- are nvim-lint's to surface. Conform ignores empty output, so the buffer
+          -- is left alone if sqlfluff genuinely fails.
+          exit_codes = { 0, 1 },
+        },
+      },
       format_on_save = function()
         if vim.g.format_on_save_enabled then
           return {
