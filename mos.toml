@@ -9,7 +9,7 @@ os = "macos"
 package_manager = "brew"
 default_profile = "home"
 
-[hosts."MacBook Pro M3"]
+[hosts.M5]
 os = "macos"
 package_manager = "brew"
 default_profile = "thegrind"
