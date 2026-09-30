@@ -35,6 +35,7 @@ modules = [
   "search",
   "sketchybar",
   "starship",
+  "superfile",
   "tmux",
   "vex",
   "vim",
@@ -60,6 +61,7 @@ modules = [
   "perp",
   "search",
   "starship",
+  "superfile",
   "tmux",
   "vex",
   "vim",
@@ -227,6 +229,14 @@ tracked = true
 script = [
   { name = "starship", cmd = "curl -sS https://starship.rs/install.sh | sh" },
 ]
+
+[modules.superfile]
+source = "superfile/.config/superfile"
+target = "~/.config/superfile"
+tracked = true
+
+[modules.superfile.deps]
+packages = [{ brew = "superfile" }]
 
 [modules.tmux]
 source = "tmux/.tmux.conf"
