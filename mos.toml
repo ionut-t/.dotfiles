@@ -93,7 +93,7 @@ target = "~/.config/aerospace"
 tracked = true
 
 [modules.aerospace.deps]
-brew = ["aerospace"]
+brew = [{ pkg = "aerospace", tap = "nikitabobko/tap" }]
 
 [modules.alacritty]
 source = "alacritty/.config/alacritty"
@@ -102,11 +102,6 @@ tracked = true
 
 [modules.alacritty.deps]
 packages = ["alacritty"]
-
-[modules.ask]
-source = "ask/ask"
-target = "~/ask"
-tracked = true
 
 [modules.atuin]
 source = "atuin/.config/atuin"
@@ -122,7 +117,7 @@ target = "~/.config/borders"
 tracked = true
 
 [modules.borders.deps]
-brew = ["borders"]
+brew = [{ pkg = "borders", tap = "felixkratz/formulae" }]
 
 [modules.ghostty]
 source = "ghostty/.config/ghostty"
@@ -221,7 +216,7 @@ target = "~/.config/sketchybar"
 tracked = true
 
 [modules.sketchybar.deps]
-brew = ["sketchybar"]
+brew = [{ pkg = "sketchybar", tap = "felixkratz/formulae" }]
 
 [modules.starship]
 source = "starship/.config"
@@ -242,8 +237,8 @@ tracked = true
 packages = ["tmux"]
 script = [
   { name = "tsm", cmd = "cargo install --git https://github.com/ionut-t/tsm" },
-  { name = "tpm", cmd = "[ -d ~/.tmux/plugins/tpm ] || git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm" },
-  { name = "catppuccin-tmux", cmd = "[ -d ~/.config/tmux/plugins/catppuccin/tmux ] || git clone https://github.com/catppuccin/tmux.git ~/.config/tmux/plugins/catppuccin/tmux" },
+  { name = "tpm", check = "test -d ~/.tmux/plugins/tpm", cmd = "git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm" },
+  { name = "catppuccin-tmux", check = "test -d ~/.config/tmux/plugins/catppuccin/tmux", cmd = "git clone https://github.com/catppuccin/tmux.git ~/.config/tmux/plugins/catppuccin/tmux" },
 ]
 
 [modules.vim]
@@ -292,6 +287,15 @@ go = ["github.com/ionut-t/bark/v2@latest"]
 [modules.vex.deps]
 go = ["github.com/ionut-t/vex@latest"]
 
+[modules.ask]
+source = "ask/ask"
+target = "~/ask"
+tracked = true
+
+[modules.ask.deps]
+go = ["github.com/ionut-t/vex@latest"]
+
+
 [modules.perp]
 
 [modules.perp.deps]
@@ -320,5 +324,5 @@ tracked = true
 [modules.zsh.deps]
 packages = ["fzf", "eza", "bat", "zoxide", "jq", "thefuck"]
 script = [
-  { name = "fzf-git.sh", cmd = "[ -d ~/fzf-git.sh ] || git clone https://github.com/junegunn/fzf-git.sh.git ~/fzf-git.sh" },
+  { name = "fzf-git.sh", check = "test -d ~/fzf-git.sh", cmd = "git clone https://github.com/junegunn/fzf-git.sh.git ~/fzf-git.sh" },
 ]
