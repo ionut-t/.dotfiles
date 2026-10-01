@@ -303,7 +303,7 @@ target = "~/ask"
 tracked = true
 
 [modules.ask.deps]
-go = ["github.com/ionut-t/vex@latest"]
+go = ["github.com/ionut-t/ask@latest"]
 
 
 [modules.perp]
