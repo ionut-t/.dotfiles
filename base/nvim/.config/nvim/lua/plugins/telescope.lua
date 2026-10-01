@@ -155,6 +155,14 @@ return {
     -- FIND namespace (<Space>f) - Files, Buffers, UI elements
     -- ═══════════════════════════════════════════════════════════════════
     vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Files' })
+    -- Find files without respecting .gitignore (includes ignored/untracked files)
+    vim.keymap.set('n', '<leader>fa', function()
+      builtin.find_files {
+        prompt_title = 'All Files (no ignore)',
+        no_ignore = true,
+        no_ignore_parent = true,
+      }
+    end, { desc = 'All files (no ignore)' })
     vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Help' })
     vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = 'Keymaps' })
     vim.keymap.set('n', '<leader>ft', builtin.builtin, { desc = 'Telescope pickers' })
