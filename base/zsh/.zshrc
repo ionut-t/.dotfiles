@@ -426,17 +426,25 @@ case "$TSM_WORKSPACE" in
   tsm|lens|mos)
     alias install='cargo install --path .'
     alias review='bark review --as linus'
-    alias test='cargo test'
+    alias tests='cargo test'
     alias fmt='cargo fmt'
     alias lint='cargo clippy --all-targets --all-features -- -D warnings'
     ;;
   perp|bark)
     alias install='go install .'
     alias run='go run .'
-    alias build='go build -o bin/perp'
-    alias test='go test ./...'
+    alias tests='go test ./...'
     alias review='bark review --as linus'
     alias lint='golangci-lint run'
-    alias fmt='gofmt -w .'
+    alias format='gofmt -w .'
+    ;;
+  goeditor)
+    alias basic='z basic && go run . && z goeditor'
+    alias completion='z completion && go run . && z goeditor'
+    alias layout='z layout && go run . && z goeditor'
+    alias tests='go test ./...'
+    alias review='bark review --as linus'
+    alias lint='golangci-lint run'
+    alias format='gofmt -w .'
     ;;
 esac
