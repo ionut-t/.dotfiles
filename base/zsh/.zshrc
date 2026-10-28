@@ -125,6 +125,8 @@ export PATH="$PATH:$HOME/tools/flutter/bin"                                    #
 export PATH="$HOME/tools/bin:$PATH"                                            # Custom tools
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"  # Yarn
 export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.antigravity-ide/antigravity-ide/bin:$PATH"
 
 # ============================================================================
 # LANGUAGE & FRAMEWORK SETUP
@@ -418,10 +420,6 @@ zle -N _vex_edit_line
 bindkey '^e' _vex_edit_line
 bindkey -M vicmd '^e' _vex_edit_line
 
-
-# Added by Antigravity CLI installer
-export PATH="/Users/ionut-traistaru/.local/bin:$PATH"
-
 case "$TSM_WORKSPACE" in
   tsm|lens|mos)
     alias install='cargo install --path .'
@@ -448,3 +446,4 @@ case "$TSM_WORKSPACE" in
     alias format='gofmt -w .'
     ;;
 esac
+
