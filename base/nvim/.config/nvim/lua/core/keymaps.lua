@@ -70,6 +70,40 @@ vim.keymap.set('n', '<leader>yd', function()
   vim.notify('Copied directory: ' .. dir, vim.log.levels.INFO)
 end, { desc = 'Directory path' })
 
+-- Copy pytest-style node id of the enclosing Python function: path/to/test_x.py::Class::func
+-- Buffer-local, so it only exists in Python files.
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'python',
+  callback = function(ev)
+    vim.keymap.set('n', '<leader>yf', function()
+      local path = vim.fn.expand '%:.'
+      local ok, node = pcall(vim.treesitter.get_node)
+      if not ok or not node then
+        vim.notify('No treesitter parser for this buffer', vim.log.levels.WARN)
+        return
+      end
+      local parts = {}
+      while node do
+        local t = node:type()
+        if t == 'function_definition' or t == 'class_definition' then
+          local name = node:field('name')[1]
+          if name then
+            table.insert(parts, 1, vim.treesitter.get_node_text(name, 0))
+          end
+        end
+        node = node:parent()
+      end
+      if #parts == 0 then
+        vim.notify('Cursor is not inside a function or class', vim.log.levels.WARN)
+        return
+      end
+      local id = path .. '::' .. table.concat(parts, '::')
+      vim.fn.setreg('+', id)
+      vim.notify('Copied: ' .. id, vim.log.levels.INFO)
+    end, { buffer = ev.buf, desc = 'Function path (path::func)' })
+  end,
+})
+
 -- Exit insert mode with jj
 vim.keymap.set('i', 'jj', '<Esc>', { desc = 'Exit insert mode' })
 
