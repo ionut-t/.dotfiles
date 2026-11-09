@@ -283,6 +283,8 @@ alias ta="tmux a"
 alias gs="git branch | fzf --preview 'git log --oneline --graph --color=always {1}' | xargs git checkout"
 alias gsa="git branch --all | fzf --preview 'git log --oneline --graph --color=always {1}' | xargs git checkout"
 alias gll="git log --oneline --graph --color=always | fzf --ansi --preview 'git show --color=always {1}' --bind 'enter:execute(git show {1})'"
+alias gcpr="gh pr create --web"
+alias gvpr="gh pr view --web"
 
 # Editors & IDEs
 alias vim="/Applications/MacVim.app/Contents/bin/Vim"
