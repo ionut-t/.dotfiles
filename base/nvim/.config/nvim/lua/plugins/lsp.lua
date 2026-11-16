@@ -382,6 +382,7 @@ return {
       'sqlfluff', -- SQL linter
       'shellcheck', -- Shell script linter
       'taplo', -- TOML formatter/LSP
+      'typescript-language-server', -- bundles TS 5.x tsserver.js for typescript-tools (global TS 7 has none)
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -390,7 +391,7 @@ return {
       -- mason-lspconfig v2 auto-enables every installed server. sqlls' PEG grammar
       -- only knows CREATE TABLE/INDEX/TYPE, so it flags CREATE FUNCTION/TRIGGER and
       -- goose annotations in Postgres migrations. Linting is sqlfluff's job here.
-      automatic_enable = { exclude = { 'sqlls', 'pylsp', 'rust_analyzer' } },
+      automatic_enable = { exclude = { 'sqlls', 'pylsp', 'rust_analyzer', 'ts_ls' } }, -- ts_ls: typescript-tools handles TS/JS
       handlers = {
         function(server_name)
           -- Skip formatters/linters that aren't LSP servers
